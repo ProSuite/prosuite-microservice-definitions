@@ -1,0 +1,176 @@
+﻿syntax = "proto3";
+
+/**
+ * The core types contain re-usable message definitions to be used in various
+ * services or aggregate messages.
+ *
+ * They allow for re-usable utility methods for packing and unpacking to/from
+ * the wire format.
+ *
+ */
+
+package ProSuite.Microservices.Definitions.Shared;
+
+/**
+  * UUID / Guid format as byte array.
+  */
+message UUID {
+	bytes value = 1;
+}
+
+/**
+  * A basic envelope in the XY plane.
+  */
+message EnvelopeMsg {
+  double x_min = 1;
+  double y_min = 2;
+  double x_max = 3;
+  double y_max = 4;
+}
+
+/**
+  * Geometry as Esri shape buffer or well-known-binary format.
+  */
+message ShapeMsg {
+
+  /**
+  * Geometry as Esri shape buffer or well-known-binary format.
+  */
+  oneof byte_format {
+	
+	/** The Esri shape buffer format */
+    bytes esri_shape = 1;
+    
+	/** The OGC well-known-binary format */
+	bytes wkb = 2;
+  }
+  
+  /**
+  * The optional spatial reference. For performance-critical feature-transfer
+  * or the need for tolerance / resolution information, consider using the 
+  * spatial reference of the feature class.
+  */
+  oneof spatial_reference {
+
+    /** The spatial reference in its Esri XML format */
+    string spatial_reference_esri_xml = 3;
+
+    /** The OGC well-known text format */
+    string spatial_reference_wkt = 4;
+
+    /** The spatial reference id */
+    int32 spatial_reference_wkid = 5;
+  }
+}
+
+/**
+  * An attribute value of a geodatabase object.  
+  * By convention a row has a null Shape and a feature a not-null (but possibly empty)
+  * shape. If 
+  */
+message AttributeValue {
+  oneof value {
+
+	/** The value is null in the database */
+    bool db_null = 1;
+
+	/** The geodatabase 'short' integer */
+    int32 short_int_value = 2;
+
+	/** The geodatabase 'long' integer */
+    int64 long_int_value = 3;
+
+	/** The geodatabase 'float' */
+    float float_value = 4;
+
+	/** The geodatabase 'double' */
+    double double_value = 5;
+
+	/** The geodatabase 'double' */
+    string string_value = 6;
+
+	/** The geodatabase 'date/time' value */
+    int64 date_time_ticks_value = 7;
+
+	/** The geodatabase 'GUID' */
+    UUID uuid_value = 8;
+
+	/** The geodatabase 'blob' */
+    bytes blob_value = 9;
+	}
+}
+
+/**
+  * Geodatabase object (feature or row). 
+  * By convention a row has a null Shape and a feature a not-null (but possibly empty)
+  * shape.
+  */
+message GdbObjectMsg {
+
+  /** The object id of the feature or object. */
+  int32 object_id = 1;
+
+  /** The handle that allows referencing an object class such as the class-id or 
+    * dataset-id.
+	*/
+  int32 class_handle = 2; 
+
+  /** The attribute values that should be transmitted in the appropriate order  
+    * of the fields. The field definitions must be retrieved from the object 
+	* class. Depending on the context, some fields could be omitted or 
+	* the entire list left empty alltogether.
+	*/
+  repeated AttributeValue values = 3;
+
+  /** The geometry, in case this message represents a feature. */
+  ShapeMsg Shape = 4;
+}
+
+/**
+  * A light-weight reference to a geodatabase object (feature or row). 
+  */
+message GdbObjRefMsg {
+
+  /** The handle that allows referencing an object class such as the class-id or 
+    * dataset-id.
+    */
+  int32 class_handle = 1;
+
+  /** The object id of the feature or object. */
+  int32 object_id = 2;
+}
+
+/**
+  * A geodatabase object class. 
+  */
+message ObjectClassMsg {
+
+  /** The class identifier that allows objects to maintain a reference to its 
+    * respective class. This typically corresponds to the object class id or
+	* dataset id.
+    */
+  int32 class_handle = 1;
+
+  /** The workspace identifier that can be used to uniquely define the 
+    * workspace of this class. Its value is defined by the application.
+    */
+  int32 workspace_handle = 2;
+
+  /** The name of the class. */
+  string name = 3;
+
+  /** The display name of the class. */
+  string alias = 4;
+}
+
+/** A representation of a feature that was typically updated by some type of  
+    * manipulation.
+    */
+message ResultFeatureMsg {
+
+  /** The feature with its updated properties. */
+  GdbObjectMsg updated_feature = 1;
+
+  /** Any notification associated with the update process or its result. */
+  repeated string notifications = 2;
+}
