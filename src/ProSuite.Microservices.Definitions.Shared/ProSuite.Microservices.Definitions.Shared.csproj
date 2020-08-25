@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>The ProSuite Authors</Authors>
     <SignAssembly>true</SignAssembly>
@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.11.4" />
-    <PackageReference Include="Grpc" Version="2.28.1" />
-    <PackageReference Include="Grpc.Tools" Version="2.28.1">
+    <PackageReference Include="Google.Protobuf" Version="3.12.2" />
+    <PackageReference Include="Grpc" Version="2.31.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.31.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
