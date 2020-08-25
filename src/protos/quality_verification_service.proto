@@ -15,7 +15,10 @@ import "shared_types.proto";
   */
 service QualityVerificationGrpc {
 
-	rpc VerifyQuality(VerificationRequest) returns (stream VerificationResponse) {}
+  /**
+  * The quality verification RPC.
+  */
+  rpc VerifyQuality(VerificationRequest) returns (stream VerificationResponse) {}
 }
 
 /**
@@ -64,6 +67,9 @@ message VerificationResponse {
 
   /** In the final response: The actual perimeter that was verified. */
   .ProSuite.Microservices.Definitions.Shared.ShapeMsg verified_perimeter = 5;
+
+  /** The list of allowed issues (exceptions) to be deleted. */
+  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjRefMsg obsolete_exceptions = 6;
 }
 
 // ----------------------------------------------------------------------------
@@ -168,6 +174,25 @@ message VerificationParametersMsg {
 
   /** Whether the verification should be saved in the data dictionary. */
   bool save_verification_statistics = 13;
+
+  /** Whether stored exceptions (allowed errors) that were not found should be
+    * returned to the caller via obsolete_exceptions to allow for deletion of 
+	* said objects.
+	*/
+  bool report_unused_exceptions = 14;
+
+  /** Whether stored exceptions (allowed errors) that are considered invalid
+    * (e.g. because the condition or the object chagned) should be returned 
+	* to the caller via obsolete_exceptions to allow for deletion of said 
+	* objects.
+	*/
+  bool report_invalid_exceptions = 15;
+
+  /** Invalidation if an involved object changed since the error was allowed. */
+  bool invalidate_exceptions_if_any_involved_object_changed = 16;
+
+  /** Invalidation if the condition changed since the error was allowed. */
+  bool invalidate_exceptions_if_condition_was_updated = 17;
 }
 
 // ----------------------------------------------------------------------------
@@ -250,9 +275,9 @@ message IssueMsg {
 	/** The creation date/time in local time, represented as ticks. */
 	int64 creation_date_time_ticks = 12;
 
-	/** The violated test descriptor. */
+	/** The violated test index. */
 	int32 test = 13;
-	
+
 	// TODO: some tests can write extra object values. Add name/value pair list.
 }
 
