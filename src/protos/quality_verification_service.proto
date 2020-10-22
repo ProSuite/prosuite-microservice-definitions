@@ -88,14 +88,20 @@ message WorkContextMsg {
 
   /**
     * The type of the work context. 
-	* 1 = model (not yet supported)
+	* 1 = project (model)
 	* 2 = release cycle (not yet supported)
 	* 3 = work unit
 	* 4 = import_unit (not yet supported)
 	*/
   int32 type = 2;
   
-  // TODO: workspace/version/connection string?
+  // TODO: connection string?
+
+  /** The version name (for type project). */
+  string version_name = 6;
+
+  /** The (fully qualified) dataset names to be verified. */
+  repeated string verified_datasets = 7;
   
   /** The work context type (string representation for display purposes). */
   string context_type = 4;
