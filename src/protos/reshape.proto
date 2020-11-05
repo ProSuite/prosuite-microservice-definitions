@@ -1,0 +1,94 @@
+﻿syntax = "proto3";
+
+/**
+ * The reshape service definition and its associated request and response message types.
+ *
+ */
+
+package ProSuite.Microservices.Definitions.Geometry;
+
+import "shared_types.proto";
+
+
+/**
+  * The reshape service definition.
+  */
+service ReshapeGrpc {
+
+  /**
+  * The advanced reshape RPC.
+  */
+  rpc AdvancedReshape(AdvancedReshapeRequest) returns (AdvancedReshapeResponse) {}
+
+  /**
+  * The request to get the replaced endpoint for a potential Y-reshape.
+  */
+  rpc GetOpenJawReshapeLineReplaceEndPoint(OpenJawReshapeLineReplacementParameters) returns (.ProSuite.Microservices.Definitions.Shared.ShapeMsg) {}
+}
+
+/**
+  * The request containing the relevant reshape parameters.
+  */
+message AdvancedReshapeRequest {
+
+  /** The input features. */
+  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg features = 1;
+
+  /** The input reshape paths. */
+  .ProSuite.Microservices.Definitions.Shared.ShapeMsg reshape_paths = 2;
+
+  /** The sticky intersections for multiple reshapes. */
+  repeated SourceTargetPointPair sticky_intersections = 3;
+
+  /** Whether the non-default reshape side should be preferred. */
+  bool use_non_default_reshape_side = 4;
+
+  /** Whether to allow Y-reshape. */
+  bool allow_open_jaw_reshape = 5;
+
+  /** The move Y-reshape junction option. */
+  bool move_open_jaw_end_junction = 6;
+
+  /** The adjacent polyline features in a linear network. */
+  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg potentially_connected_features = 7;
+
+  /** Whether the reshape-as-union strategy should be employed for multiple features. */
+  bool multiple_sources_try_union = 8;
+}
+
+/**
+  * The response message containing the result.
+  */
+message AdvancedReshapeResponse {
+
+  /** The result features with updated geometry. */
+  repeated .ProSuite.Microservices.Definitions.Shared.ResultFeatureMsg result_features = 1;
+
+  /** Whether the Y-reshape was performed. */
+  bool OpenJawReshapeHappened = 2;
+
+  /** The number of source-target intersections if the Y-reshape was performed. */
+  int32 OpenJawIntersectionCount = 3;
+}
+
+/**
+  * The request containing the parameters to obtain the moved Y-reshape endpoint.
+  */
+message OpenJawReshapeLineReplacementParameters
+{
+  /** The input feature. */
+  .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg feature = 1;
+  
+  /** The reshape path. */
+  .ProSuite.Microservices.Definitions.Shared.ShapeMsg reshape_path = 2;
+
+  /** Whether the non-default reshape side should be preferred. */
+  bool use_non_default_reshape_side = 3;
+}
+
+message SourceTargetPointPair {
+	.ProSuite.Microservices.Definitions.Shared.ShapeMsg source_point = 1;
+	.ProSuite.Microservices.Definitions.Shared.ShapeMsg target_point = 2;
+}
+
+

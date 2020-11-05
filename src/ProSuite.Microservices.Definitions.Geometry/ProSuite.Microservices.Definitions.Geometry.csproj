@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
@@ -28,7 +28,7 @@
     see: https://github.com/grpc/grpc/blob/master/src/csharp/BUILD-INTEGRATION.md
     -->
     <Content Include="..\protos\shared_types.proto" Link="protos\shared_types.proto" />
-    <Protobuf Include="..\protos\quality_verification_service.proto" Link="protos\quality_verification_service.proto" />
+    <Protobuf Include="..\protos\remove_overlaps.proto" Link="protos\remove_overlaps.proto" />
   </ItemGroup>
 
   <ItemGroup>

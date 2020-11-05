@@ -36,13 +36,16 @@ message ShapeMsg {
   /**
   * Geometry as Esri shape buffer or well-known-binary format.
   */
-  oneof byte_format {
+  oneof format {
 	
 	/** The Esri shape buffer format */
     bytes esri_shape = 1;
     
 	/** The OGC well-known-binary format */
 	bytes wkb = 2;
+
+	/** A simple envelope */
+    EnvelopeMsg envelope = 3;
   }
   
   /**
@@ -53,13 +56,13 @@ message ShapeMsg {
   oneof spatial_reference {
 
     /** The spatial reference in its Esri XML format */
-    string spatial_reference_esri_xml = 3;
+    string spatial_reference_esri_xml = 4;
 
     /** The OGC well-known text format */
-    string spatial_reference_wkt = 4;
+    string spatial_reference_wkt = 5;
 
     /** The spatial reference id */
-    int32 spatial_reference_wkid = 5;
+    int32 spatial_reference_wkid = 6;
   }
 }
 
@@ -161,6 +164,24 @@ message ObjectClassMsg {
 
   /** The display name of the class. */
   string alias = 4;
+
+  /** The geometry type of the class, corresponding to ProSuiteGeometryType 
+    * enum. Null (0) signifies that it is a table without geometry field. 
+    */
+  int32 geometry_type = 5;
+
+  /** The spatial reference of the class. */
+  oneof spatial_reference {
+
+	  /** The spatial reference in its Esri XML format */
+	  string spatial_reference_esri_xml = 6;
+
+	  /** The OGC well-known text format */
+	  string spatial_reference_wkt = 7;
+
+	  /** The spatial reference id */
+	  int32 spatial_reference_wkid = 8;
+  }
 }
 
 /** A representation of a feature that was typically updated by some type of  

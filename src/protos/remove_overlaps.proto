@@ -1,0 +1,116 @@
+﻿syntax = "proto3";
+
+/**
+ * The remove overlaps service definition and its associated request and 
+ * response message types.
+ *
+ */
+
+package ProSuite.Microservices.Definitions.Geometry;
+
+import "shared_types.proto";
+
+/**
+  * The remove overlaps service definition.
+  */
+service RemoveOverlapsGrpc {
+
+  /**
+    * The calculation of relevant overlaps.
+    */
+  rpc CalculateOverlaps(CalculateOverlapsRequest) returns (CalculateOverlapsResponse) {}
+
+  /**
+  * The removal of the specified overlaps.
+  */
+  rpc RemoveOverlaps(RemoveOverlapsRequest) returns (RemoveOverlapsResponse) {}
+}
+
+/**
+  * The overlaps calculation request.
+  */
+message CalculateOverlapsRequest {
+
+  /** The set of source features from which the overlaps shall be removed. */
+  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg source_features = 1;
+
+  /** The set of potentially overlapping target features. */
+  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg target_features = 2;
+
+  /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
+  repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 3;
+}
+
+/**
+  * The overlaps calculation response.
+  */
+message CalculateOverlapsResponse {
+
+  /** The result overlap geometries (polygons and polylines). */
+  repeated .ProSuite.Microservices.Definitions.Shared.ShapeMsg overlaps = 1;
+
+  /** Notifications that might relevant to the user. */
+  repeated string notifications = 2;
+}
+
+/**
+  * The overlaps removal request.
+  */
+message RemoveOverlapsRequest {
+
+  /** The set of source features from which the overlaps shall be removed. */
+  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg source_features = 1;
+
+  /** The overlap geometries (polygons and polylines) to be removed from the 
+    * appropriate respective source geometries.
+    */
+  repeated .ProSuite.Microservices.Definitions.Shared.ShapeMsg overlaps = 2;
+  
+  /** The target features from which require updated (inserting intersection vertices). */
+  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg updatable_target_features = 4;
+
+  /** Whether multipart results shall be exploded. */
+  bool explode_multipart_results = 5;
+
+  /** Whether the removed overlaps should be returned as 'new features'. */
+  bool store_overlaps_as_new_features = 6;
+
+  /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
+  repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 7;
+}
+
+/**
+  * The overlaps removal response.
+  */
+message RemoveOverlapsResponse {
+
+  /** Whether the result has multiparts (because it was exploded). */
+  bool result_has_multiparts = 1;
+
+  /** The results at source feature granularity. */
+  repeated ResultGeometriesByFeature results_by_feature = 2;
+
+  /** The updated target features. */
+  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg target_features_to_update = 4;
+
+  /** Notifications that might relevant to the user. */
+  repeated string non_storable_messages = 5;
+}
+
+/**
+  * The overlaps removal result for a specific source feature.
+  */
+message ResultGeometriesByFeature {
+
+  /** The original source features. */
+  .ProSuite.Microservices.Definitions.Shared.GdbObjRefMsg original_feature_ref = 1;
+
+  /** The updated geometry of the source feature. */
+  .ProSuite.Microservices.Definitions.Shared.ShapeMsg updated_geometry = 2;
+
+  /** Any new features (due to exploded multiparts or additionally requested 
+    * overlaps) to be saved as copies of the original.
+    */
+  repeated .ProSuite.Microservices.Definitions.Shared.ShapeMsg new_geometries = 3;
+}
+

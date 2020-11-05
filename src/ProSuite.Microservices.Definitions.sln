@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSuite.Microservices.Defi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSuite.Microservices.Definitions.QA", "ProSuite.Microservices.Definitions.QA\ProSuite.Microservices.Definitions.QA.csproj", "{817BC46B-DF58-4DBA-8E19-55202DAF3795}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProSuite.Microservices.Definitions.Geometry", "ProSuite.Microservices.Definitions.Geometry\ProSuite.Microservices.Definitions.Geometry.csproj", "{8623D1F3-3637-4983-A73A-636BD571172E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{817BC46B-DF58-4DBA-8E19-55202DAF3795}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{817BC46B-DF58-4DBA-8E19-55202DAF3795}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{817BC46B-DF58-4DBA-8E19-55202DAF3795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8623D1F3-3637-4983-A73A-636BD571172E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8623D1F3-3637-4983-A73A-636BD571172E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8623D1F3-3637-4983-A73A-636BD571172E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8623D1F3-3637-4983-A73A-636BD571172E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
