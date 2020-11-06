@@ -53,17 +53,7 @@ message ShapeMsg {
   * or the need for tolerance / resolution information, consider using the 
   * spatial reference of the feature class.
   */
-  oneof spatial_reference {
-
-    /** The spatial reference in its Esri XML format */
-    string spatial_reference_esri_xml = 4;
-
-    /** The OGC well-known text format */
-    string spatial_reference_wkt = 5;
-
-    /** The spatial reference id */
-    int32 spatial_reference_wkid = 6;
-  }
+  .ProSuite.Microservices.Definitions.Shared.SpatialReferenceMsg spatial_reference = 4;
 }
 
 /**
@@ -171,16 +161,23 @@ message ObjectClassMsg {
   int32 geometry_type = 5;
 
   /** The spatial reference of the class. */
-  oneof spatial_reference {
+  SpatialReferenceMsg spatial_reference = 6;
+}
 
-	  /** The spatial reference in its Esri XML format */
-	  string spatial_reference_esri_xml = 6;
+/** A spatial reference, represented only by its well-known id (fast) or in 
+    * text format.
+    */
+message SpatialReferenceMsg {
 
-	  /** The OGC well-known text format */
-	  string spatial_reference_wkt = 7;
+  oneof format {
+	/** The spatial reference in its Esri XML format */
+	string spatial_reference_esri_xml = 1;
 
-	  /** The spatial reference id */
-	  int32 spatial_reference_wkid = 8;
+	/** The OGC well-known text format */
+	string spatial_reference_wkt = 2;
+
+	/** The spatial reference id */
+	int32 spatial_reference_wkid = 3;
   }
 }
 

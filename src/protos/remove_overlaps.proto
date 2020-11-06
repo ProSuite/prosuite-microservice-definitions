@@ -47,7 +47,7 @@ message CalculateOverlapsRequest {
 message CalculateOverlapsResponse {
 
   /** The result overlap geometries (polygons and polylines). */
-  repeated .ProSuite.Microservices.Definitions.Shared.ShapeMsg overlaps = 1;
+  repeated OverlapMsg overlaps = 1;
 
   /** Notifications that might relevant to the user. */
   repeated string notifications = 2;
@@ -64,7 +64,7 @@ message RemoveOverlapsRequest {
   /** The overlap geometries (polygons and polylines) to be removed from the 
     * appropriate respective source geometries.
     */
-  repeated .ProSuite.Microservices.Definitions.Shared.ShapeMsg overlaps = 2;
+  repeated OverlapMsg overlaps = 2;
   
   /** The target features from which require updated (inserting intersection vertices). */
   repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg updatable_target_features = 4;
@@ -98,6 +98,20 @@ message RemoveOverlapsResponse {
 }
 
 /**
+  * A set of overlaps associated with a specific source feature.
+  */
+message OverlapMsg {
+
+	/** The result overlap geometries (polygons or polylines) in the same 
+    * spatial reference as the original feature.  
+    */
+	repeated .ProSuite.Microservices.Definitions.Shared.ShapeMsg overlaps = 1;
+
+	/** A reference to the original feature. */
+	.ProSuite.Microservices.Definitions.Shared.GdbObjRefMsg original_feature_ref = 2;
+}
+
+/**
   * The overlaps removal result for a specific source feature.
   */
 message ResultGeometriesByFeature {
@@ -113,4 +127,3 @@ message ResultGeometriesByFeature {
     */
   repeated .ProSuite.Microservices.Definitions.Shared.ShapeMsg new_geometries = 3;
 }
-

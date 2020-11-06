@@ -128,12 +128,17 @@ message QualitySpecificationMsg {
 	  * 1 = release_quality
       */
 	int32 well_known_specification = 2;  // Release quality: 1
+
+    /**
+      * ...or a XML specification
+      */
+    int32 xml_specification = 3;
   }
 
   /**
     * The condition ids that are to be excluded from the base specification.
     */
-  repeated int32 excluded_condition_ids = 3;
+  repeated int32 excluded_condition_ids = 4;
 }
 
 /**
