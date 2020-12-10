@@ -71,7 +71,7 @@ message AttributeValue {
     int32 short_int_value = 2;
 
 	/** The geodatabase 'long' integer */
-    int64 long_int_value = 3;
+	int32 long_int_value = 3;
 
 	/** The geodatabase 'float' */
     float float_value = 4;
@@ -162,6 +162,41 @@ message ObjectClassMsg {
 
   /** The spatial reference of the class. */
   SpatialReferenceMsg spatial_reference = 6;
+
+  repeated .ProSuite.Microservices.Definitions.Shared.FieldMsg fields = 7;
+}
+
+/**
+  * A geodatabase object class field. 
+  */
+message FieldMsg {
+
+  /** The name of the field. */
+  string name = 1;
+
+  /** The alias name of the field. */
+  string alias_name = 2;
+
+  /** The field type corresponding to the esriFieldType. */
+  int32 type = 3;
+
+  /** The length of text fields. */
+  int32 length = 4;
+
+  /** The name of the applicable domain of the field. */
+  string domain_name = 5;
+
+  /** The scale. */
+  int32 scale = 6;
+
+  /** The precision. */
+  int32 precision = 7;
+
+  /** The nullability. */
+  bool is_nullable = 8;
+
+  /** Whether or not the field is editable. */
+  bool is_editable = 9;
 }
 
 /** A spatial reference, represented only by its well-known id (fast) or in 

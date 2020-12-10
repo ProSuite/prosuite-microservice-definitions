@@ -19,6 +19,7 @@ service QualityVerificationGrpc {
   * The quality verification RPC.
   */
   rpc VerifyQuality(VerificationRequest) returns (stream VerificationResponse) {}
+  rpc VerifyDataQuality(stream DataVerificationRequest) returns (stream DataVerificationResponse) {}
 }
 
 /**
@@ -47,6 +48,13 @@ message VerificationRequest {
   string user_name = 6;
 }
 
+
+message DataVerificationRequest {
+	VerificationRequest request = 1;
+	GdbData data = 2;
+	SchemaMsg schema = 3;
+}
+
 /**
   * The response containing the streamed response messages. The last response 
   * contains the quality verification and the verified perimeter.
@@ -70,6 +78,12 @@ message VerificationResponse {
 
   /** The list of allowed issues (exceptions) to be deleted. */
   repeated .ProSuite.Microservices.Definitions.Shared.GdbObjRefMsg obsolete_exceptions = 6;
+}
+
+message DataVerificationResponse {
+  VerificationResponse response = 1;
+  DataRequest data_request = 2;
+  SchemaRequest schema_request = 3;
 }
 
 // ----------------------------------------------------------------------------
@@ -204,6 +218,113 @@ message VerificationParametersMsg {
 
   /** Invalidation if the condition changed since the error was allowed. */
   bool invalidate_exceptions_if_condition_was_updated = 17;
+}
+
+/**
+  * The response for a DataRequest, submitting gdb objects or object counts for
+  * a specific object class.
+  */
+message GdbData {
+  
+	/** The object count (if requested). */
+	int32 gdb_object_count = 4;
+
+	/** The gdb objects (if requested). */
+	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg gdb_objects = 3;
+}
+
+/**
+  * The request for more data to be sent by the remote peer (client), for a 
+  * specific object class or (relationship-class-based) query.
+  */
+message DataRequest {
+	
+	/** The table or query for which additional objects are requested. */
+  oneof table
+  {
+    ClassDef class_def = 1;
+
+    RelationshipClassQuery rel_query_def = 2;
+  }
+
+  /** The where clause. */
+	string where_clause = 3;
+
+  /** The intersecting search geometry. */
+	.ProSuite.Microservices.Definitions.Shared.ShapeMsg search_geometry = 4;
+
+  /** The subfields to be provided for a data query. */
+	string sub_fields = 5;
+
+  /** Whether only the object count is being requested and the objects shall 
+    * be ommited in the result.
+    */
+	bool count_only = 6;
+}
+
+/**
+  * A unique definition of an object class. In general, the model id is used 
+  * as the workspace_handle and the object class id as the class handle.
+  */
+message ClassDef {
+
+	/** The unique identification of the object class (the object class ID). */
+	int32 class_handle = 1;
+
+	/** The unique identification of the workspace (the ddx model ID). */
+	int32 workspace_handle = 2;
+}
+
+/**
+  * A unique definition of a query table that is based on a relationship class. 
+  */
+message RelationshipClassQuery {
+  
+	/** The name of the relationship class. */
+  string relationship_class_name = 1;
+
+  /** The unique identification of the workspace (the ddx model ID). */
+  int32 workspace_handle = 2;
+
+  /** The tables to be joined (and which must participate in the relationship). */
+  repeated string tables = 3;
+
+  /** The join type corresponding to the JoinType enum:
+	* 1 = InnerJoin
+	* 2 = LeftJoin
+	* 3 = RightJoin
+	*/
+  int32 join_type = 4;
+
+  /** The optional where clause. */
+  string where_clause = 5;
+}
+
+/**
+  * The response for a SchemaRequest, submitting object class definitions or a
+  * query table definition.
+  */
+message SchemaMsg {
+  
+	/** The object class details referenced by the class_handle of the gdb_objects. */
+	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 1;
+
+	/** The relationship class details referenced by the class_handle of the gdb_objects. */
+	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg relclass_definitions = 2;
+}
+
+/**
+  * The request for schema information to be sent by the remote peer (client).
+  * Currently the request must either consist of a list of dataset ddx IDs or
+  * a (relationship-class-based) query.
+  */
+message SchemaRequest {
+	
+	/** The ddx dataset IDs for the requested object classes. */
+	repeated int32 dataset_ids = 1;
+
+	/** The query definition of the requested query table. */
+	repeated RelationshipClassQuery relationship_class_queries = 2;
 }
 
 // ----------------------------------------------------------------------------
