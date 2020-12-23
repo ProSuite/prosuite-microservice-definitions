@@ -46,8 +46,10 @@ message VerificationRequest {
 
   /** The (display) name of the user who requested the verification. */
   string user_name = 6;
-}
 
+  /** The maximum number of desired parallel processing, if resources allow. */
+  int32 max_parallel_processing = 7;
+}
 
 message DataVerificationRequest {
 	VerificationRequest request = 1;
