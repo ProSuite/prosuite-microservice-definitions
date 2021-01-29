@@ -226,4 +226,7 @@ message ResultFeatureMsg {
 
   /** Any notification associated with the update process or its result. */
   repeated string notifications = 2;
+
+  /** Whether the notification should be regarded as warning. */
+  bool has_warning = 3;
 }

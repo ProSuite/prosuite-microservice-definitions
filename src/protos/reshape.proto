@@ -23,7 +23,7 @@ service ReshapeGrpc {
   /**
   * The request to get the replaced endpoint for a potential Y-reshape.
   */
-  rpc GetOpenJawReshapeLineReplaceEndPoint(OpenJawReshapeLineReplacementParameters) returns (.ProSuite.Microservices.Definitions.Shared.ShapeMsg) {}
+  rpc GetOpenJawReshapeLineReplaceEndPoint(OpenJawReshapeLineReplacementRequest) returns (.ProSuite.Microservices.Definitions.Shared.ShapeMsg) {}
 }
 
 /**
@@ -31,29 +31,32 @@ service ReshapeGrpc {
   */
 message AdvancedReshapeRequest {
 
+	/** The object class details referenced by the class_handle of the GdbObjectMsg objects defined below. */
+	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 1;
+
   /** The input features. */
-  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg features = 1;
+  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg features = 2;
 
   /** The input reshape paths. */
-  .ProSuite.Microservices.Definitions.Shared.ShapeMsg reshape_paths = 2;
+  .ProSuite.Microservices.Definitions.Shared.ShapeMsg reshape_paths = 3;
 
   /** The sticky intersections for multiple reshapes. */
-  repeated SourceTargetPointPair sticky_intersections = 3;
+  repeated SourceTargetPointPair sticky_intersections = 4;
 
   /** Whether the non-default reshape side should be preferred. */
-  bool use_non_default_reshape_side = 4;
+  bool use_non_default_reshape_side = 5;
 
   /** Whether to allow Y-reshape. */
-  bool allow_open_jaw_reshape = 5;
+  bool allow_open_jaw_reshape = 6;
 
   /** The move Y-reshape junction option. */
-  bool move_open_jaw_end_junction = 6;
+  bool move_open_jaw_end_junction = 7;
 
   /** The adjacent polyline features in a linear network. */
-  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg potentially_connected_features = 7;
+  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg potentially_connected_features = 8;
 
   /** Whether the reshape-as-union strategy should be employed for multiple features. */
-  bool multiple_sources_try_union = 8;
+  bool multiple_sources_try_union = 9;
 }
 
 /**
@@ -65,16 +68,24 @@ message AdvancedReshapeResponse {
   repeated .ProSuite.Microservices.Definitions.Shared.ResultFeatureMsg result_features = 1;
 
   /** Whether the Y-reshape was performed. */
-  bool OpenJawReshapeHappened = 2;
+  bool open_jaw_reshape_happened = 2;
 
   /** The number of source-target intersections if the Y-reshape was performed. */
-  int32 OpenJawIntersectionCount = 3;
+  int32 open_jaw_intersection_count = 3;
+
+  /** The overlap of a multi-polygon reshape that results in an overlap despite
+    * the original polygons having no overlap (circumcision reshape).
+    */
+  .ProSuite.Microservices.Definitions.Shared.ShapeMsg overlap_polygon = 4;
+
+  /** The overall warning regarding the (failure of the) operation. */
+  string warning_message = 5;
 }
 
 /**
   * The request containing the parameters to obtain the moved Y-reshape endpoint.
   */
-message OpenJawReshapeLineReplacementParameters
+message OpenJawReshapeLineReplacementRequest
 {
   /** The input feature. */
   .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg feature = 1;
@@ -86,9 +97,15 @@ message OpenJawReshapeLineReplacementParameters
   bool use_non_default_reshape_side = 3;
 }
 
+/**
+  * The pair of points representing 'sticky intersections', i.e. a source 
+  * location and its corresponding target location.
+  */
 message SourceTargetPointPair {
+
+	/** The source point. */
 	.ProSuite.Microservices.Definitions.Shared.ShapeMsg source_point = 1;
+
+	/** The target point. */
 	.ProSuite.Microservices.Definitions.Shared.ShapeMsg target_point = 2;
 }
-
-
