@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
-    <Version>0.0.9</Version>
+    <Version>0.1.0</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>The ProSuite Authors</Authors>
     <SignAssembly>true</SignAssembly>
