@@ -18,8 +18,22 @@ service QualityVerificationGrpc {
   /**
   * The quality verification RPC.
   */
+
+  /**
+    * Verifies the quality definied in the data dictionary.
+    */
   rpc VerifyQuality(VerificationRequest) returns (stream VerificationResponse) {}
+
+  
+  /**
+    * Experimental - Verifies the data quality definied in the data dictionary. The data is provided by the client.
+    */
   rpc VerifyDataQuality(stream DataVerificationRequest) returns (stream DataVerificationResponse) {}
+
+  /**
+    * Verifies the quality using an XML definition instead of accessing the data dictionary.
+    */
+  rpc VerifyStandaloneXml(StandaloneVerificationRequest) returns (stream StandaloneVerificationResponse) {}
 }
 
 /**
@@ -51,10 +65,30 @@ message VerificationRequest {
   int32 max_parallel_processing = 7;
 }
 
+/**
+  * The request containing the relevant verification parameters together with the data.
+  */
 message DataVerificationRequest {
 	VerificationRequest request = 1;
 	GdbData data = 2;
 	SchemaMsg schema = 3;
+}
+
+/**
+  * The request containing the XML definition for a stand alone service.
+  */
+message StandaloneVerificationRequest {
+
+	/** XML specification. */
+	XmlQualitySpecificationMsg specification = 1;
+
+	/** Additional parameters such as the verification perimeter and other 
+    * miscellaneous settings.
+	*/
+	VerificationParametersMsg parameters = 2;
+
+	/** The output directory. */
+  string output_directory = 3;
 }
 
 /**
@@ -82,10 +116,27 @@ message VerificationResponse {
   repeated .ProSuite.Microservices.Definitions.Shared.GdbObjRefMsg obsolete_exceptions = 6;
 }
 
+/** The response containing the streamed response messages for the VerifyDataQuality service. */
 message DataVerificationResponse {
+
+	/** The standard response. */
   VerificationResponse response = 1;
+
+  /** The definition of the data to be provided by the client. */
   DataRequest data_request = 2;
+
+  /** The elements for which the schema shall be provided by the client. */
   SchemaRequest schema_request = 3;
+}
+
+/** The response containing the streamed response messages for the stand-alone service. */
+message StandaloneVerificationResponse {
+
+	/** The current status of the verification run. */
+	int32 service_call_status = 1;
+
+	/** The current log message of the verification run. */
+	LogMsg message = 2;
 }
 
 // ----------------------------------------------------------------------------
@@ -136,25 +187,43 @@ message QualitySpecificationMsg {
     */
   oneof specification {
 
-    /** ...data dictionary id */
-    int32 quality_specification_id = 1;  // Data dictionary id
+  /** ...data dictionary id */
+  int32 quality_specification_id = 1;  // Data dictionary id
 
-    /**
-      * ...or a well-known specification, such as
+  /**
+    * ...or a well-known specification, such as
 	  * 1 = release_quality
-      */
-	int32 well_known_specification = 2;  // Release quality: 1
+    */
+  int32 well_known_specification = 2;  // Release quality: 1
 
-    /**
-      * ...or a XML specification
-      */
-    int32 xml_specification = 3;
+  /**
+    * ...or a XML specification
+    */
+  int32 xml_specification = 3;
   }
 
   /**
     * The condition ids that are to be excluded from the base specification.
     */
   repeated int32 excluded_condition_ids = 4;
+}
+
+  /**
+    * A specification based on an XML document.
+    */
+message XmlQualitySpecificationMsg {
+
+	/** The contents of the XML document which includes datasets, descriptors, 
+      conditions and potentially several specifications. */
+  string xml = 1;
+
+  /** The name of the specification to be used. */
+  string selected_specification_name = 2;
+
+  /** The list of data source replacements encoded in the format:
+    * WorkspaceId > WorkspaceCatalogPath
+    */
+  repeated string data_source_replacements = 3;
 }
 
 /**
@@ -524,4 +593,16 @@ message QualityVerificationDatasetMsg {
 
   /** The load time for this dataset [s]. */
   double load_time = 2;
+}
+
+/**
+  * A simple progress message wrapping a log entry to be streamed during a lengthy process.
+  */
+message LogMsg {
+
+	/** The detailed progress message. */
+	string message = 3;
+
+	/** The (log4net) progress message level. */
+	int32 message_level = 4;
 }
