@@ -1,0 +1,178 @@
+﻿syntax = "proto3";
+
+/**
+ * The quality verification service definition and its associated request and
+ * response message types.
+ *
+ */
+
+package ProSuite.Microservices.Definitions.QA.Test;
+
+import "shared_types.proto";
+
+/**
+  * The quality test definition.
+  */
+service QualityTestGrpc {
+
+  /**
+  * The quality verification RPC.
+  */
+
+  /**
+    * Verifies the quality definied in the data dictionary.
+    */
+  rpc Execute(ExecuteTestRequest) returns (stream ExecuteTestResponse) {}
+
+}
+
+/**
+  * The request containing the relevant verification parameters.
+  */
+message ExecuteTestRequest {
+  
+  /** The workspaces referenced by the workspace_handle of the datasets */
+  repeated WorkspaceMsg workspaces = 1;
+
+  /** The datasets */
+  repeated TestDatasetMsg involved_tables = 2;
+
+  /** The verification perimeter (envelope or polygon). */
+  .ProSuite.Microservices.Definitions.Shared.ShapeMsg perimeter = 3;
+
+  /** The name whose meaning is defined by the specified service. */
+  string test_name = 4;
+
+  /** A string parameter whose meaning is defined by the specified service. */
+  string parameter = 5;
+}
+
+/**
+  * The response containing the streamed response messages. The last response 
+  * contains the quality verification and the verified perimeter.
+  */
+message ExecuteTestResponse {
+
+  /** The current status of the verification run. */
+  int32 service_call_status = 1;
+
+  /** The current progress of the verification run. */
+  TestProgressMsg progress = 2;
+
+  /** The list of issues detected since the last response. */
+  repeated DetectedIssueMsg issues = 3;
+}
+
+// ----------------------------------------------------------------------------
+// Request Details
+// ----------------------------------------------------------------------------
+
+/**
+  * The work context determines the workspace to be verified. Additionally, a 
+  * specific work context type from the data dictionary could be used for extra 
+  * functionality.
+  */
+message WorkspaceMsg {
+  
+	/** The workspace identifier that uniquely identifies the  workspace. */
+	int32 workspace_handle = 1;
+
+	enum WorkspaceType {
+		Unknown = 0;
+		SdeGeodatabase = 1;
+		FileGeodatabase = 2;
+		ShapefileWorkspace = 3;
+		PersonalGeodatabase = 4;
+	}
+
+	/** The type of the workspace, corresponding to esriWorkspaceType. */
+	WorkspaceType workspace_type = 2;
+  
+	repeated KeyValuePairMsg connection_properties = 3;
+}
+
+message TestDatasetMsg {
+
+	/** The dataset */
+	.ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definition = 1;
+
+	/** The table constraint / filter expression. */
+	string filter_expression = 2;
+}
+
+/**
+  * A key value pair.
+  */
+message KeyValuePairMsg {
+
+	/** The key. */
+	string key = 1;
+
+	/** The value. */
+	string value = 2;
+}
+
+
+// ----------------------------------------------------------------------------
+// Response Details
+// ----------------------------------------------------------------------------
+
+/**
+  * The progress message that will be streamed during a lengthy test.
+  */
+message TestProgressMsg {
+
+	/** The total progress step count. */
+	int32 progress_total_steps = 1;
+
+	/** The overall total progress current step. */
+	int32 progress_current_step = 2;
+
+	/** The current message / status information. */
+	string message = 3;
+}
+
+/**
+  * The issue definition. Found issues are streamed to the client together
+  * with the current progress. This definition should be sufficient to create 
+  * the error features in the client.
+  */
+message DetectedIssueMsg {
+	
+	/** The issue description. */
+	string description = 1;
+  
+	/** The issue geometry. */
+	.ProSuite.Microservices.Definitions.Shared.ShapeMsg issue_geometry = 2;
+
+  /** The issue code. */
+	string issue_code_id = 3;
+
+	/** The issue code description. */
+	string issue_code_description = 4;
+	
+	/** The involved tables with their involved rows. */
+	repeated InvolvedObjectsMsg involved_objects = 5;
+
+	/** Whether the violated condition is used as a stop condition. */
+	bool stop_condition = 6;
+
+	/** The affected component. */
+	string affected_component = 7;
+
+	/** The creation date/time in local time, represented as ticks. */
+	int64 creation_date_time_ticks = 8;
+}
+
+/**
+  * The involved gdb objects (to be written issue-gdb-style).
+  */
+message InvolvedObjectsMsg {
+  
+	/** The table name (as opposed to the dataset name used by the legacy format).
+    */
+	.ProSuite.Microservices.Definitions.Shared.ObjectClassMsg dataset = 1;
+
+	/** The list of objectIDs. */
+	repeated int32 object_ids = 2;
+}
