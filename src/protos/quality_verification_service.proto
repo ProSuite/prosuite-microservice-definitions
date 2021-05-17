@@ -440,7 +440,7 @@ message VerificationProgressMsg {
 
 /**
   * The issue definition. Found issues are streamed to the client together
-  * with the current progress. This definition should be sufficiont to create 
+  * with the current progress. This definition should be sufficient to create 
   * the error features in the client.
   */
 message IssueMsg {
