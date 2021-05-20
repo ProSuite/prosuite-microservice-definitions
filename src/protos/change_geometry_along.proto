@@ -1,0 +1,282 @@
+﻿syntax = "proto3";
+
+/**
+ * The reshape along / cut along service definitions and their associated request and 
+ * response message types.
+ *
+ */
+
+package ProSuite.Microservices.Definitions.Geometry;
+
+import "shared_types.proto";
+
+/**
+  * The change-along service definitions.
+  */
+service ChangeAlongGrpc {
+
+  /**
+    * The calculation of relevant reshape lines along which the source features 
+    * can be adjusted to the target features.
+    */
+  rpc CalculateReshapeLines(CalculateReshapeLinesRequest) returns (CalculateReshapeLinesResponse) {}
+
+  /**
+    * The reshaping of the source geometries along the provided reshape lines.
+    */
+  rpc ApplyReshapeLines(ApplyReshapeLinesRequest) returns (ApplyReshapeLinesResponse) {}
+
+  /**
+    * The calculation of relevant cut curves along which the source features 
+    * can be cut.
+    */
+  rpc CalculateCutLines(CalculateCutLinesRequest) returns (CalculateCutLinesResponse) {}
+
+  /**
+    * The cutting of the source geometries along the provided reshape lines.
+    */
+  rpc ApplyCutLines(ApplyCutLinesRequest) returns (ApplyCutLinesResponse) {}
+}
+
+// ----------------------------------------------------------------------------
+// Reshape/cut line calculation
+// ----------------------------------------------------------------------------
+
+/**
+  * The reshape line calculation request.
+  */
+message CalculateReshapeLinesRequest {
+
+  /** The source features to be changed. */
+	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg source_features = 1;
+
+  /** The set of target features along which the source features can be changed. */
+	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg target_features = 2;
+
+	/** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
+	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 3;
+
+  /** The tolerance to be used for the calculation of differences along which the
+    * source features can be adjusted to the target features. 
+    */
+	double tolerance = 4;
+
+  /** The target feature buffering options. */
+	TargetBufferOptionsMsg target_buffer_options = 5;
+
+  /** The options that control the filtering of the result reshape lines. */
+  ReshapeLineFilterOptionsMsg filter_options = 6;
+}
+
+/**
+  * The reshape line calculation response.
+  */
+message CalculateReshapeLinesResponse {
+
+  /** The resulting reshape lines. */
+	repeated ReshapeLineMsg reshape_lines = 1;
+
+  /** The resulting reshape lines. */
+	int32 reshape_lines_usability = 2;
+
+  /** The notifications. */
+  repeated string notifications = 3;
+}
+
+/**
+  * The cut line calculation request.
+  */
+message CalculateCutLinesRequest {
+
+	/** The source features to be cut. */
+	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg source_features = 1;
+
+	/** The set of target features along which the source features can be cut. */
+	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg target_features = 2;
+
+	/** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
+	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 3;
+
+	/** The tolerance to be used for the calculation of differences along which the
+    * source features can be adjusted to the target features. 
+    */
+	double tolerance = 4;
+
+	/** The target feature buffering options. */
+	TargetBufferOptionsMsg target_buffer_options = 5;
+
+	/** The options that control the filtering of the result reshape lines. */
+	ReshapeLineFilterOptionsMsg filter_options = 6;
+}
+
+/**
+  * The reshape line calculation response.
+  */
+message CalculateCutLinesResponse {
+
+	/** The resulting reshape lines. */
+	repeated ReshapeLineMsg cut_lines = 1;
+
+	/** The resulting reshape lines. */
+	int32 reshape_lines_usability = 2;
+
+	/** The notifications. */
+	repeated string notifications = 3;
+}
+
+// ----------------------------------------------------------------------------
+// Reshaping/cutting
+// ----------------------------------------------------------------------------
+
+/**
+  * The apply reshape lines request.
+  */
+message ApplyReshapeLinesRequest {
+
+  /** The original reshape line calculation request. */
+  CalculateReshapeLinesRequest calculation_request = 1;
+
+  /** The reshape lines to be applied. */
+  repeated ReshapeLineMsg reshape_lines = 2;
+
+  /** Whether the non-default reshape side shall be used for inside-only reshapes. */
+  bool use_non_default_reshape_side = 3;
+
+  /** Whether the intersection targets shall be incerted as vertices in the target. */
+  bool insert_vertices_in_target = 4;
+}
+
+/**
+  * The apply reshape lines response.
+  */
+message ApplyReshapeLinesResponse {
+
+	/** The result features. */
+  repeated .ProSuite.Microservices.Definitions.Shared.ResultFeatureMsg result_features = 1;
+
+  /** The new reshape lines after the reshape has been performed. */
+  repeated ReshapeLineMsg new_reshape_lines = 2;
+
+  /** The new reshape lines. */
+  int32 reshape_lines_usability = 3;
+
+  /** The notifications. */
+  repeated string notifications = 4;
+}
+
+/**
+  * The apply cut lines request.
+  */
+message ApplyCutLinesRequest {
+
+	/** The original reshape line calculation request. */
+	CalculateCutLinesRequest calculation_request = 1;
+
+	/** The reshape lines to be applied. */
+	repeated ReshapeLineMsg cut_lines = 2;
+
+	/** Whether the intersection points shall be inserted as new vertices in the 
+    * target feature.
+    */
+	bool insert_vertices_in_target = 3;
+
+	/** The z source of the changed vertices.
+    */
+	int32 changed_vertices_z_source = 4;
+}
+
+
+/**
+  * The apply cut lines response.
+  */
+message ApplyCutLinesResponse {
+
+	/** The result features. */
+	repeated .ProSuite.Microservices.Definitions.Shared.ResultFeatureMsg result_features = 1;
+
+	/** The new cut lines after the cut has been performed. */
+	repeated ReshapeLineMsg new_cut_lines = 2;
+
+	/** The new cut lines. */
+	int32 cut_lines_usability = 3;
+
+	/** The notifications. */
+	repeated string notifications = 4;
+}
+
+// ----------------------------------------------------------------------------
+// Request Details
+// ----------------------------------------------------------------------------
+
+/**
+  * The target feature buffering options.
+  */
+message TargetBufferOptionsMsg {
+
+	/** The buffer distance. */
+  double buffer_distance = 1;
+
+  /** The minimum segment length after buffering. */
+  double buffer_minimum_segment_length = 2;
+}
+
+/**
+  * The reshape/cut line filter options.
+  */
+message ReshapeLineFilterOptionsMsg {
+
+  /** Whether the reshape/cut lines should be filtered by intersection with the 
+    * visible extent(s).
+    */
+  bool clip_lines_on_visible_extent = 1;
+
+  /** The visible extent(s). */
+  repeated .ProSuite.Microservices.Definitions.Shared.EnvelopeMsg visible_extents = 2;
+	
+  /** The reshape line filter by distance from the source features. */
+  double exclude_outside_tolerance = 3;
+
+  /** Whether the reshape lines should be filtered by intersection with the 
+    * source features.
+    */
+  bool exclude_outside_source = 5;
+
+  /** Whether the reshape lines should be filtered out if the result would 
+    * overlap the source.
+    */
+  bool exclude_resulting_in_overlaps = 6;
+}
+
+// ----------------------------------------------------------------------------
+// Response Details
+// ----------------------------------------------------------------------------
+
+/**
+  * The reshape line.
+  */
+message ReshapeLineMsg {
+
+	/** The reshape path. */
+	.ProSuite.Microservices.Definitions.Shared.ShapeMsg path = 1;
+
+	/** Whether the reshape lines can be used to reshape the source. */
+	bool can_reshape = 2;
+
+	/** Whether the reshape lines is a (yellow) reshape candidate together with other lines. */
+	bool is_candidate = 3;
+
+	/** Whether the reshape lines has been filtered out by a filter. */
+	bool is_filtered = 4;
+
+	/** The target segment at the reshape path's from point. */
+	.ProSuite.Microservices.Definitions.Shared.ShapeMsg target_segment_at_from = 5;
+	
+	/** The target segment at the reshape path's to point. */
+  .ProSuite.Microservices.Definitions.Shared.ShapeMsg target_segment_at_to = 6;
+
+	/** The extra target insert points in case the reshape line is applied. */
+	.ProSuite.Microservices.Definitions.Shared.ShapeMsg extra_target_insert_points = 7;
+
+	/** The source feature reference. */
+	.ProSuite.Microservices.Definitions.Shared.GdbObjRefMsg source = 8;
+}

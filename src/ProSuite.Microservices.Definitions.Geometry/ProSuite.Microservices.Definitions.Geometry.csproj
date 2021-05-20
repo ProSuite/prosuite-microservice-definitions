@@ -28,6 +28,7 @@
     see: https://github.com/grpc/grpc/blob/master/src/csharp/BUILD-INTEGRATION.md
     -->
     <Content Include="..\protos\shared_types.proto" Link="protos\shared_types.proto" />
+    <Protobuf Include="..\protos\change_geometry_along.proto" Link="protos\change_geometry_along.proto" />
     <Protobuf Include="..\protos\reshape.proto" Link="protos\reshape.proto" />
     <Protobuf Include="..\protos\remove_overlaps.proto" Link="protos\remove_overlaps.proto" />
   </ItemGroup>
