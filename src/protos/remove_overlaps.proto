@@ -21,8 +21,8 @@ service RemoveOverlapsGrpc {
   rpc CalculateOverlaps(CalculateOverlapsRequest) returns (CalculateOverlapsResponse) {}
 
   /**
-  * The removal of the specified overlaps.
-  */
+    * The removal of the specified overlaps.
+    */
   rpc RemoveOverlaps(RemoveOverlapsRequest) returns (RemoveOverlapsResponse) {}
 }
 

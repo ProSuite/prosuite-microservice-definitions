@@ -2,14 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
-    <Version>0.1.1</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Authors>The ProSuite Authors</Authors>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ProSuite.Microservices.Definitions.Key.snk</AssemblyOriginatorKeyFile>
     <Description>The shared types that are used in various microservices, such as geodatabase object or geometry.</Description>
     <PackageLicenseFile>..\..\LICENSE.md</PackageLicenseFile>
-    <Copyright>Copyright (c) 2020 The ProSuite Authors</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
