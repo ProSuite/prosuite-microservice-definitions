@@ -65,7 +65,7 @@ message AdvancedReshapeRequest {
 message AdvancedReshapeResponse {
 
   /** The result features with updated geometry. */
-  repeated .ProSuite.Microservices.Definitions.Shared.ResultFeatureMsg result_features = 1;
+  repeated .ProSuite.Microservices.Definitions.Shared.ResultObjectMsg result_features = 1;
 
   /** Whether the Y-reshape was performed. */
   bool open_jaw_reshape_happened = 2;

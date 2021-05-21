@@ -152,7 +152,7 @@ message ApplyReshapeLinesRequest {
 message ApplyReshapeLinesResponse {
 
 	/** The result features. */
-  repeated .ProSuite.Microservices.Definitions.Shared.ResultFeatureMsg result_features = 1;
+  repeated .ProSuite.Microservices.Definitions.Shared.ResultObjectMsg result_features = 1;
 
   /** The new reshape lines after the reshape has been performed. */
   repeated ReshapeLineMsg new_reshape_lines = 2;
@@ -192,7 +192,7 @@ message ApplyCutLinesRequest {
 message ApplyCutLinesResponse {
 
 	/** The result features. */
-	repeated .ProSuite.Microservices.Definitions.Shared.ResultFeatureMsg result_features = 1;
+	repeated .ProSuite.Microservices.Definitions.Shared.ResultObjectMsg result_features = 1;
 
 	/** The new cut lines after the cut has been performed. */
 	repeated ReshapeLineMsg new_cut_lines = 2;

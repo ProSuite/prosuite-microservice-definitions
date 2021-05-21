@@ -219,14 +219,35 @@ message SpatialReferenceMsg {
 /** A representation of a feature that was typically updated by some type of  
     * manipulation.
     */
-message ResultFeatureMsg {
+message ResultObjectMsg {
 
-  /** The feature with its updated properties. */
-  GdbObjectMsg updated_feature = 1;
+  oneof feature {
+
+    /** The updated feature with its new properties. */
+    GdbObjectMsg update = 1;
+
+    /** The inserted feature with its new properties. */
+    InsertedObjectMsg insert = 2;
+
+    /** The inserted feature with its new properties. */
+    GdbObjRefMsg delete = 3;
+  }
 
   /** Any notification associated with the update process or its result. */
-  repeated string notifications = 2;
+  repeated string notifications = 4;
 
   /** Whether the notification should be regarded as warning. */
-  bool has_warning = 3;
+  bool has_warning = 5;
+}
+
+/** A representation of an inserted feature or row that resulted from some kind 
+    * of manipulation.
+    */
+message InsertedObjectMsg {
+
+  /** The inserted feature with its new properties. */
+  GdbObjectMsg inserted_object = 1;
+
+  /** The optional reference back to the original feature (e.g. for split-inserts). */
+  GdbObjRefMsg original_reference = 2;
 }
