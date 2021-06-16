@@ -1,0 +1,162 @@
+﻿syntax = "proto3";
+
+/**
+ * The quality verification service definition and its associated request and
+ * response message types.
+ *
+ */
+
+package ProSuite.Microservices.Definitions.QA;
+
+import "shared_types.proto";
+
+/**
+  * The quality verification service definition.
+  */
+service QualityVerificationDdxGrpc {
+
+	/**
+    * Gets the quality specifications for the specified object classes.
+    */
+	rpc GetProjectWorkspaces(GetProjectWorkspacesRequest) returns (GetProjectWorkspacesResponse) {}
+
+  /**
+    * Gets the quality specifications for the specified object classes.
+    */
+  rpc GetQualitySpecifications(GetSpecificationsRequest) returns (GetSpecificationsResponse) {}
+}
+
+message GetProjectWorkspacesRequest {
+
+	/** The data dictionary environment. */
+	string environment = 1;
+
+	/** The editable object classes for which project workspaces should be found. */
+	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg object_classes = 2;
+
+	repeated .ProSuite.Microservices.Definitions.Shared.WorkspaceMsg workspaces = 3;
+}
+
+message GetSpecificationsRequest {
+
+	/** The data dictionary environment. */
+	string environment = 1;
+
+	/** The editable object classes for which the specifications should be applicable. */
+	repeated int32 dataset_ids = 2;
+
+	/** Whether hidden specifications should be included. */
+  bool include_hidden = 3;
+}
+
+message GetSpecificationsResponse {
+
+  /** The editable object classes for which the specifications should be applicable. */
+  repeated QualitySpecificationRefMsg quality_specifications = 1;
+}
+
+message GetProjectWorkspacesResponse {
+
+	/** The editable object classes for which the specifications should be applicable. */
+	repeated ProjectWorkspaceMsg project_workspaces = 1;
+
+	repeated ProjectMsg projects = 2;
+
+	repeated ModelMsg models = 3;
+
+	repeated DatasetMsg datasets = 4;
+}
+
+// ----------------------------------------------------------------------------
+// Response Details
+// ----------------------------------------------------------------------------
+
+/**
+  * The project workspace message
+  */
+message ProjectWorkspaceMsg {
+	
+  /** The project id. */
+  int32 project_id = 1;
+	
+  /** The workspace. */
+  int64 workspace_handle = 2;
+	
+  /** The dataset id list. */
+  repeated int32 dataset_ids = 3;
+}
+
+/**
+  * The project message
+  */
+message ProjectMsg {
+	
+  /** The project id. */
+  int32 project_id = 1;
+
+  /** The production model id. */
+  int32 model_id = 2;
+
+  /** The project name. */
+  string name = 3;
+
+  /** The project short name. */
+  string short_name = 4;
+
+  /** The minimum scale denominator. */
+  double minimum_scale_denominator = 5;
+
+  /** The tool configuration directory. */
+  string tool_config_directory = 6;
+
+  /** The whether read-only datasets are to be excluded from the project worksapce. */
+  bool exclude_read_only_datasets_from_project_workspace = 7;
+}
+
+/**
+  * The ddx model.
+  */
+message ModelMsg {
+  
+  /** The model id. */
+  int32 model_id = 1;
+
+  /** The model name. */
+  string name = 2;
+
+  /** The list of dataset ids. */
+  repeated int32 dataset_ids = 3;
+
+  /** The list of error dataset ids. */
+  repeated int32 error_dataset_ids = 4;
+
+  /** The workspace handle of the master db. */
+  int64 master_db_workspace_handle = 5;
+}
+
+/**
+  * The ddx dataset.
+  */
+message DatasetMsg {
+
+  /** The dataset id. */
+  int32 dataset_id = 1;
+
+  /** The dataset name. */
+  string name = 2;
+
+  /** The dataset alias name. */
+  string alias_name = 3;
+}
+
+/**
+  * The quality specification reference.
+  */
+message QualitySpecificationRefMsg {
+
+  /** ...data dictionary id */
+  int32 quality_specification_id = 1;  // Data dictionary id
+
+  /** The name of the quality specification (optional in requests)*/
+  string name = 2;
+}
