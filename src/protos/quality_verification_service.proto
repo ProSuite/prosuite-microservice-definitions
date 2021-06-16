@@ -16,15 +16,10 @@ import "shared_types.proto";
 service QualityVerificationGrpc {
 
   /**
-  * The quality verification RPC.
-  */
-
-  /**
     * Verifies the quality definied in the data dictionary.
     */
   rpc VerifyQuality(VerificationRequest) returns (stream VerificationResponse) {}
-
-  
+    
   /**
     * Experimental - Verifies the data quality definied in the data dictionary. The data is provided by the client.
     */
@@ -187,19 +182,19 @@ message QualitySpecificationMsg {
     */
   oneof specification {
 
-  /** ...data dictionary id */
-  int32 quality_specification_id = 1;  // Data dictionary id
+    /** ...data dictionary id */
+    int32 quality_specification_id = 1;  // Data dictionary id
 
-  /**
-    * ...or a well-known specification, such as
-	  * 1 = release_quality
-    */
-  int32 well_known_specification = 2;  // Release quality: 1
-
-  /**
-    * ...or a XML specification
-    */
-  int32 xml_specification = 3;
+    /**
+      * ...or a well-known specification, such as
+  	  * 1 = release_quality
+      */
+    int32 well_known_specification = 2;  // Release quality: 1
+  
+    /**
+      * ...or a XML specification
+      */
+    int32 xml_specification = 3;
   }
 
   /**
@@ -340,10 +335,10 @@ message DataRequest {
 message ClassDef {
 
 	/** The unique identification of the object class (the object class ID). */
-	int32 class_handle = 1;
+	int64 class_handle = 1;
 
 	/** The unique identification of the workspace (the ddx model ID). */
-	int32 workspace_handle = 2;
+	int64 workspace_handle = 2;
 }
 
 /**
@@ -355,7 +350,7 @@ message RelationshipClassQuery {
   string relationship_class_name = 1;
 
   /** The unique identification of the workspace (the ddx model ID). */
-  int32 workspace_handle = 2;
+  int64 workspace_handle = 2;
 
   /** The tables to be joined (and which must participate in the relationship). */
   repeated string tables = 3;

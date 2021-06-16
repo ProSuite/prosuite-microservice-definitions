@@ -64,31 +64,31 @@ message ShapeMsg {
 message AttributeValue {
   oneof value {
 
-	/** The value is null in the database */
+    /** The value is null in the database */
     bool db_null = 1;
 
-	/** The geodatabase 'short' integer */
+    /** The geodatabase 'short' integer */
     int32 short_int_value = 2;
 
-	/** The geodatabase 'long' integer */
-	int32 long_int_value = 3;
+    /** The geodatabase 'long' integer */
+    int32 long_int_value = 3;
 
-	/** The geodatabase 'float' */
+    /** The geodatabase 'float' */
     float float_value = 4;
 
-	/** The geodatabase 'double' */
+    /** The geodatabase 'double' */
     double double_value = 5;
 
-	/** The geodatabase 'double' */
+    /** The geodatabase 'double' */
     string string_value = 6;
 
-	/** The geodatabase 'date/time' value */
+    /** The geodatabase 'date/time' value */
     int64 date_time_ticks_value = 7;
 
-	/** The geodatabase 'GUID' */
+    /** The geodatabase 'GUID' */
     UUID uuid_value = 8;
 
-	/** The geodatabase 'blob' */
+    /** The geodatabase 'blob' */
     bytes blob_value = 9;
 	}
 }
@@ -101,18 +101,18 @@ message AttributeValue {
 message GdbObjectMsg {
 
   /** The object id of the feature or object. */
-  int32 object_id = 1;
+  int64 object_id = 1;
 
   /** The handle that allows referencing an object class such as the class-id or 
     * dataset-id.
-	*/
-  int32 class_handle = 2; 
+    */
+  int64 class_handle = 2; 
 
   /** The attribute values that should be transmitted in the appropriate order  
     * of the fields. The field definitions must be retrieved from the object 
-	* class. Depending on the context, some fields could be omitted or 
-	* the entire list left empty alltogether.
-	*/
+    * class. Depending on the context, some fields could be omitted or 
+    * the entire list left empty alltogether.
+    */
   repeated AttributeValue values = 3;
 
   /** The geometry, in case this message represents a feature. */
@@ -127,10 +127,10 @@ message GdbObjRefMsg {
   /** The handle that allows referencing an object class such as the class-id or 
     * dataset-id.
     */
-  int32 class_handle = 1;
+  int64 class_handle = 1;
 
   /** The object id of the feature or object. */
-  int32 object_id = 2;
+  int64 object_id = 2;
 }
 
 /**
@@ -142,12 +142,12 @@ message ObjectClassMsg {
     * respective class. This typically corresponds to the object class id or
 	* dataset id.
     */
-  int32 class_handle = 1;
+  int64 class_handle = 1;
 
   /** The workspace identifier that can be used to uniquely define the 
     * workspace of this class. Its value is defined by the application.
     */
-  int32 workspace_handle = 2;
+  int64 workspace_handle = 2;
 
   /** The name of the class. */
   string name = 3;
@@ -164,6 +164,33 @@ message ObjectClassMsg {
   SpatialReferenceMsg spatial_reference = 6;
 
   repeated .ProSuite.Microservices.Definitions.Shared.FieldMsg fields = 7;
+}
+
+/**
+  * A workspace representation
+  */
+message WorkspaceMsg {
+
+  /** The unique handle used as a key. */
+  int64 workspace_handle = 1;
+
+  /** The database type. */
+  int32 workspace_db_type = 2;
+
+  /** The path if it is a local geodatabase. */
+  string path = 3;
+
+  /** The version name, in case it is a remote geodatabase. */
+  string version_name = 4;
+
+  /** The default version name, in case it is a remote geodatabase. */
+  string default_version_name = 5;
+
+  /** The default version description, in case it is a remote geodatabase. */
+  string default_version_description = 6;
+
+  /** The default version cration date, in case it is a remote geodatabase. */
+  int64 default_version_creation_ticks = 7;
 }
 
 /**
