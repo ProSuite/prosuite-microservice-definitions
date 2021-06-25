@@ -124,14 +124,17 @@ message ModelMsg {
   /** The model name. */
   string name = 2;
 
+  /** The model's spatial reference. */
+  .ProSuite.Microservices.Definitions.Shared.SpatialReferenceMsg spatial_reference = 3;
+
   /** The list of dataset ids. */
-  repeated int32 dataset_ids = 3;
+  repeated int32 dataset_ids = 4;
 
   /** The list of error dataset ids. */
-  repeated int32 error_dataset_ids = 4;
+  repeated int32 error_dataset_ids = 5;
 
   /** The workspace handle of the master db. */
-  int64 master_db_workspace_handle = 5;
+  int64 master_db_workspace_handle = 6;
 }
 
 /**
