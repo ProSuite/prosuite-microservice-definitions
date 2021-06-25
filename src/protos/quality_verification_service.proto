@@ -162,8 +162,8 @@ message WorkContextMsg {
   /** The version name (for type project). */
   string version_name = 6;
 
-  /** The (fully qualified) dataset names to be verified. */
-  repeated string verified_datasets = 7;
+  /** The DDX IDs of the datasets to be verified. */
+  repeated int32 verified_dataset_ids = 7;
   
   /** The work context type (string representation for display purposes). */
   string context_type = 4;
