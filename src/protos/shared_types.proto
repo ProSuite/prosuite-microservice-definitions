@@ -191,6 +191,21 @@ message WorkspaceMsg {
 
   /** The default version cration date, in case it is a remote geodatabase. */
   int64 default_version_creation_ticks = 7;
+
+  /** The workspace connection properties. */
+  repeated KeyValuePairMsg connection_properties = 8;
+}
+
+/**
+  * A key value pair.
+  */
+message KeyValuePairMsg {
+
+	/** The key. */
+	string key = 1;
+
+	/** The value. */
+	string value = 2;
 }
 
 /**
