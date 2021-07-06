@@ -44,7 +44,7 @@ message ExecuteTestRequest {
   string test_name = 4;
 
   /** A string parameter whose meaning is defined by the specified service. */
-  string parameter = 5;
+  repeated string parameter = 5;
 }
 
 /**
