@@ -150,6 +150,15 @@ message DatasetMsg {
 
   /** The dataset alias name. */
   string alias_name = 3;
+
+  /** The dataset's geometry type or 0 if it has no geometry. */
+  int32 geometry_type = 4;
+
+  /** The dataset type once more than object datasets are supported */
+  int32 dataset_type = 5;
+
+  /** The path to the default symbology (layer) file. */
+  string default_symbology = 6;
 }
 
 /**
