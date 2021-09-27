@@ -74,8 +74,15 @@ message DataVerificationRequest {
   */
 message StandaloneVerificationRequest {
 
-	/** XML specification. */
-	XmlQualitySpecificationMsg specification = 1;
+  /** The quality specification. */
+	oneof specification
+	{
+    /** XML specification (full XML document). */
+    XmlQualitySpecificationMsg xml_specification = 1;
+
+    /** A set of XML conditions (XML fragments). */
+    XmlConditionListSpecificationMsg xml_conditions = 4;
+	}
 
 	/** Additional parameters such as the verification perimeter and other 
     * miscellaneous settings.
@@ -203,12 +210,12 @@ message QualitySpecificationMsg {
   repeated int32 excluded_condition_ids = 4;
 }
 
-  /**
-    * A specification based on an XML document.
-    */
+/**
+  * A specification based on an XML document.
+  */
 message XmlQualitySpecificationMsg {
 
-	/** The contents of the XML document which includes datasets, descriptors, 
+  /** The contents of the XML document which includes datasets, descriptors, 
       conditions and potentially several specifications. */
   string xml = 1;
 
@@ -216,9 +223,74 @@ message XmlQualitySpecificationMsg {
   string selected_specification_name = 2;
 
   /** The list of data source replacements encoded in the format:
-    * WorkspaceId > WorkspaceCatalogPath
+    * WorkspaceId | WorkspaceCatalogPath
     */
   repeated string data_source_replacements = 3;
+}
+
+/**
+  * A specification based on a list of conditions.
+  */
+message XmlConditionListSpecificationMsg {
+
+  /** The name of the specification. */
+  string name = 1;
+
+  /** The description of the specification. */
+  string description = 2;
+
+  /** The elements with the conditions. */
+  repeated XmlQualitySpecificationElementMsg elements = 3;
+
+  /** The list of data source replacements encoded in the format:
+    * WorkspaceId > WorkspaceCatalogPath
+    */
+  repeated DataSourceMsg data_sources = 4;
+}
+
+/**
+  * A data source definition for a model.
+  */
+message DataSourceMsg {
+
+	/** The workspace id as it is referenced by the xml dataset parameter. */
+  string id = 1;
+
+  /** The workspace catalog path. */
+  string catalog_path = 2;
+
+  /** The model name. */
+  string model_name = 3;
+
+  /** The database (catalog), as used by sql server and postgresql*/
+  string database = 4;
+
+  /** The database owner (for enterprise databases) */
+  string schema_owner = 5;
+}
+
+/**
+  * A single element of a quality specification.
+  */
+message XmlQualitySpecificationElementMsg {
+
+  /** The XML fragment containing the XMLQualityCondition. The referenced test
+      descriptor must be in the form <class name>(<consturctor id>). */
+  string xml_condition = 1;
+
+  /** Whether errors are allowed (a.k.a. 'soft errors' or 'warnings). */
+  bool allow_errors = 2;
+
+  /** Whether no further tests shall be executed on this row if an error is found. */
+  bool stop_on_error = 3;
+
+  /** The optional id of the condition. This will be relevant once single 
+    * conditions of a DDX specification can be replaced by an XML condition.
+    */
+  int32 condition_id = 4;
+
+  /** The name of the condition's category. */
+  string category_name = 5;
 }
 
 /**
