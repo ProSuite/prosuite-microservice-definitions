@@ -81,7 +81,7 @@ message StandaloneVerificationRequest {
     XmlQualitySpecificationMsg xml_specification = 1;
 
     /** A set of XML conditions (XML fragments). */
-    XmlConditionListSpecificationMsg xml_conditions = 4;
+    ConditionListSpecificationMsg xml_conditions = 4;
 	}
 
 	/** Additional parameters such as the verification perimeter and other 
@@ -231,7 +231,7 @@ message XmlQualitySpecificationMsg {
 /**
   * A specification based on a list of conditions.
   */
-message XmlConditionListSpecificationMsg {
+message ConditionListSpecificationMsg {
 
   /** The name of the specification. */
   string name = 1;
@@ -240,7 +240,7 @@ message XmlConditionListSpecificationMsg {
   string description = 2;
 
   /** The elements with the conditions. */
-  repeated XmlQualitySpecificationElementMsg elements = 3;
+  repeated QualitySpecificationElementMsg elements = 3;
 
   /** The list of data source replacements encoded in the format:
     * WorkspaceId > WorkspaceCatalogPath
@@ -272,11 +272,11 @@ message DataSourceMsg {
 /**
   * A single element of a quality specification.
   */
-message XmlQualitySpecificationElementMsg {
+message QualitySpecificationElementMsg {
 
-  /** The XML fragment containing the XMLQualityCondition. The referenced test
+  /** The quality condition. The referenced test
       descriptor must be in the form <class name>(<consturctor id>). */
-  string xml_condition = 1;
+  QualityConditionMsg condition = 1;
 
   /** Whether errors are allowed (a.k.a. 'soft errors' or 'warnings). */
   bool allow_errors = 2;
@@ -291,6 +291,53 @@ message XmlQualitySpecificationElementMsg {
 
   /** The name of the condition's category. */
   string category_name = 5;
+}
+
+/**
+  * A single quality condition.
+  */
+message QualityConditionMsg {
+
+	/** The name of the condition. */
+	string name = 1;
+
+	/** The name of the test descriptor in the form <class name>(<consturctor id>). */
+	string test_descriptor_name = 2;
+
+	/** An optional url. */
+	string url = 3;
+
+	/** The optional description.
+    */
+	string description = 4;
+
+	/** The name of the condition's category. */
+	string category_name = 5;
+    
+	/** The condition's parameters. */
+	repeated .ProSuite.Microservices.Definitions.QA.ParameterMsg parameters = 6;
+}
+
+/**
+  * A quality condition parameter
+  */
+message ParameterMsg {
+
+	/** Name of the parameter. */
+	string name = 1;
+
+	/** The parameter value. */
+	string value = 2;
+
+	/** For dataset parameters: an optional where clause. */
+	string where_clause = 3;
+
+	/** For dataset parameters: The workspace.
+    */
+	string workspace = 4;
+
+	/** For dataset parameters: if the dataset is only used as reference. */
+	bool used_as_reference_data = 5;
 }
 
 /**
