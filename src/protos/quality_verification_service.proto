@@ -80,13 +80,12 @@ message StandaloneVerificationRequest {
     /** XML specification (full XML document). */
     XmlQualitySpecificationMsg xml_specification = 1;
 
-    /** A set of XML conditions (XML fragments). */
-    ConditionListSpecificationMsg xml_conditions = 4;
+    /** A set of conditions. */
+    ConditionListSpecificationMsg condition_list_specification = 4;
 	}
 
 	/** Additional parameters such as the verification perimeter and other 
-    * miscellaneous settings.
-	*/
+    * miscellaneous settings. */
 	VerificationParametersMsg parameters = 2;
 
 	/** The output directory. */
@@ -284,11 +283,6 @@ message QualitySpecificationElementMsg {
   /** Whether no further tests shall be executed on this row if an error is found. */
   bool stop_on_error = 3;
 
-  /** The optional id of the condition. This will be relevant once single 
-    * conditions of a DDX specification can be replaced by an XML condition.
-    */
-  int32 condition_id = 4;
-
   /** The name of the condition's category. */
   string category_name = 5;
 }
@@ -298,24 +292,26 @@ message QualitySpecificationElementMsg {
   */
 message QualityConditionMsg {
 
+  /** The optional id of the condition. This will be relevant once single 
+    * conditions of a DDX specification can be replaced by an XML condition.
+    */
+  int32 condition_id = 1;
+
 	/** The name of the condition. */
-	string name = 1;
+	string name = 2;
 
 	/** The name of the test descriptor in the form <class name>(<consturctor id>). */
-	string test_descriptor_name = 2;
+	string test_descriptor_name = 3;
 
 	/** An optional url. */
-	string url = 3;
+	string url = 4;
 
 	/** The optional description.
     */
-	string description = 4;
-
-	/** The name of the condition's category. */
-	string category_name = 5;
+	string description = 5;
     
 	/** The condition's parameters. */
-	repeated .ProSuite.Microservices.Definitions.QA.ParameterMsg parameters = 6;
+	repeated ParameterMsg parameters = 6;
 }
 
 /**
@@ -332,11 +328,11 @@ message ParameterMsg {
 	/** For dataset parameters: an optional where clause. */
 	string where_clause = 3;
 
-	/** For dataset parameters: The workspace.
+	/** For dataset parameters: The workspace id.
     */
-	string workspace = 4;
+	string workspace_id = 4;
 
-	/** For dataset parameters: if the dataset is only used as reference. */
+	/** For dataset parameters: Whether the dataset is only used as reference. */
 	bool used_as_reference_data = 5;
 }
 
