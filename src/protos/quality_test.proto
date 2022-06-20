@@ -57,7 +57,14 @@ message ExecuteTestRequest {
   */
 message ExecuteTestResponse {
 
-  /** The current status of the verification run. */
+/** 
+  * The current status of the verification run. One of the following values:
+  * Undefined = 0,
+  * Running = 1,
+  * Cancelled = 2,
+  * Finished = 3,
+  * Failed = 4
+  */
   int32 service_call_status = 1;
 
   /** The current progress of the verification run. */

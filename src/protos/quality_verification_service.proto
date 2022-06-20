@@ -697,7 +697,7 @@ message QualityConditionVerificationMsg {
   * It is the secondary constituent of the quality verification.
   */
 message QualityVerificationDatasetMsg {
-
+  
   /** The dataset's data dictionary id. */
   int32 dataset_id = 1;
 
@@ -713,6 +713,13 @@ message LogMsg {
 	/** The detailed progress message. */
 	string message = 3;
 
-	/** The (log4net) progress message level. */
+    /** The (log4net) progress message level. A few examples:
+	  * Fatal = 110000
+	  * Error = 70000
+	  * Warn = 60000
+	  * Info = 40000
+	  * Debug = 30000
+	  * Verbose = 10000
+	  */
 	int32 message_level = 4;
 }
