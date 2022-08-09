@@ -58,6 +58,11 @@ message VerificationRequest {
 
   /** The maximum number of desired parallel processing, if resources allow. */
   int32 max_parallel_processing = 7;
+
+  /** The name of the Environment (i.e. the Data Dictionary) containing the 
+    * specified work context / specification.
+    */
+  string environment = 8;
 }
 
 /**
