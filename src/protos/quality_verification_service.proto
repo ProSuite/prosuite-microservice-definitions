@@ -138,11 +138,14 @@ message DataVerificationResponse {
 /** The response containing the streamed response messages for the stand-alone service. */
 message StandaloneVerificationResponse {
 
-	/** The current status of the verification run. */
-	int32 service_call_status = 1;
+  /** The current status of the verification run. */
+  int32 service_call_status = 1;
 
-	/** The current log message of the verification run. */
-	LogMsg message = 2;
+  /** The current log message of the verification run. */
+  LogMsg message = 2;
+
+  /** The list of issues detected since the last response. */
+  repeated IssueMsg issues = 3;
 }
 
 // ----------------------------------------------------------------------------
