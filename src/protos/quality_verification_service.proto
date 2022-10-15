@@ -27,6 +27,8 @@ service QualityVerificationGrpc {
 
   /**
     * Verifies the quality using an XML definition instead of accessing the data dictionary.
+	* This is a simplified interface with a basic response and no parallelism. Consider using
+	* VerifyQuality instead.
     */
   rpc VerifyStandaloneXml(StandaloneVerificationRequest) returns (stream StandaloneVerificationResponse) {}
 }
@@ -37,7 +39,9 @@ service QualityVerificationGrpc {
 message VerificationRequest {
 
   /** The work context that determines the workspace, the error datasets and 
-    * the data model's datasets. */
+    * the data model's datasets. Can be null in case of stand-alone verification
+	* e.g. for XML or condition-list specifications.
+	*/
   WorkContextMsg work_context = 1;
 
   /** The quality specification as defined in the data dictionary and optionally 
@@ -80,8 +84,8 @@ message DataVerificationRequest {
 message StandaloneVerificationRequest {
 
   /** The quality specification. */
-	oneof specification
-	{
+  oneof specification	{
+
     /** XML specification (full XML document). */
     XmlQualitySpecificationMsg xml_specification = 1;
 
@@ -211,7 +215,12 @@ message QualitySpecificationMsg {
     /**
       * ...or a XML specification
       */
-    int32 xml_specification = 3;
+    XmlQualitySpecificationMsg xml_specification = 3;
+
+    /**
+      * ...or a fine-granular list of conditions
+      */
+    ConditionListSpecificationMsg condition_list_specification = 5;
   }
 
   /**
@@ -252,8 +261,7 @@ message ConditionListSpecificationMsg {
   /** The elements with the conditions. */
   repeated QualitySpecificationElementMsg elements = 3;
 
-  /** The list of data source replacements encoded in the format:
-    * WorkspaceId > WorkspaceCatalogPath
+  /** The list of data source replacements 
     */
   repeated DataSourceMsg data_sources = 4;
 }
