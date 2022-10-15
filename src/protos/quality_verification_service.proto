@@ -19,7 +19,7 @@ service QualityVerificationGrpc {
     * Verifies the quality definied in the data dictionary.
     */
   rpc VerifyQuality(VerificationRequest) returns (stream VerificationResponse) {}
-    
+
   /**
     * Experimental - Verifies the data quality definied in the data dictionary. The data is provided by the client.
     */
@@ -35,7 +35,7 @@ service QualityVerificationGrpc {
   * The request containing the relevant verification parameters.
   */
 message VerificationRequest {
-  
+
   /** The work context that determines the workspace, the error datasets and 
     * the data model's datasets. */
   WorkContextMsg work_context = 1;
@@ -87,14 +87,17 @@ message StandaloneVerificationRequest {
 
     /** A set of conditions. */
     ConditionListSpecificationMsg condition_list_specification = 4;
-	}
+  }
 
-	/** Additional parameters such as the verification perimeter and other 
-    * miscellaneous settings. */
-	VerificationParametersMsg parameters = 2;
+  /** Additional parameters such as the verification perimeter and other 
+  * miscellaneous settings. */
+  VerificationParametersMsg parameters = 2;
 
-	/** The output directory. */
+  /** The output directory. */
   string output_directory = 3;
+
+  /** The (display) name of the user who requested the verification. */
+  string user_name = 6;
 }
 
 /**
