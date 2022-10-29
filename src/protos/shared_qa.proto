@@ -285,7 +285,7 @@ message VerificationParametersMsg {
 message GdbData {
   
 	/** The object count (if requested). */
-	int32 gdb_object_count = 4;
+	int64 gdb_object_count = 4;
 
 	/** The gdb objects (if requested). */
 	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg gdb_objects = 3;
@@ -482,7 +482,7 @@ message InvolvedTableMsg {
   string table_name = 1;
 
   /** The list of objectIDs. */
-  repeated int32 object_ids = 2;
+  repeated int64 object_ids = 2;
 }
 
 /**

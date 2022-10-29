@@ -149,5 +149,5 @@ message InvolvedObjectsMsg {
 	.ProSuite.Microservices.Definitions.Shared.ObjectClassMsg dataset = 1;
 
 	/** The list of objectIDs. */
-	repeated int32 object_ids = 2;
+	repeated int64 object_ids = 2;
 }
