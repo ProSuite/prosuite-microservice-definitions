@@ -27,6 +27,7 @@
     <Content Include="..\protos\shared_types.proto" Link="protos\shared_types.proto" />
     <Protobuf Include="..\protos\quality_verification_service.proto" Link="protos\quality_verification_service.proto" />
     <Protobuf Include="..\protos\quality_verification_ddx.proto" Link="protos\quality_verification_ddx.proto" />
+    <Protobuf Include="..\protos\shared_qa.proto" Link="protos\shared_qa.proto" />
   </ItemGroup>
 
   <ItemGroup>
