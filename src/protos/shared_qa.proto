@@ -36,7 +36,8 @@ message WorkContextMsg {
 	*/
   int32 type = 2;
   
-  // TODO: connection string?
+  /** The project workspace (optional, to be tested instead of the master db). */
+  .ProSuite.Microservices.Definitions.Shared.WorkspaceMsg workspace = 3;
 
   /** The version name (for type project). */
   string version_name = 6;
