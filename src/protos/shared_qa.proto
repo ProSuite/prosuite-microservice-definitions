@@ -190,6 +190,39 @@ message QualityConditionMsg {
     
 	/** The condition's parameters. */
 	repeated ParameterMsg parameters = 6;
+
+	/** The condition's issue filters. */
+	repeated InstanceConfigurationMsg condition_issue_filters = 7;
+
+	/** The condition's issue filter expression that allows combining issue filters. */
+	string issue_filter_expression = 8;
+}
+
+/**
+  * A transformer or issue filter.
+  */
+message InstanceConfigurationMsg {
+
+  /** The optional id of the condition. This will be relevant once single 
+    * conditions of a DDX specification can be replaced by an XML condition.
+    */
+  int32 condition_id = 1;
+
+  /** The name of the condition. */
+  string name = 2;
+
+  /** The name of the instance descriptor in the form <class name>(<consturctor id>). */
+  string instance_descriptor_name = 3;
+
+  /** An optional url. */
+  string url = 4;
+
+  /** The optional description.
+  */
+  string description = 5;
+
+  /** The condition's parameters. */
+  repeated ParameterMsg parameters = 6;
 }
 
 /**
@@ -200,8 +233,11 @@ message ParameterMsg {
 	/** Name of the parameter. */
 	string name = 1;
 
-	/** The parameter value. */
+	/** The parameter value... */
 	string value = 2;
+
+	/** ... or, alternatively, the transformer */
+	InstanceConfigurationMsg transformer = 6;
 
 	/** For dataset parameters: an optional where clause. */
 	string where_clause = 3;
