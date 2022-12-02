@@ -461,6 +461,16 @@ message VerificationProgressMsg {
   
   /** The current message / status information. */
   string message = 10;
+
+  /** The (log4net) progress message level. A few examples:
+    * Fatal = 110000
+    * Error = 70000
+    * Warn = 60000
+    * Info = 40000
+    * Debug = 30000
+    * Verbose = 10000
+    */
+  int32 message_level = 11;
 }
 
 /**
