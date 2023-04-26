@@ -130,7 +130,7 @@ message ConditionListSpecificationMsg {
   */
 message DataSourceMsg {
 
-	/** The workspace id as it is referenced by the xml dataset parameter. */
+	/** The workspace id as it is referenced by the dataset parameter. */
   string id = 1;
 
   /** The workspace catalog path. */
@@ -203,10 +203,9 @@ message QualityConditionMsg {
   */
 message InstanceConfigurationMsg {
 
-  /** The optional id of the condition. This will be relevant once single 
-    * conditions of a DDX specification can be replaced by an XML condition.
+  /** The id of the instance configuration.
     */
-  int32 condition_id = 1;
+  int32 id = 1;
 
   /** The name of the condition. */
   string name = 2;

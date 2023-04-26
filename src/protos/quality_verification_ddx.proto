@@ -15,15 +15,17 @@ import "shared_types.proto";
   */
 service QualityVerificationDdxGrpc {
 
-	/**
+  /**
     * Gets the quality specifications for the specified object classes.
     */
 	rpc GetProjectWorkspaces(GetProjectWorkspacesRequest) returns (GetProjectWorkspacesResponse) {}
 
   /**
-    * Gets the quality specifications for the specified object classes.
+    * Gets the quality specification references (id/name pairs) for the specified object classes.
     */
-  rpc GetQualitySpecifications(GetSpecificationsRequest) returns (GetSpecificationsResponse) {}
+  rpc GetQualitySpecifications(GetSpecificationRefsRequest) returns (GetSpecificationRefsResponse) {}
+
+  rpc GetFullSpecification(GetFullSpecificationRequest) returns (GetFullSpecificationResponse) {}
 }
 
 message GetProjectWorkspacesRequest {
@@ -37,7 +39,7 @@ message GetProjectWorkspacesRequest {
 	repeated .ProSuite.Microservices.Definitions.Shared.WorkspaceMsg workspaces = 3;
 }
 
-message GetSpecificationsRequest {
+message GetSpecificationRefsRequest {
 
 	/** The data dictionary environment. */
 	string environment = 1;
@@ -46,7 +48,7 @@ message GetSpecificationsRequest {
 	repeated int32 dataset_ids = 2;
 
 	/** Whether hidden specifications should be included. */
-  bool include_hidden = 3;
+	bool include_hidden = 3;
 }
 
 message GetSpecificationsResponse {
