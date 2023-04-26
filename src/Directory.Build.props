@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
     <Deterministic>true</Deterministic>
-    <Version>0.3.1</Version>
+    <Version>0.3.2</Version>
     <Authors>The ProSuite Authors</Authors>
-    <Copyright>Copyright (c) 2020-2022 The ProSuite Authors</Copyright>
+    <Copyright>Copyright (c) 2020-2023 The ProSuite Authors</Copyright>
     <Company />
   </PropertyGroup>
 </Project>
