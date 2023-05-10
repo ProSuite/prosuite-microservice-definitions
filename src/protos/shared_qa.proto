@@ -250,6 +250,44 @@ message ParameterMsg {
 }
 
 /**
+  * The instance descriptor.
+  */
+message InstanceDescriptorMsg {
+
+  /** ...data dictionary id */
+  int32 id = 1;
+
+  /** The name of the instance descriptor. This name is referenced in the configurations. */
+  string name = 2;
+
+  /** The type of instance descriptor (TestDescriptor, TransformerDescriptor, IssueFilterDescriptor).
+  */
+  int32 type = 3;
+
+  /** The class descriptor. In case the constructor is -1, it is a factory. */
+  ClassDescriptorMsg class_descriptor = 4;
+
+  /** The class descriptor. In case the constructor is -1, the class descriptor is a factory. */
+  int32 constructor = 5;
+
+  /** The optional description.
+  */
+  string description = 6;
+}
+
+/**
+  * The class descriptor.
+  */
+message ClassDescriptorMsg {
+
+  /** The name of the type */
+  string type_name = 1;
+
+  /** The name of the assembly */
+  string assembly_name = 2;
+}
+
+/**
   * Additional parameters such as the verification perimeter and other 
   * miscellaneous and advanced verification parameters.
   */
