@@ -31,8 +31,8 @@ service ReshapeGrpc {
   */
 message AdvancedReshapeRequest {
 
-	/** The object class details referenced by the class_handle of the GdbObjectMsg objects defined below. */
-	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 1;
+  /** The object class details referenced by the class_handle of the GdbObjectMsg objects defined below. */
+  repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 1;
 
   /** The input features. */
   repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg features = 2;
@@ -103,9 +103,9 @@ message OpenJawReshapeLineReplacementRequest
   */
 message SourceTargetPointPair {
 
-	/** The source point. */
-	.ProSuite.Microservices.Definitions.Shared.ShapeMsg source_point = 1;
+  /** The source point. */
+  .ProSuite.Microservices.Definitions.Shared.ShapeMsg source_point = 1;
 
-	/** The target point. */
-	.ProSuite.Microservices.Definitions.Shared.ShapeMsg target_point = 2;
+  /** The target point. */
+  .ProSuite.Microservices.Definitions.Shared.ShapeMsg target_point = 2;
 }

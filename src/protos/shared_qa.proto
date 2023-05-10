@@ -35,7 +35,7 @@ message WorkContextMsg {
 	* 4 = import_unit (not yet supported)
 	*/
   int32 type = 2;
-  
+ 
   /** The project workspace (optional, to be tested instead of the master db). */
   .ProSuite.Microservices.Definitions.Shared.WorkspaceMsg workspace = 3;
 
@@ -44,7 +44,7 @@ message WorkContextMsg {
 
   /** The DDX IDs of the datasets to be verified. */
   repeated int32 verified_dataset_ids = 7;
-  
+ 
   /** The work context type (string representation for display purposes). */
   string context_type = 4;
 
@@ -107,7 +107,7 @@ message XmlQualitySpecificationMsg {
 }
 
 /**
-  * A specification based on a list of conditions.
+  * A specification based on a list of conditions defined as protocol buffers.
   */
 message ConditionListSpecificationMsg {
 
@@ -210,7 +210,7 @@ message InstanceConfigurationMsg {
   /** The name of the condition. */
   string name = 2;
 
-  /** The name of the instance descriptor in the form <class name>(<consturctor id>). */
+  /** The name of the instance descriptor in the form <class name>(<constructor id>). */
   string instance_descriptor_name = 3;
 
   /** An optional url. */
@@ -229,24 +229,24 @@ message InstanceConfigurationMsg {
   */
 message ParameterMsg {
 
-	/** Name of the parameter. */
-	string name = 1;
+  /** Name of the parameter. */
+  string name = 1;
 
-	/** The parameter value... */
-	string value = 2;
+  /** The parameter value... */
+  string value = 2;
 
-	/** ... or, alternatively, the transformer */
-	InstanceConfigurationMsg transformer = 6;
+  /** ... or, alternatively, the transformer */
+  InstanceConfigurationMsg transformer = 6;
 
-	/** For dataset parameters: an optional where clause. */
-	string where_clause = 3;
+  /** For dataset parameters: an optional where clause. */
+  string where_clause = 3;
 
-	/** For dataset parameters: The workspace id.
-    */
-	string workspace_id = 4;
+  /** For dataset parameters: The workspace id.
+  */
+  string workspace_id = 4;
 
-	/** For dataset parameters: Whether the dataset is only used as reference. */
-	bool used_as_reference_data = 5;
+  /** For dataset parameters: Whether the dataset is only used as reference. */
+  bool used_as_reference_data = 5;
 }
 
 /**
@@ -413,12 +413,12 @@ message SchemaMsg {
   * a (relationship-class-based) query.
   */
 message SchemaRequest {
-	
-	/** The ddx dataset IDs for the requested object classes. */
-	repeated int32 dataset_ids = 1;
 
-	/** The query definition of the requested query table. */
-	repeated RelationshipClassQuery relationship_class_queries = 2;
+  /** The ddx dataset IDs for the requested object classes. */
+  repeated int32 dataset_ids = 1;
+
+  /** The query definition of the requested query table. */
+  repeated RelationshipClassQuery relationship_class_queries = 2;
 }
 
 
@@ -478,44 +478,44 @@ message VerificationProgressMsg {
   * the error features in the client.
   */
 message IssueMsg {
-	
-	/** The violated contition's data dictionary id. */
-	int32 condition_id = 1;
-	
-	/** The issue geometry. */
-	.ProSuite.Microservices.Definitions.Shared.ShapeMsg issue_geometry = 2;
-	
-	/** The issue description. */
-	string description = 4;
 
-	/** The issue code. */
-	string issue_code_id = 5;
+  /** The violated contition's data dictionary id. */
+  int32 condition_id = 1;
 
-	/** The issue code. */
-	string issue_code_description = 6;
-	
-	/** The involved tables with their involved rows. */
-	repeated InvolvedTableMsg involved_tables = 7;
+  /** The issue geometry. */
+  .ProSuite.Microservices.Definitions.Shared.ShapeMsg issue_geometry = 2;
 
-	/** The legacy involved rows string representation. */
-	string legacy_involved_rows = 8;
+  /** The issue description. */
+  string description = 4;
 
-	/** Whether it is a 'soft' error that can be allowed. */
-	bool allowable = 9;
+  /** The issue code. */
+  string issue_code_id = 5;
 
-	/** Whether the violated condition is used as a stop condition. */
-	bool stop_condition = 10;
+  /** The issue code. */
+  string issue_code_description = 6;
 
-	/** The affected component. */
-	string affected_component = 11;
+  /** The involved tables with their involved rows. */
+  repeated InvolvedTableMsg involved_tables = 7;
 
-	/** The creation date/time in local time, represented as ticks. */
-	int64 creation_date_time_ticks = 12;
+  /** The legacy involved rows string representation. */
+  string legacy_involved_rows = 8;
 
-	/** The violated test index. */
-	int32 test = 13;
+  /** Whether it is a 'soft' error that can be allowed. */
+  bool allowable = 9;
 
-	// TODO: some tests can write extra object values. Add name/value pair list.
+  /** Whether the violated condition is used as a stop condition. */
+  bool stop_condition = 10;
+
+  /** The affected component. */
+  string affected_component = 11;
+
+  /** The creation date/time in local time, represented as ticks. */
+  int64 creation_date_time_ticks = 12;
+
+  /** The violated test index. */
+  int32 test = 13;
+
+  // TODO: some tests can write extra object values. Add name/value pair list.
 }
 
 /**
@@ -634,18 +634,17 @@ message QualityVerificationDatasetMsg {
   */
 message LogMsg {
 
-	/** The detailed progress message. */
-	string message = 3;
+  /** The detailed progress message. */
+  string message = 3;
 
-    /** The (log4net) progress message level. A few examples:
-	  * Fatal = 110000
-	  * Error = 70000
-	  * Warn = 60000
-	  * Info = 40000
-	  * Debug = 30000
-	  * Verbose = 10000
-	  */
-	int32 message_level = 4;
+  /** The (log4net) progress message level. A few examples:
+    * Fatal = 110000
+    * Error = 70000
+    * Warn = 60000
+    * Info = 40000
+    * Debug = 30000
+    * Verbose = 10000
+    */
+  int32 message_level = 4;
 }
-
 
