@@ -9,6 +9,7 @@
 package ProSuite.Microservices.Definitions.QA;
 
 import "shared_types.proto";
+import "shared_qa.proto";
 
 /**
   * The quality verification service definition.
@@ -18,55 +19,89 @@ service QualityVerificationDdxGrpc {
   /**
     * Gets the quality specifications for the specified object classes.
     */
-	rpc GetProjectWorkspaces(GetProjectWorkspacesRequest) returns (GetProjectWorkspacesResponse) {}
+  rpc GetProjectWorkspaces(GetProjectWorkspacesRequest) returns (GetProjectWorkspacesResponse) {}
 
   /**
     * Gets the quality specification references (id/name pairs) for the specified object classes.
     */
-  rpc GetQualitySpecifications(GetSpecificationRefsRequest) returns (GetSpecificationRefsResponse) {}
+  rpc GetQualitySpecificationRefs(GetSpecificationRefsRequest) returns (GetSpecificationRefsResponse) {}
 
-  rpc GetFullSpecification(GetFullSpecificationRequest) returns (GetFullSpecificationResponse) {}
+  /**
+    * Gets a full quality specification from the data dictionary in form of a 
+	* ConditionListSpecificationMsg.
+    */
+  rpc GetQualitySpecification(GetSpecificationRequest) returns (GetSpecificationResponse) {}
 }
 
 message GetProjectWorkspacesRequest {
 
-	/** The data dictionary environment. */
-	string environment = 1;
+  /** The data dictionary environment. */
+  string environment = 1;
 
 	/** The editable object classes for which project workspaces should be found. */
-	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg object_classes = 2;
+  repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg object_classes = 2;
 
-	repeated .ProSuite.Microservices.Definitions.Shared.WorkspaceMsg workspaces = 3;
+  repeated .ProSuite.Microservices.Definitions.Shared.WorkspaceMsg workspaces = 3;
 }
 
 message GetSpecificationRefsRequest {
 
-	/** The data dictionary environment. */
-	string environment = 1;
+  /** The data dictionary environment. */
+  string environment = 1;
 
-	/** The editable object classes for which the specifications should be applicable. */
-	repeated int32 dataset_ids = 2;
+  /** The editable object classes for which the specifications should be applicable. */
+  repeated int32 dataset_ids = 2;
 
-	/** Whether hidden specifications should be included. */
-	bool include_hidden = 3;
+  /** Whether hidden specifications should be included. */
+  bool include_hidden = 3;
 }
 
-message GetSpecificationsResponse {
+message GetSpecificationRequest {
+
+  /** The data dictionary environment. */
+  string environment = 1;
+
+  /** ...data dictionary id */
+  int32 quality_specification_id = 2;  // Data dictionary id
+}
+
+message GetProjectWorkspacesResponse {
+
+  /** The editable object classes for which the specifications should be applicable. */
+  repeated ProjectWorkspaceMsg project_workspaces = 1;
+
+  /** The projects referenced by the provided project workspaces. */
+  repeated ProjectMsg projects = 2;
+
+  /** The models referenced by the projects referenced by the provided project workspaces. */
+  repeated ModelMsg models = 3;
+
+  /** The datasets referenced by the provided project workspace or models. */
+  repeated DatasetMsg datasets = 4;
+
+  /** The name of the ddx environment. */
+  string environment_name = 5;
+}
+
+message GetSpecificationRefsResponse {
 
   /** The editable object classes for which the specifications should be applicable. */
   repeated QualitySpecificationRefMsg quality_specifications = 1;
 }
 
-message GetProjectWorkspacesResponse {
+message GetSpecificationResponse {
 
-	/** The editable object classes for which the specifications should be applicable. */
-	repeated ProjectWorkspaceMsg project_workspaces = 1;
+  /** The full specification. */
+  ConditionListSpecificationMsg specification = 1;
 
-	repeated ProjectMsg projects = 2;
+  /** The instance descriptors referenced by the specification. */
+  repeated InstanceDescriptorMsg referenced_instance_descriptors = 2;
 
-	repeated ModelMsg models = 3;
+  /** The datasets referenced by the specification. */
+  repeated DatasetMsg referenced_datasets = 3;
 
-	repeated DatasetMsg datasets = 4;
+  /** The models referenced by the datasets referenced in the specification. */
+  repeated ModelMsg referenced_models = 4;
 }
 
 // ----------------------------------------------------------------------------
@@ -80,10 +115,10 @@ message ProjectWorkspaceMsg {
 	
   /** The project id. */
   int32 project_id = 1;
-	
+
   /** The workspace. */
   int64 workspace_handle = 2;
-	
+
   /** The dataset id list. */
   repeated int32 dataset_ids = 3;
 }
