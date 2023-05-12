@@ -10,9 +10,11 @@ $OutputDir = "output/python"
 Remove-Item $OutputDir -Recurse
 mkdir $OutputDir
 
-python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --grpc_python_out=$OutputDir quality_verification_service.proto
-python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir shared_types.proto
-python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir shared_qa.proto
-python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --grpc_python_out=$OutputDir quality_test.proto
+python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --pyi_out=$OutputDir --grpc_python_out=$OutputDir quality_verification_service.proto
+python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --pyi_out=$OutputDir shared_types.proto
+python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --pyi_out=$OutputDir shared_qa.proto
+python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --pyi_out=$OutputDir --grpc_python_out=$OutputDir quality_test.proto
 
-pause
+Write-Host "Created python output in ${OutputDir}"
+
+Pause
