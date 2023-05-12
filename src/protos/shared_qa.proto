@@ -267,7 +267,7 @@ message InstanceDescriptorMsg {
   /** The class descriptor. In case the constructor is -1, it is a factory. */
   ClassDescriptorMsg class_descriptor = 4;
 
-  /** The class descriptor. In case the constructor is -1, the class descriptor is a factory. */
+  /** The constructor index. In case the constructor is -1, the class descriptor is a factory. */
   int32 constructor = 5;
 
   /** The optional description.

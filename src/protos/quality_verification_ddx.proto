@@ -17,7 +17,7 @@ import "shared_qa.proto";
 service QualityVerificationDdxGrpc {
 
   /**
-    * Gets the quality specifications for the specified object classes.
+    * Gets the projejct workspace candidates for the specified object classes.
     */
   rpc GetProjectWorkspaces(GetProjectWorkspacesRequest) returns (GetProjectWorkspacesResponse) {}
 
@@ -38,9 +38,10 @@ message GetProjectWorkspacesRequest {
   /** The data dictionary environment. */
   string environment = 1;
 
-	/** The editable object classes for which project workspaces should be found. */
+  /** The object classes for which project workspaces should be found. */
   repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg object_classes = 2;
 
+  /** The workspaces referenced by the specified object classes. */
   repeated .ProSuite.Microservices.Definitions.Shared.WorkspaceMsg workspaces = 3;
 }
 
@@ -146,7 +147,7 @@ message ProjectMsg {
   /** The tool configuration directory. */
   string tool_config_directory = 6;
 
-  /** The whether read-only datasets are to be excluded from the project worksapce. */
+  /** Whether read-only datasets are to be excluded from the project worksapce. */
   bool exclude_read_only_datasets_from_project_workspace = 7;
 }
 
