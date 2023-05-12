@@ -4,13 +4,15 @@
 # - ProSuite.Microservices.Definitions.QA.*
 # These python files can be checked into the consuming repo's lib folder.
 
-cd $PSScriptRoot
+Set-Location $PSScriptRoot
 
-mode con:cols=200 lines=15000
+$OutputDir = "output/python" 
+Remove-Item $OutputDir -Recurse
+mkdir $OutputDir
 
-python -m grpc.tools.protoc --proto_path=../src/protos --python_out=output --grpc_python_out=output quality_verification_service.proto
-python -m grpc.tools.protoc --proto_path=../src/protos --python_out=output shared_types.proto
-python -m grpc.tools.protoc --proto_path=../src/protos --python_out=output shared_qa.proto
-python -m grpc.tools.protoc --proto_path=../src/protos --python_out=output --grpc_python_out=output quality_test.proto
+python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --grpc_python_out=$OutputDir quality_verification_service.proto
+python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir shared_types.proto
+python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir shared_qa.proto
+python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --grpc_python_out=$OutputDir quality_test.proto
 
 pause
