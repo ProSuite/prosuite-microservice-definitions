@@ -194,6 +194,9 @@ message WorkspaceMsg {
 
   /** The workspace connection properties. */
   repeated KeyValuePairMsg connection_properties = 8;
+
+  /** The default version modification date, in case it is a remote geodatabase. */
+  int64 default_version_modification_ticks = 9;
 }
 
 /**
