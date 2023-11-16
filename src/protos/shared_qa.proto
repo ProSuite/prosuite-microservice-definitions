@@ -350,6 +350,12 @@ message VerificationParametersMsg {
 
   /** Invalidation if the condition changed since the error was allowed. */
   bool invalidate_exceptions_if_condition_was_updated = 17;
+
+  /** The desired spatial reference of the issue feature classes in the issue 
+    * geodatabase. If not specified, the spatial reference of the primary model
+    * which is the majority of the involved datasets, will be used. 
+    */
+  .ProSuite.Microservices.Definitions.Shared.SpatialReferenceMsg issue_repository_spatial_reference = 18;
 }
 
 /**
