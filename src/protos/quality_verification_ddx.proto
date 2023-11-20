@@ -31,6 +31,11 @@ service QualityVerificationDdxGrpc {
 	* ConditionListSpecificationMsg.
     */
   rpc GetQualitySpecification(GetSpecificationRequest) returns (GetSpecificationResponse) {}
+
+  /**
+    * Gets a quality condition
+    */
+  rpc GetQualityCondition(GetConditionRequest) returns (GetConditionResponse) {}
 }
 
 message GetProjectWorkspacesRequest {
@@ -64,6 +69,15 @@ message GetSpecificationRequest {
 
   /** ...data dictionary id */
   int32 quality_specification_id = 2;  // Data dictionary id
+}
+
+message GetConditionRequest {
+
+  /** The data dictionary environment. */
+  string environment = 1;
+
+  /** The name of the requested quality condition. */
+  string condition_name = 2;
 }
 
 message GetProjectWorkspacesResponse {
@@ -103,6 +117,25 @@ message GetSpecificationResponse {
 
   /** The models referenced by the datasets referenced in the specification. */
   repeated ModelMsg referenced_models = 4;
+}
+
+message GetConditionResponse {
+
+  /** The quality condition. The referenced test
+      descriptor must be in the form <class name>(<consturctor id>). */
+  QualityConditionMsg condition = 1;
+
+  /** The category assigned to the condition. */
+  string category_name = 2;
+
+  /** The instance descriptors referenced by the condition. */
+  repeated InstanceDescriptorMsg referenced_instance_descriptors = 3;
+
+  /** The datasets referenced by the condition. */
+  repeated DatasetMsg referenced_datasets = 4;
+
+  /** The models referenced by the datasets referenced by the condition. */
+  repeated ModelMsg referenced_models = 5;
 }
 
 // ----------------------------------------------------------------------------
