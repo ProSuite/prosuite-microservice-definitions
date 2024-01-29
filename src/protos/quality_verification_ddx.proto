@@ -155,6 +155,9 @@ message ProjectWorkspaceMsg {
 
   /** The dataset id list. */
   repeated int32 dataset_ids = 3;
+
+  /** Whether the workspace is in the model's master database. */
+  bool is_master_database_workspace =  4;
 }
 
 /**
