@@ -36,6 +36,11 @@ service QualityVerificationDdxGrpc {
     * Gets a quality condition
     */
   rpc GetQualityCondition(GetConditionRequest) returns (GetConditionResponse) {}
+
+    /**
+    * Gets dataset details, such as the attributes and object category collections.
+    */
+  rpc GetDatasetDetails(GetDatasetDetailsRequest) returns (GetDatasetDetailsResponse) {}
 }
 
 message GetProjectWorkspacesRequest {
@@ -78,6 +83,15 @@ message GetConditionRequest {
 
   /** The name of the requested quality condition. */
   string condition_name = 2;
+}
+
+message GetDatasetDetailsRequest {
+
+  /** The data dictionary environment. */
+  string environment = 1;
+
+  /** The list of dataset ids. */
+  repeated int32 dataset_ids = 2;
 }
 
 message GetProjectWorkspacesResponse {
@@ -136,6 +150,12 @@ message GetConditionResponse {
 
   /** The models referenced by the datasets referenced by the condition. */
   repeated ModelMsg referenced_models = 5;
+}
+
+message GetDatasetDetailsResponse {
+
+  /** The datasets with all properties including the collections fully populated. */
+  repeated DatasetMsg datasets = 1;
 }
 
 // ----------------------------------------------------------------------------
@@ -233,6 +253,63 @@ message DatasetMsg {
 
   /** The path to the default symbology (layer) file. */
   string default_symbology = 6;
+
+  /** The dataset's attributes. */
+  repeated AttributeMsg attributes = 7;
+
+  /** The dataset's object categories (object type or object sub-type). */
+  repeated ObjectCategoryMsg object_categories = 8;
+}
+
+/**
+  * The ddx attribute.
+  */
+message AttributeMsg {
+
+  /** The name of the field. */
+  string name = 1;
+
+  /** The field type corresponding to the ProSuite.Commons.GeoDb.FieldType */
+  int32 type = 2;
+
+  /** Whether it is read-only or not. */
+  bool is_readonly = 3;
+
+  /** Whether it is object-defining or not. */
+  bool is_object_defining = 4;
+
+  /** The attribute role id. */
+  int32 attribute_role = 5;
+
+  /** The non-appliccable value. */
+  .ProSuite.Microservices.Definitions.Shared.AttributeValue non_applicable_value = 6;
+}
+
+/**
+  * The ddx object category (i.e. the ObjectType or ObjectSubtype).
+  */
+message ObjectCategoryMsg {
+
+  /** The name of the field. */
+  string name = 1;
+
+  /** The subtype code. If this is an ObjectSubtype, the referenced ObjectType's code. */
+  int32 subtype_code = 2;
+
+  /** The ObjectSubtype criteria. */
+  repeated ObjectSubtypeCriterionMsg object_subtype_criterion = 3;
+}
+
+/**
+  * The ddx object subtype criterion.
+  */
+message ObjectSubtypeCriterionMsg {
+
+  /** The name of the referenced attribute. */
+  string attribute_name = 1;
+
+  /** The attribute value. */
+  .ProSuite.Microservices.Definitions.Shared.AttributeValue attribute_value = 2;
 }
 
 /**
