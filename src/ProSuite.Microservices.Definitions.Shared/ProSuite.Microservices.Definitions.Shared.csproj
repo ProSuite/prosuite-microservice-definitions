@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Protobuf Include="..\protos\shared_gdb.proto" Link="protos\shared_gdb.proto" />
+    <Protobuf Include="..\protos\shared_ddx.proto" Link="protos\shared_ddx.proto" />
   </ItemGroup>
 
   <ItemGroup>

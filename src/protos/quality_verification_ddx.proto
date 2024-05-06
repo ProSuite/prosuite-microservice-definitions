@@ -9,6 +9,7 @@
 package ProSuite.Microservices.Definitions.QA;
 
 import "shared_gdb.proto";
+import "shared_ddx.proto";
 import "shared_qa.proto";
 
 /**
@@ -101,13 +102,13 @@ message GetProjectWorkspacesResponse {
   repeated ProjectWorkspaceMsg project_workspaces = 1;
 
   /** The projects referenced by the provided project workspaces. */
-  repeated ProjectMsg projects = 2;
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.ProjectMsg projects = 2;
 
   /** The models referenced by the projects referenced by the provided project workspaces. */
-  repeated ModelMsg models = 3;
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.ModelMsg models = 3;
 
   /** The datasets referenced by the provided project workspace or models. */
-  repeated DatasetMsg datasets = 4;
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.DatasetMsg datasets = 4;
 
   /** The name of the ddx environment. */
   string environment_name = 5;
@@ -128,10 +129,10 @@ message GetSpecificationResponse {
   repeated InstanceDescriptorMsg referenced_instance_descriptors = 2;
 
   /** The datasets referenced by the specification. */
-  repeated DatasetMsg referenced_datasets = 3;
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.DatasetMsg referenced_datasets = 3;
 
   /** The models referenced by the datasets referenced in the specification. */
-  repeated ModelMsg referenced_models = 4;
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.ModelMsg referenced_models = 4;
 }
 
 message GetConditionResponse {
@@ -147,16 +148,16 @@ message GetConditionResponse {
   repeated InstanceDescriptorMsg referenced_instance_descriptors = 3;
 
   /** The datasets referenced by the condition. */
-  repeated DatasetMsg referenced_datasets = 4;
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.DatasetMsg referenced_datasets = 4;
 
   /** The models referenced by the datasets referenced by the condition. */
-  repeated ModelMsg referenced_models = 5;
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.ModelMsg referenced_models = 5;
 }
 
 message GetDatasetDetailsResponse {
 
   /** The datasets with all properties including the collections fully populated. */
-  repeated DatasetMsg datasets = 1;
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.DatasetMsg datasets = 1;
 }
 
 // ----------------------------------------------------------------------------
@@ -179,138 +180,6 @@ message ProjectWorkspaceMsg {
 
   /** Whether the workspace is in the model's master database. */
   bool is_master_database_workspace =  4;
-}
-
-/**
-  * The project message
-  */
-message ProjectMsg {
-	
-  /** The project id. */
-  int32 project_id = 1;
-
-  /** The production model id. */
-  int32 model_id = 2;
-
-  /** The project name. */
-  string name = 3;
-
-  /** The project short name. */
-  string short_name = 4;
-
-  /** The minimum scale denominator. */
-  double minimum_scale_denominator = 5;
-
-  /** The tool configuration directory. */
-  string tool_config_directory = 6;
-
-  /** Whether read-only datasets are to be excluded from the project worksapce. */
-  bool exclude_read_only_datasets_from_project_workspace = 7;
-}
-
-/**
-  * The ddx model.
-  */
-message ModelMsg {
-  
-  /** The model id. */
-  int32 model_id = 1;
-
-  /** The model name. */
-  string name = 2;
-
-  /** The model's spatial reference. */
-  .ProSuite.Microservices.Definitions.Shared.Gdb.SpatialReferenceMsg spatial_reference = 3;
-
-  /** The list of dataset ids. */
-  repeated int32 dataset_ids = 4;
-
-  /** The list of error dataset ids. */
-  repeated int32 error_dataset_ids = 5;
-
-  /** The workspace handle of the master db. */
-  int64 master_db_workspace_handle = 6;
-}
-
-/**
-  * The ddx dataset.
-  */
-message DatasetMsg {
-
-  /** The dataset id. */
-  int32 dataset_id = 1;
-
-  /** The dataset name. */
-  string name = 2;
-
-  /** The dataset alias name. */
-  string alias_name = 3;
-
-  /** The dataset's geometry type or 0 if it has no geometry. */
-  int32 geometry_type = 4;
-
-  /** The dataset type once more than object datasets are supported */
-  int32 dataset_type = 5;
-
-  /** The path to the default symbology (layer) file. */
-  string default_symbology = 6;
-
-  /** The dataset's attributes. */
-  repeated AttributeMsg attributes = 7;
-
-  /** The dataset's object categories (object type or object sub-type). */
-  repeated ObjectCategoryMsg object_categories = 8;
-}
-
-/**
-  * The ddx attribute.
-  */
-message AttributeMsg {
-
-  /** The name of the field. */
-  string name = 1;
-
-  /** The field type corresponding to the ProSuite.Commons.GeoDb.FieldType */
-  int32 type = 2;
-
-  /** Whether it is read-only or not. */
-  bool is_readonly = 3;
-
-  /** Whether it is object-defining or not. */
-  bool is_object_defining = 4;
-
-  /** The attribute role id. */
-  int32 attribute_role = 5;
-
-  /** The non-appliccable value. */
-  .ProSuite.Microservices.Definitions.Shared.Gdb.AttributeValue non_applicable_value = 6;
-}
-
-/**
-  * The ddx object category (i.e. the ObjectType or ObjectSubtype).
-  */
-message ObjectCategoryMsg {
-
-  /** The name of the field. */
-  string name = 1;
-
-  /** The subtype code. If this is an ObjectSubtype, the referenced ObjectType's code. */
-  int32 subtype_code = 2;
-
-  /** The ObjectSubtype criteria. */
-  repeated ObjectSubtypeCriterionMsg object_subtype_criterion = 3;
-}
-
-/**
-  * The ddx object subtype criterion.
-  */
-message ObjectSubtypeCriterionMsg {
-
-  /** The name of the referenced attribute. */
-  string attribute_name = 1;
-
-  /** The attribute value. */
-  .ProSuite.Microservices.Definitions.Shared.Gdb.AttributeValue attribute_value = 2;
 }
 
 /**
