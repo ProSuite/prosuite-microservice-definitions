@@ -7,7 +7,7 @@
 
 package ProSuite.Microservices.Definitions.Geometry;
 
-import "shared_types.proto";
+import "shared_gdb.proto";
 
 
 /**

@@ -16,7 +16,7 @@
     In order to reference types (such as ShapeBuffer) defined in other proto files and being able 
     to use them from client code we must not compile the referenced types into this assembly! 
     However, protoc requires the other proto file containing the type definition to 'reside' next
-    to the proto file that uses these types. In order to avoid copying the shared_types.proto around
+    to the proto file that uses these types. In order to avoid copying the shared_gdb.proto around
     -> Keep all proto files in a central location (src\protos\*.proto)
     -> Add the file(s) to be compiled to c# types using <Protobuf Include=... Link(!)> as 
        it is shown in the google examples
@@ -24,7 +24,7 @@
        <Content Include=... Link=> or even <Item Include= to hide it in Visual Studio)      
     see: https://github.com/grpc/grpc/blob/master/src/csharp/BUILD-INTEGRATION.md
     -->
-    <Content Include="..\protos\shared_types.proto" Link="protos\shared_types.proto" />
+    <Content Include="..\protos\shared_gdb.proto" Link="protos\shared_gdb.proto" />
     <Protobuf Include="..\protos\quality_verification_service.proto" Link="protos\quality_verification_service.proto" />
     <Protobuf Include="..\protos\quality_verification_ddx.proto" Link="protos\quality_verification_ddx.proto" />
     <Protobuf Include="..\protos\shared_qa.proto" Link="protos\shared_qa.proto" />

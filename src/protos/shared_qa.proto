@@ -10,7 +10,7 @@ syntax = "proto3";
  */
 package ProSuite.Microservices.Definitions.QA;
 
-import "shared_types.proto";
+import "shared_gdb.proto";
 
 
 // ----------------------------------------------------------------------------

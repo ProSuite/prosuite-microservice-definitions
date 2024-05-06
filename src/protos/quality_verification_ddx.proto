@@ -8,7 +8,7 @@
 
 package ProSuite.Microservices.Definitions.QA;
 
-import "shared_types.proto";
+import "shared_gdb.proto";
 import "shared_qa.proto";
 
 /**

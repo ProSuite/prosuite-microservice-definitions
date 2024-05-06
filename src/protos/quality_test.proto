@@ -8,7 +8,7 @@
 
 package ProSuite.Microservices.Definitions.QA.Test;
 
-import "shared_types.proto";
+import "shared_gdb.proto";
 
 /**
   * The quality test definition.

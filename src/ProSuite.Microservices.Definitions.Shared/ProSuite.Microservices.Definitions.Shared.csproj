@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\protos\shared_types.proto" Link="protos\shared_types.proto" />
+    <Protobuf Include="..\protos\shared_gdb.proto" Link="protos\shared_gdb.proto" />
   </ItemGroup>
 
   <ItemGroup>
