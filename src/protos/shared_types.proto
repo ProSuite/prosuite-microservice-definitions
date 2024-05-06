@@ -9,7 +9,7 @@
  *
  */
 
-package ProSuite.Microservices.Definitions.Shared;
+package ProSuite.Microservices.Definitions.Shared.Gdb;
 
 /**
   * UUID / Guid format as byte array.

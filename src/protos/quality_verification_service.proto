@@ -56,7 +56,7 @@ message VerificationRequest {
   VerificationParametersMsg parameters = 3;
 
   /** The set of gdb features to be tested. */
-  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg features = 5;
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg features = 5;
 
   /** The (display) name of the user who requested the verification. */
   string user_name = 6;
@@ -124,10 +124,10 @@ message VerificationResponse {
   QualityVerificationMsg quality_verification = 4;
 
   /** In the final response: The actual perimeter that was verified. */
-  .ProSuite.Microservices.Definitions.Shared.ShapeMsg verified_perimeter = 5;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg verified_perimeter = 5;
 
   /** The list of allowed issues (exceptions) to be deleted. */
-  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjRefMsg obsolete_exceptions = 6;
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjRefMsg obsolete_exceptions = 6;
 }
 
 /** The response containing the streamed response messages for the VerifyDataQuality service. */

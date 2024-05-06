@@ -48,13 +48,13 @@ service ChangeAlongGrpc {
 message CalculateReshapeLinesRequest {
 
   /** The source features to be changed. */
-	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg source_features = 1;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
 
   /** The set of target features along which the source features can be changed. */
-	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg target_features = 2;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg target_features = 2;
 
 	/** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
-	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 3;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 3;
 
   /** The tolerance to be used for the calculation of differences along which the
     * source features can be adjusted to the target features. 
@@ -89,13 +89,13 @@ message CalculateReshapeLinesResponse {
 message CalculateCutLinesRequest {
 
 	/** The source features to be cut. */
-	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg source_features = 1;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
 
 	/** The set of target features along which the source features can be cut. */
-	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg target_features = 2;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg target_features = 2;
 
 	/** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
-	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 3;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 3;
 
 	/** The tolerance to be used for the calculation of differences along which the
     * source features can be adjusted to the target features. 
@@ -152,7 +152,7 @@ message ApplyReshapeLinesRequest {
 message ApplyReshapeLinesResponse {
 
 	/** The result features. */
-  repeated .ProSuite.Microservices.Definitions.Shared.ResultObjectMsg result_features = 1;
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ResultObjectMsg result_features = 1;
 
   /** The new reshape lines after the reshape has been performed. */
   repeated ReshapeLineMsg new_reshape_lines = 2;
@@ -192,7 +192,7 @@ message ApplyCutLinesRequest {
 message ApplyCutLinesResponse {
 
 	/** The result features. */
-	repeated .ProSuite.Microservices.Definitions.Shared.ResultObjectMsg result_features = 1;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ResultObjectMsg result_features = 1;
 
 	/** The new cut lines after the cut has been performed. */
 	repeated ReshapeLineMsg new_cut_lines = 2;
@@ -231,7 +231,7 @@ message ReshapeLineFilterOptionsMsg {
   bool clip_lines_on_visible_extent = 1;
 
   /** The visible extent(s). */
-  repeated .ProSuite.Microservices.Definitions.Shared.EnvelopeMsg visible_extents = 2;
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.EnvelopeMsg visible_extents = 2;
 	
   /** The reshape line filter by distance from the source features. */
   double exclude_outside_tolerance = 3;
@@ -257,7 +257,7 @@ message ReshapeLineFilterOptionsMsg {
 message ReshapeLineMsg {
 
 	/** The reshape path. */
-	.ProSuite.Microservices.Definitions.Shared.ShapeMsg path = 1;
+	.ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg path = 1;
 
 	/** Whether the reshape lines can be used to reshape the source. */
 	bool can_reshape = 2;
@@ -269,14 +269,14 @@ message ReshapeLineMsg {
 	bool is_filtered = 4;
 
 	/** The target segment at the reshape path's from point. */
-	.ProSuite.Microservices.Definitions.Shared.ShapeMsg target_segment_at_from = 5;
+	.ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg target_segment_at_from = 5;
 	
 	/** The target segment at the reshape path's to point. */
-  .ProSuite.Microservices.Definitions.Shared.ShapeMsg target_segment_at_to = 6;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg target_segment_at_to = 6;
 
 	/** The extra target insert points in case the reshape line is applied. */
-	.ProSuite.Microservices.Definitions.Shared.ShapeMsg extra_target_insert_points = 7;
+	.ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg extra_target_insert_points = 7;
 
 	/** The source feature reference. */
-	.ProSuite.Microservices.Definitions.Shared.GdbObjRefMsg source = 8;
+	.ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjRefMsg source = 8;
 }

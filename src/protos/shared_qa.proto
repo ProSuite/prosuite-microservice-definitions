@@ -37,7 +37,7 @@ message WorkContextMsg {
   int32 type = 2;
  
   /** The project workspace (optional, to be tested instead of the master db). */
-  .ProSuite.Microservices.Definitions.Shared.WorkspaceMsg workspace = 3;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.WorkspaceMsg workspace = 3;
 
   /** The version name (for type project). */
   string version_name = 6;
@@ -297,7 +297,7 @@ message VerificationParametersMsg {
   double tile_size = 1;
 
   /** The mostly required verification perimeter (envelope or polygon). */
-  .ProSuite.Microservices.Definitions.Shared.ShapeMsg perimeter = 2;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg perimeter = 2;
 
   /** Whether a detailed verification report shall be created. */
   bool write_detailed_verification_report = 3;
@@ -355,7 +355,7 @@ message VerificationParametersMsg {
     * geodatabase. If not specified, the spatial reference of the primary model
     * which is the majority of the involved datasets, will be used. 
     */
-  .ProSuite.Microservices.Definitions.Shared.SpatialReferenceMsg issue_repository_spatial_reference = 18;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.SpatialReferenceMsg issue_repository_spatial_reference = 18;
 }
 
 /**
@@ -368,7 +368,7 @@ message GdbData {
 	int64 gdb_object_count = 4;
 
 	/** The gdb objects (if requested). */
-	repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg gdb_objects = 3;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg gdb_objects = 3;
 }
 
 /**
@@ -389,7 +389,7 @@ message DataRequest {
 	string where_clause = 3;
 
   /** The intersecting search geometry. */
-	.ProSuite.Microservices.Definitions.Shared.ShapeMsg search_geometry = 4;
+	.ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg search_geometry = 4;
 
   /** The subfields to be provided for a data query. */
 	string sub_fields = 5;
@@ -445,10 +445,10 @@ message RelationshipClassQuery {
 message SchemaMsg {
   
 	/** The object class details referenced by the class_handle of the gdb_objects. */
-	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 1;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 1;
 
 	/** The relationship class details referenced by the class_handle of the gdb_objects. */
-	repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg relclass_definitions = 2;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg relclass_definitions = 2;
 }
 
 /**
@@ -497,10 +497,10 @@ message VerificationProgressMsg {
   string processing_step_message = 7;
   
   /** The current step's envelope (during the container tests phase). */
-  .ProSuite.Microservices.Definitions.Shared.EnvelopeMsg current_box = 8;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.EnvelopeMsg current_box = 8;
 
   /** The total extent of the verification perimeter. */
-  .ProSuite.Microservices.Definitions.Shared.EnvelopeMsg total_box = 9;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.EnvelopeMsg total_box = 9;
   
   /** The current message / status information. */
   string message = 10;
@@ -527,7 +527,7 @@ message IssueMsg {
   int32 condition_id = 1;
 
   /** The issue geometry. */
-  .ProSuite.Microservices.Definitions.Shared.ShapeMsg issue_geometry = 2;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg issue_geometry = 2;
 
   /** The issue description. */
   string description = 4;

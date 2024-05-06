@@ -41,6 +41,7 @@ service QualityVerificationDdxGrpc {
     * Gets dataset details, such as the attributes and object category collections.
     */
   rpc GetDatasetDetails(GetDatasetDetailsRequest) returns (GetDatasetDetailsResponse) {}
+
 }
 
 message GetProjectWorkspacesRequest {
@@ -49,10 +50,10 @@ message GetProjectWorkspacesRequest {
   string environment = 1;
 
   /** The object classes for which project workspaces should be found. */
-  repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg object_classes = 2;
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg object_classes = 2;
 
   /** The workspaces referenced by the specified object classes. */
-  repeated .ProSuite.Microservices.Definitions.Shared.WorkspaceMsg workspaces = 3;
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.WorkspaceMsg workspaces = 3;
 }
 
 message GetSpecificationRefsRequest {
@@ -219,7 +220,7 @@ message ModelMsg {
   string name = 2;
 
   /** The model's spatial reference. */
-  .ProSuite.Microservices.Definitions.Shared.SpatialReferenceMsg spatial_reference = 3;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.SpatialReferenceMsg spatial_reference = 3;
 
   /** The list of dataset ids. */
   repeated int32 dataset_ids = 4;
@@ -282,7 +283,7 @@ message AttributeMsg {
   int32 attribute_role = 5;
 
   /** The non-appliccable value. */
-  .ProSuite.Microservices.Definitions.Shared.AttributeValue non_applicable_value = 6;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.AttributeValue non_applicable_value = 6;
 }
 
 /**
@@ -309,7 +310,7 @@ message ObjectSubtypeCriterionMsg {
   string attribute_name = 1;
 
   /** The attribute value. */
-  .ProSuite.Microservices.Definitions.Shared.AttributeValue attribute_value = 2;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.AttributeValue attribute_value = 2;
 }
 
 /**

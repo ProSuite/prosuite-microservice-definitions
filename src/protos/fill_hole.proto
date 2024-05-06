@@ -27,13 +27,13 @@ service FillHolesGrpc {
 message CalculateHolesRequest {
 
   /** The set of source features from which the overlaps shall be removed. */
-  repeated .ProSuite.Microservices.Definitions.Shared.GdbObjectMsg source_features = 1;
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
 
   /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
-  repeated .ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definitions = 2;
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 2;
 
   /** The visible extent(s) to be used to restrict the hole calculation. */
-  repeated .ProSuite.Microservices.Definitions.Shared.EnvelopeMsg visible_extents = 3;
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.EnvelopeMsg visible_extents = 3;
 
   /** Whether the union of the source features shall be evaluated for holes or 
     * each feature individually.
@@ -61,10 +61,10 @@ message HolesMsg {
 	/** The result overlap geometries (polygons or polylines) in the same 
     * spatial reference as the original feature.  
     */
-	repeated .ProSuite.Microservices.Definitions.Shared.ShapeMsg hole_geometries = 1;
+	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg hole_geometries = 1;
 
 	/** A reference to the original feature that contains the hole(s). Null, if 
       * the source features have been unioned.
       */
-	.ProSuite.Microservices.Definitions.Shared.GdbObjRefMsg original_feature_ref = 2;
+	.ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjRefMsg original_feature_ref = 2;
 }

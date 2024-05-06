@@ -36,13 +36,13 @@ message ExecuteTestRequest {
   * specific work context type from the data dictionary could be used for extra 
   * functionality.
   */
-  repeated .ProSuite.Microservices.Definitions.Shared.WorkspaceMsg workspaces = 1;
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.WorkspaceMsg workspaces = 1;
 
   /** The datasets */
   repeated TestDatasetMsg involved_tables = 2;
 
   /** The verification perimeter (envelope or polygon). */
-  .ProSuite.Microservices.Definitions.Shared.ShapeMsg perimeter = 3;
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg perimeter = 3;
 
   /** The name whose meaning is defined by the specified service. */
   string test_name = 4;
@@ -81,7 +81,7 @@ message ExecuteTestResponse {
 message TestDatasetMsg {
 
 	/** The dataset */
-	.ProSuite.Microservices.Definitions.Shared.ObjectClassMsg class_definition = 1;
+	.ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definition = 1;
 
 	/** The table constraint / filter expression. */
 	string filter_expression = 2;
@@ -118,7 +118,7 @@ message DetectedIssueMsg {
 	string description = 1;
   
 	/** The issue geometry. */
-	.ProSuite.Microservices.Definitions.Shared.ShapeMsg issue_geometry = 2;
+	.ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg issue_geometry = 2;
 
   /** The issue code. */
 	string issue_code_id = 3;
@@ -146,7 +146,7 @@ message InvolvedObjectsMsg {
   
 	/** The table name (as opposed to the dataset name used by the legacy format).
     */
-	.ProSuite.Microservices.Definitions.Shared.ObjectClassMsg dataset = 1;
+	.ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg dataset = 1;
 
 	/** The list of objectIDs. */
 	repeated int64 object_ids = 2;
