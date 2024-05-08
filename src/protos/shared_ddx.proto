@@ -62,6 +62,44 @@ message ModelMsg {
 
   /** The workspace handle of the master db. */
   int64 master_db_workspace_handle = 6;
+
+  /** Whether the model element (datasets, associations) names are qualified. */
+  bool element_names_are_qualified = 7;
+  
+  /** Gets the name of the master database (catalog), as used by sql server and 
+    * postgresql. NULL, if the database name is not unique across the datasets
+	* in which case the dataset names are qualified.
+	*/
+  string default_database_name = 8;
+
+  /** The name of the master database owner (for ArcSDE master databases), if it 
+    * is unique for the harvested datasets.
+	*/
+  string default_database_schema_owner = 9;
+
+  /** The case sensitivity of the SQL queries. */
+  int32 sql_case_sensitivity = 10;
+
+  /** The user / default connection. */
+  ConnectionMsg user_connection = 11;
+}
+
+/**
+  * The ddx connection provider.
+  */
+message ConnectionMsg {
+  
+  /** The connection id. */
+  int32 connection_id = 1;
+
+  /** The connection name. */
+  string name = 2;
+
+  /** The connection type. */
+  int32 connection_type = 3;
+
+  /** The connection string. */
+  string connection_string = 4;
 }
 
 /**
