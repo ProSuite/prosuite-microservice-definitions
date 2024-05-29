@@ -137,6 +137,9 @@ message DatasetMsg {
   */
 message AttributeMsg {
 
+  /** The attribute id. */
+  int32 attribute_id = 7;
+
   /** The name of the field. */
   string name = 1;
 
@@ -160,6 +163,9 @@ message AttributeMsg {
   * The ddx object category (i.e. the ObjectType or ObjectSubtype).
   */
 message ObjectCategoryMsg {
+
+  /** The object category id. */
+  int32 object_category_id = 4;
 
   /** The name of the field. */
   string name = 1;
