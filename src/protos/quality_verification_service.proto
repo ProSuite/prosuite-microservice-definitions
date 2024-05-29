@@ -74,9 +74,15 @@ message VerificationRequest {
   * The request containing the relevant verification parameters together with the data.
   */
 message DataVerificationRequest {
-	VerificationRequest request = 1;
-	GdbData data = 2;
-	SchemaMsg schema = 3;
+
+  VerificationRequest request = 1;
+
+  GdbData data = 2;
+
+  SchemaMsg schema = 3;
+
+  /** The error message (if any) regarding data or schema provision. */
+  string error_message = 5;
 }
 
 /**
