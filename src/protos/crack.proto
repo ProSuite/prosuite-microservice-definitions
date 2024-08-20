@@ -1,0 +1,156 @@
+﻿syntax = "proto3";
+
+/**
+ * The remove overlaps service definition and its associated request and 
+ * response message types.
+ *
+ */
+
+package ProSuite.Microservices.Definitions.Geometry;
+
+import "shared_gdb.proto";
+
+/**
+  * The crack service definition.
+  */
+service CrackGrpc {
+
+  /**
+    * The calculation of relevant overlaps.
+    */
+  rpc CalculateCrackPoints(CalculateCrackPointsRequest) returns (CalculateCrackPointsResponse) {}
+
+  /**
+    * The removal of the specified overlaps.
+    */
+  rpc ApplyCrackPoints(ApplyCrackPointsRequest) returns (ApplyCrackPointsResponse) {}
+}
+
+/**
+  * The overlaps calculation request.
+  */
+message CalculateCrackPointsRequest {
+
+  /** The set of source features from which the overlaps shall be removed. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
+
+  /** The set of potentially overlapping target features. If this collection is empty the
+    * crack points between source features shall be calculated.
+    */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg target_features = 2;
+
+  /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 3; 
+
+  /** The crack options. */
+  CrackOptionsMsg crack_options = 4;
+
+  /** The perimeter (envelope or polygon) in which the result shall be calculated. */
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg perimeter = 5;
+}
+
+/**
+  * The basic topological cracking options.
+  */
+message CrackOptionsMsg {
+
+  /** Whether a minimum segment length shall be respected. */
+  bool respect_minimum_segment_length = 1;
+
+  /** The minimum segment length. */
+  double minimum_segment_length = 2;
+
+  /** Whether the crack points shall be snapped to nearby target vertices. */
+  bool snap_to_target_vertices = 3;
+
+  /** The snap tolerance. */
+  double snap_tolerance = 4;
+
+  /** Whether the source's Z values shall be maintained (z value of inserted 
+    * crack points are interpolated along source). 
+    */
+  bool use_source_zs = 5;
+
+  /** Whether the source features shall only be cracked with relation to target
+    * features within the same feature class, i.e. the TargetFeatureSelection 
+    * option is 'SameClass'.
+    */
+  bool crack_only_within_same_class = 6;
+}
+
+/**
+  * The overlaps calculation response.
+  */
+message CalculateCrackPointsResponse {
+
+  /** The result crack points. */
+  repeated CrackPointsMsg crack_points = 1;
+
+  /** Notifications that might relevant to the user. */
+  repeated string notifications = 2;
+}
+
+/**
+  * The overlaps removal request.
+  */
+message ApplyCrackPointsRequest {
+
+  /** The set of source features from which the overlaps shall be removed. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
+
+  /** The crack points to be inserted into the appropriate respective source geometries.
+    */
+  repeated CrackPointsMsg crack_points = 2;
+
+  /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 3;
+  
+  /** The crack options. */
+  CrackOptionsMsg crack_options = 4;
+}
+
+/**
+  * The overlaps removal response.
+  */
+message ApplyCrackPointsResponse {
+
+  /** The result features. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ResultObjectMsg result_features = 1;
+
+  /** Notifications that might relevant to the user. */
+  repeated string non_storable_messages = 2;
+}
+
+/**
+  * A set of crack points associated with a specific source feature.
+  */
+message CrackPointsMsg {
+
+	/** The result overlap geometries (polygons or polylines) in the same 
+    * spatial reference as the original feature.  
+    */
+	repeated CrackPointMsg crack_points = 1;
+
+	/** A reference to the original feature. */
+	.ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjRefMsg original_feature_ref = 2;
+}
+
+message CrackPointMsg {
+
+  /** The crack point. */
+  ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg point = 1;
+
+  /** Whether the potentially inserted crack point would lead to a violation of the specified 
+    * minimum segment length.
+    */
+  bool violates_minimum_segment_length = 2;
+
+  /** Whether the nearby target vertex is different from the crack point but within the 
+    * tolerance (in XY). 
+    */
+  bool target_vertex_different_within_tolerance = 3;
+
+  /** Whether the nearby target vertex is different from the crack point but only in Z */
+  bool target_vertex_only_different_in_z = 4;
+}
+
