@@ -18,7 +18,7 @@ import "shared_qa.proto";
 service QualityVerificationDdxGrpc {
 
   /**
-    * Gets the projejct workspace candidates for the specified object classes.
+    * Gets the project workspace candidates for the specified object classes.
     */
   rpc GetProjectWorkspaces(GetProjectWorkspacesRequest) returns (GetProjectWorkspacesResponse) {}
 

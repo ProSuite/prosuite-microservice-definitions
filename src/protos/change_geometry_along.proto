@@ -151,7 +151,7 @@ message ApplyReshapeLinesRequest {
   */
 message ApplyReshapeLinesResponse {
 
-	/** The result features. */
+  /** The result features. */
   repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ResultObjectMsg result_features = 1;
 
   /** The new reshape lines after the reshape has been performed. */
