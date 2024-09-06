@@ -133,6 +133,83 @@ message DatasetMsg {
 }
 
 /**
+  * The ddx association.
+  */
+message AssociationMsg {
+	
+  /** The association id. */
+  int32 association_id = 1;
+
+  /** The association name. */
+  string name = 2;
+
+  /** The association type:
+    * 0 - Foreign key association
+	* 1 - Attributed association
+    */
+  int32 association_type = 3;
+
+  /** The association cardinality. */
+  int32 cardinality = 4;
+
+  /** The dataset id of the End1 association end */
+  int32 end1_dataset = 5;
+
+  /** The dataset id of the End2 association end */
+  int32 end2_dataset = 6;
+
+  /** The id of the End1 association end */
+  int32 end1_id = 7;
+
+  /** The id of the End2 association end */
+  int32 end2_id = 8;
+
+  /** The name of the End1 association end */
+  string end1_name = 9;
+
+  /** The name of the End2 association end */
+  string end2_name = 10;
+
+  /** Whether edits of this association shall be documented on end1 */
+  bool end1_document_edit = 11;
+
+  /** Whether edits of this association shall be documented on end2 */
+  bool end2_document_edit = 12;
+
+  /** Whether cascade deletion is enabled for end1 */
+  bool end1_cascade_deletion = 13;
+
+  /** Whether cascade deletion is enabled for end2 */
+  bool end2_cascade_deletion = 14;
+
+  /** Whether cascade deletion of orphans is enabled for end1 */
+  bool end1_cascade_delete_orphans = 15;
+
+  /** Whether cascade deletion of orphans is enabled for end2 */
+  bool end2_cascade_delete_orphans = 16;
+
+  /** The copy policy for end1 */
+  int32 end1_copy_policy = 17;
+
+  /** The copy policy for end2 */
+  int32 end2_copy_policy = 18;
+
+  /** The association's attributes. The following convention is applied:
+    *
+    * For foreign key associations:
+    * - The first attribute is the foreign key (destination end).
+	* - The second attribute is the primary key (origin end).
+	*
+	* For attributed associations:
+    * - The first attribute is the destination end's foreign key field (in the association table).
+	* - The second attribute is the primary key of the destination end
+	* - The third attribute is the foreign key field of the origin end (in the association table).
+	* - The fourth attribute is the primary key of the origin end.
+    */
+  repeated AttributeMsg attributes = 19;
+}
+
+/**
   * The ddx attribute.
   */
 message AttributeMsg {
@@ -187,4 +264,19 @@ message ObjectSubtypeCriterionMsg {
 
   /** The attribute value. */
   .ProSuite.Microservices.Definitions.Shared.Gdb.AttributeValue attribute_value = 2;
+}
+
+  /**
+  * The object cateogry attribute constraint such as a not-applicable attribute.
+  */
+  message ObjectCategoryAttributeConstraintMsg {
+  
+	/** The dataset id. */
+	int32 dataset_id = 1;
+
+	/** The object category id. */
+	int32 object_category_id = 2;
+  
+	/** The attribute id. */
+	int32 attribute_id = 3;
 }

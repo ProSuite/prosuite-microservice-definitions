@@ -156,8 +156,14 @@ message GetConditionResponse {
 
 message GetDatasetDetailsResponse {
 
-  /** The datasets with all properties including the collections fully populated. */
+  /** The datasets with all properties including the collections fully populated. 
+    * This list could include additional datasets not requested, in case they are
+    * referenced by an association used by a requested dataset.
+    */
   repeated ProSuite.Microservices.Definitions.Shared.Ddx.DatasetMsg datasets = 1;
+
+  /** The associations referenced by one of the requested datasets. */
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.AssociationMsg associations = 2;
 }
 
 // ----------------------------------------------------------------------------
