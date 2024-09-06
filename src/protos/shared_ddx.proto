@@ -266,17 +266,56 @@ message ObjectSubtypeCriterionMsg {
   .ProSuite.Microservices.Definitions.Shared.Gdb.AttributeValue attribute_value = 2;
 }
 
-  /**
+ /**
   * The object cateogry attribute constraint such as a not-applicable attribute.
   */
-  message ObjectCategoryAttributeConstraintMsg {
+message ObjectCategoryAttributeConstraintMsg {
   
-	/** The dataset id. */
-	int32 dataset_id = 1;
+  /** The dataset id. */
+  int32 dataset_id = 1;
 
-	/** The object category id. */
-	int32 object_category_id = 2;
+  /** The object category id. */
+  int32 object_category_id = 2;
   
-	/** The attribute id. */
-	int32 attribute_id = 3;
+  /** The attribute id. */
+  int32 attribute_id = 3;
+}
+
+/**
+  * The linear network definition.
+  */
+message LinearNetworkMsg {
+
+  /** The linear network id. */
+  int32 linear_network_id = 1;
+
+  /** The linear network name. */
+  string name = 2;
+
+  /** The linear network's custom tolerance. */
+  double custom_tolerance = 3;
+
+  /** Whether the flow direction shall be enforce. */
+  int32 enforce_flow_direction = 4;
+
+  /** The linear network's attributes. */
+  repeated NetworkDatasetMsg network_datasets = 5;
+}
+
+/**
+  * The linear network dataset.
+  */
+message NetworkDatasetMsg {
+
+  /** The dataset id. */
+  int32 dataset_id = 1;
+
+  /** The dataset's where clause. */
+  string where_clause = 2;
+
+  /** Whether the dataset is the default junction dataset. */
+  bool is_default_junction = 3;
+
+  /** Whether the point dataset is splitting or the line dataset is split in nodes. */
+  bool is_splitting = 4;
 }
