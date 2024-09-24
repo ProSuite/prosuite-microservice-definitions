@@ -36,8 +36,29 @@ message ProjectMsg {
   /** The tool configuration directory. */
   string tool_config_directory = 6;
 
+  /** The project's attribute editor config dir. */
+  string attribute_editor_config_dir = 7;
+
+  /** The projects work list config dir */
+  string work_list_config_dir = 8;
+
+  /** The project's description. */
+  string description = 9;
+
   /** Whether read-only datasets are to be excluded from the project worksapce. */
-  bool exclude_read_only_datasets_from_project_workspace = 7;
+  bool exclude_read_only_datasets_from_project_workspace = 10;
+
+  /** The project's full extent X-Min */
+  double full_extent_x_min = 11;
+
+  /** The project's full extent Y-Min */
+  double full_extent_y_min = 12;
+
+  /** The project's full extent X-Max */
+  double full_extent_x_max = 13;
+
+  /** The project's full extent Y-Max */
+  double full_extent_y_max = 14;
 }
 
 /**
