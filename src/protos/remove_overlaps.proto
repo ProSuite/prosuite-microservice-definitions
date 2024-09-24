@@ -77,7 +77,19 @@ message RemoveOverlapsRequest {
 
   /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
   repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 7;
+
+  repeated DatasetSpecificZSource dataset_specific_z_sources = 8;
 }
+
+message DatasetSpecificZSource {
+
+  /** The dataset name. */
+  string dataset_name = 1;
+
+  /** The z source enum. */
+  int32 z_source = 2;
+}
+
 
 /**
   * The overlaps removal response.
