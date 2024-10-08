@@ -313,14 +313,17 @@ message LinearNetworkMsg {
   /** The linear network name. */
   string name = 2;
 
-  /** The linear network's custom tolerance. */
-  double custom_tolerance = 3;
+  /** The linear network's description. */
+  string description = 3;
 
-  /** Whether the flow direction shall be enforce. */
-  int32 enforce_flow_direction = 4;
+  /** The linear network's custom tolerance. */
+  double custom_tolerance = 4;
+
+  /** Whether the flow direction shall be enforced. */
+  bool enforce_flow_direction = 5;
 
   /** The linear network's attributes. */
-  repeated NetworkDatasetMsg network_datasets = 5;
+  repeated NetworkDatasetMsg network_datasets = 6;
 }
 
 /**
