@@ -16,26 +16,30 @@ import "shared_gdb.proto";
 service CrackGrpc {
 
   /**
-    * The calculation of relevant overlaps.
+    * The calculation of relevant crack or chop points.
     */
   rpc CalculateCrackPoints(CalculateCrackPointsRequest) returns (CalculateCrackPointsResponse) {}
 
   /**
-    * The removal of the specified overlaps.
+    * The insertion of the specified points to be used for cracking or chopping geometries.
     */
   rpc ApplyCrackPoints(ApplyCrackPointsRequest) returns (ApplyCrackPointsResponse) {}
+
+  /**
+    * The chopping (splitting) of the provided geometries at the specified points.
+    */
+  rpc ChopLines(ApplyCrackPointsRequest) returns (ChopLinesResponse) {}
 }
 
 /**
-  * The overlaps calculation request.
+  * The crack / chop point calculation request.
   */
 message CalculateCrackPointsRequest {
 
-  /** The set of source features from which the overlaps shall be removed. */
+  /** The set of source features for which the points shall be calculated. */
   repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
 
-  /** The set of potentially overlapping target features. If this collection is empty the
-    * crack points between source features shall be calculated.
+  /** The set of potentially intersecting target features.
     */
   repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg target_features = 2;
 
@@ -71,11 +75,15 @@ message CrackOptionsMsg {
     */
   bool use_source_zs = 5;
 
-  /** Whether the source features shall only be cracked with relation to target
+  /** Only chop at endpoints intersecting selected line's interior (T shapes).
+    */
+  bool exclude_interior_interior_intersection = 6;
+
+    /** Whether the source features shall only be cracked with relation to target
     * features within the same feature class, i.e. the TargetFeatureSelection 
     * option is 'SameClass'.
     */
-  bool crack_only_within_same_class = 6;
+  bool crack_only_within_same_class = 7;
 }
 
 /**
@@ -91,14 +99,14 @@ message CalculateCrackPointsResponse {
 }
 
 /**
-  * The overlaps removal request.
+  * The apply crack points request.
   */
 message ApplyCrackPointsRequest {
 
-  /** The set of source features from which the overlaps shall be removed. */
+  /** The set of source features in which the crack points shall be inserted. */
   repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
 
-  /** The crack points to be inserted into the appropriate respective source geometries.
+  /** The crack points to be inserted into the respective source geometries.
     */
   repeated CrackPointsMsg crack_points = 2;
 
@@ -110,9 +118,21 @@ message ApplyCrackPointsRequest {
 }
 
 /**
-  * The overlaps removal response.
+  * The crack point insertion response.
   */
 message ApplyCrackPointsResponse {
+
+  /** The result features. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ResultObjectMsg result_features = 1;
+
+  /** Notifications that might relevant to the user. */
+  repeated string non_storable_messages = 2;
+}
+
+/**
+  * The chop line response.
+  */
+message ChopLinesResponse {
 
   /** The result features. */
   repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ResultObjectMsg result_features = 1;

@@ -274,7 +274,7 @@ message ResultObjectMsg {
     /** The inserted feature with its new properties. */
     InsertedObjectMsg insert = 2;
 
-    /** The inserted feature with its new properties. */
+    /** The deleted feature reference. */
     GdbObjRefMsg delete = 3;
   }
 
