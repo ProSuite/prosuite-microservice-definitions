@@ -84,6 +84,16 @@ message CrackOptionsMsg {
     * option is 'SameClass'.
     */
   bool crack_only_within_same_class = 7;
+
+    /** Whether the point options shall be used DisregardLinearIntersections (0)/
+    IncludeLinearIntersectionEndpoints(1)/IncludeLinearIntersectionAllPoints(2)'.
+    */
+  int32 intersection_point_options = 8;
+
+    /** Whether the crack points shall be applied to existing vertices or not'.
+    */
+  bool add_crack_points_on_existing_vertices = 9;
+
 }
 
 /**
