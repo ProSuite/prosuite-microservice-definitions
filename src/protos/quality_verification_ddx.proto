@@ -162,7 +162,7 @@ message GetDatasetDetailsResponse {
     */
   repeated ProSuite.Microservices.Definitions.Shared.Ddx.DatasetMsg datasets = 1;
 
-  /** The associations referenced by one of the requested datasets. */
+  /** The associations referenced by one or more of the requested datasets. */
   repeated ProSuite.Microservices.Definitions.Shared.Ddx.AssociationMsg associations = 2;
 }
 
