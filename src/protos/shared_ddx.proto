@@ -140,7 +140,10 @@ message DatasetMsg {
   /** The dataset's geometry type or 0 if it has no geometry. */
   int32 geometry_type = 4;
 
-  /** The dataset type once more than object datasets are supported */
+  /** The dataset type corresponding with the ProSuite.Commons.GeoDb.DatasetType
+    * enum. For most implementations this is sufficient. For more specific sub-
+	* types, use the type_code below.
+    */
   int32 dataset_type = 5;
 
   /** The path to the default symbology (layer) file. */
@@ -151,6 +154,11 @@ message DatasetMsg {
 
   /** The dataset's object categories (object type or object sub-type). */
   repeated ObjectCategoryMsg object_categories = 8;
+
+  /** The dataset's concrete type code. This can be used to indicate a more 
+    * specific dataset subclass, such as revision dataset or conflict dataset.
+	*/
+  int32 type_code = 9;
 }
 
 /**
