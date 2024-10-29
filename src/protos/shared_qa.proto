@@ -355,6 +355,9 @@ message VerificationParametersMsg {
     * which is the majority of the involved datasets, will be used. 
     */
   .ProSuite.Microservices.Definitions.Shared.Gdb.SpatialReferenceMsg issue_repository_spatial_reference = 18;
+
+  /** Whether the issues shall be stored in the primary model's error datasets. */
+  bool update_issues_in_verified_model = 19;
 }
 
 /**
