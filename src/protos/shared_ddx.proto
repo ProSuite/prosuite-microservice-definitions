@@ -103,6 +103,9 @@ message ModelMsg {
 
   /** The user / default connection. */
   ConnectionMsg user_connection = 11;
+
+  /** Whether the default database is used only for schema information. */
+  bool use_default_database_only_for_schema = 12;
 }
 
 /**
