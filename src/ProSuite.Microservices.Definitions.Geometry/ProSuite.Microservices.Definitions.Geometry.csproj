@@ -29,6 +29,7 @@
     <Protobuf Include="..\protos\reshape.proto" Link="protos\reshape.proto" />
     <Protobuf Include="..\protos\remove_overlaps.proto" Link="protos\remove_overlaps.proto" />
     <Protobuf Include="..\protos\crack.proto" Link="protos\crack.proto" />
+    <Protobuf Include="..\protos\generalize.proto" Link="protos\generalize.proto" />
     <Protobuf Include="..\protos\fill_hole.proto" Link="protos\fill_hole.proto" />
   </ItemGroup>
 

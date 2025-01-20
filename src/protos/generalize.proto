@@ -1,0 +1,169 @@
+﻿syntax = "proto3";
+
+/**
+ * The gerneralize service definition and its associated request and 
+ * response message types.
+ *
+ */
+
+package ProSuite.Microservices.Definitions.Geometry;
+
+import "shared_gdb.proto";
+
+/**
+  * The generalize service definition.
+  */
+service GeneralizeGrpc {
+
+  /**
+    * The calculation of the removable segments and associated data.
+    */
+  rpc CalculateRemovableSegments(CalculateRemovableSegmentsRequest) 
+      returns (CalculateRemovableSegmentsResponse) {}
+
+  /**
+    * Removes the specified points or segments from the input features.
+    */
+  rpc ApplySegmentRemoval(ApplySegmentRemovalRequest) returns (ApplySegmentRemovalResponse) {}
+}
+
+/**
+  * The removable segment calculation request.
+  */
+message CalculateRemovableSegmentsRequest {
+
+  /** The set of source features for which the result shall be calculated. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
+
+  /** The set of potentially intersecting target features that could protect existing vertices. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg target_features = 2;
+
+  /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 3; 
+
+  /** The generalize options. */
+  GeneralizeOptionsMsg generalize_options = 4;
+
+  /** The perimeter (envelope or polygon) in which the result shall be calculated. */
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg perimeter = 5;
+}
+
+/**
+  * The advanced generaliization options.
+  */
+message GeneralizeOptionsMsg {
+
+  /** Whether the weed (douglas-peucker) algorithm should be used. */
+  bool weed = 1;
+
+  /** The weed_tolerance. */
+  double weed_tolerance = 2;
+
+  /** Whether non-linear segments should be linearized using the weed tolerance. */
+  bool weed_non_linear_segments = 3;
+
+  /** Whether a minimum segment length shall be enforced. */
+  bool enforce_minimum_segment_length = 4;
+
+  /** The minimum segment length. */
+  double minimum_segment_length = 5;
+
+  /** The option to protect topologically impportant vertices. */
+  bool protect_topological_vertices = 6;
+
+  /** Whether to use the 2D distance also for Z-aware geometries. */
+  bool use_2D_length = 7;
+
+  /** Whether the source features's vertices shall only be protected by target
+  * features within the same feature class, i.e. the TargetFeatureSelection 
+  * option is 'SameClass'.
+  */
+  bool protect_only_within_same_class = 8;
+}
+
+/**
+  * The removable segments / vertices calculation response.
+  */
+message CalculateRemovableSegmentsResponse {
+
+  /** The result removable segments for each feature. */
+  repeated RemovableSegmentsMsg removable_segments = 1;
+
+  /** Notifications that might relevant to the user. */
+  repeated string notifications = 2;
+}
+
+/**
+  * The apply segments removal request.
+  */
+message ApplySegmentRemovalRequest {
+
+  /** The set of source features in which segments shall be removed. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
+
+  /** The removable segments to be applied to the respective source geometries. */
+  repeated RemovableSegmentsMsg removable_segments = 2;
+
+  /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 3;
+  
+  /** The generalize options. */
+  GeneralizeOptionsMsg generalize_options = 4;
+
+  /** The perimeter (envelope or polygon) in which the result shall be applied. */
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg perimeter = 5;
+}
+
+/**
+  * The segment removal response.
+  */
+message ApplySegmentRemovalResponse {
+
+  /** The result features. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ResultObjectMsg result_features = 1;
+
+  /** Notifications that might relevant to the user. */
+  repeated string non_storable_messages = 2;
+}
+
+/**
+  * A set of removable vertices or segments associated with a specific source feature.
+  */
+message RemovableSegmentsMsg {
+
+  /** The result multipoint shape with points to delete in the same spatial 
+    * reference as the original feature.  
+    */
+  ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg points_to_delete = 1;
+
+  /** The result multipoint shape with protected points in the same spatial 
+    * reference as the original feature.  
+    */
+  ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg protected_points = 2;
+
+  repeated ShortSegmentMsg short_segments = 3;
+
+  /** A reference to the original feature. */
+  .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjRefMsg original_feature_ref = 4;
+}
+
+/**
+  * The short segment message.
+  */
+message ShortSegmentMsg {
+
+  /** The segment's from point. */
+  ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg from_point = 1;
+
+  /** The segment's to point. */
+  ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg to_point = 2;
+
+  /** The segment's absolute index in the original geometry. */
+  int32 absolute_index = 3;
+
+  /** The part index of the segment in the original geometry. */
+  int32 part_index = 4;
+
+  /** The segment's relative index in its part in the original geometry. */
+  int32 relative_index = 5;
+}
