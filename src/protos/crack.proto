@@ -1,7 +1,7 @@
 ﻿syntax = "proto3";
 
 /**
- * The remove overlaps service definition and its associated request and 
+ * The cracker / chopper service definition and its associated request and 
  * response message types.
  *
  */
@@ -11,7 +11,7 @@ package ProSuite.Microservices.Definitions.Geometry;
 import "shared_gdb.proto";
 
 /**
-  * The crack service definition.
+  * The crack and chop service definitions.
   */
 service CrackGrpc {
 
@@ -97,7 +97,7 @@ message CrackOptionsMsg {
 }
 
 /**
-  * The overlaps calculation response.
+  * The crack point calculation response.
   */
 message CalculateCrackPointsResponse {
 
@@ -156,9 +156,9 @@ message ChopLinesResponse {
   */
 message CrackPointsMsg {
 
-	/** The result overlap geometries (polygons or polylines) in the same 
-    * spatial reference as the original feature.  
-    */
+	/** The result crack points in the same spatial reference as the original 
+      * feature.  
+      */
 	repeated CrackPointMsg crack_points = 1;
 
 	/** A reference to the original feature. */
