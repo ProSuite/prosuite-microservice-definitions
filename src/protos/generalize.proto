@@ -53,32 +53,30 @@ message CalculateRemovableSegmentsRequest {
   */
 message GeneralizeOptionsMsg {
 
-  /** Whether the weed (douglas-peucker) algorithm should be used. */
-  bool weed = 1;
-
-  /** The weed_tolerance. */
-  double weed_tolerance = 2;
+  /** The weed_tolerance or a negative number if no ramer-douglas-peucker 
+    * weeding shall take place. 
+    */
+  double weed_tolerance = 1;
 
   /** Whether non-linear segments should be linearized using the weed tolerance. */
-  bool weed_non_linear_segments = 3;
+  bool weed_non_linear_segments = 2;
 
-  /** Whether a minimum segment length shall be enforced. */
-  bool enforce_minimum_segment_length = 4;
-
-  /** The minimum segment length. */
-  double minimum_segment_length = 5;
+  /** The minimum segment length or a negative number if the minimum segment 
+    * length shall not be enforced. 
+    */
+  double minimum_segment_length = 3;
 
   /** The option to protect topologically impportant vertices. */
-  bool protect_topological_vertices = 6;
+  bool protect_topological_vertices = 4;
 
   /** Whether to use the 2D distance also for Z-aware geometries. */
-  bool use_2D_length = 7;
+  bool use_2D_length = 5;
 
   /** Whether the source features's vertices shall only be protected by target
   * features within the same feature class, i.e. the TargetFeatureSelection 
   * option is 'SameClass'.
   */
-  bool protect_only_within_same_class = 8;
+  bool protect_only_within_same_class = 6;
 }
 
 /**
