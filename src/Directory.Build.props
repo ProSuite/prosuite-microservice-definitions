@@ -4,6 +4,7 @@
     <Version>0.6.0</Version>
     <Authors>The ProSuite Authors</Authors>
     <Copyright>Copyright (c) 2020 The ProSuite Authors</Copyright>
-    <Company />
+    <Company>Dira GeoSystems</Company>
+	<PackageLicenseFile>..\..\LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 </Project>
