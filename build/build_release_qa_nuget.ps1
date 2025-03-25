@@ -13,12 +13,10 @@ cd $PSScriptRoot
 
 mode con:cols=200 lines=15000
 
-dotnet build ..\src\ProSuite.Microservices.Definitions.Shared\ProSuite.Microservices.Definitions.Shared.csproj -property:Configuration=Release
 dotnet build ..\src\ProSuite.Microservices.Definitions.QA\ProSuite.Microservices.Definitions.QA.csproj -property:Configuration=Release
 
 # exclude the native binaries, otherwise the package would become huge (https://stackoverflow.com/questions/41941588/binaries-are-added-to-project-when-nuget-package-has-grpc-core-as-a-dependency)
-nuget pack ..\src\ProSuite.Microservices.Definitions.Shared\ProSuite.Microservices.Definitions.Shared.csproj -Exclude '**\*.x86.*;**\*.x64.*' -OutputDirectory .\output -Properties Configuration=Release
-nuget pack ..\src\ProSuite.Microservices.Definitions.QA\ProSuite.Microservices.Definitions.QA.csproj -Exclude '**\*.x86.*;**\*.x64.*' -OutputDirectory .\output -Properties Configuration=Release
+nuget pack ..\src\ProSuite.Microservices.Definitions.QA\ProSuite.Microservices.Definitions.QA.csproj -Exclude '**\*.x86.*;**\*.x64.*' -OutputDirectory .\output\nuget -Properties Configuration=Release
 
 
 pause
