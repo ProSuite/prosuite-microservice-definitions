@@ -15,11 +15,19 @@ $version = $xmlContent.Project.PropertyGroup.Version
 # Output the version
 Write-Output "Determined Package Version: $version"
 
-$packageName = ".\output\nuget\DiraGeoSystems.ProSuite.Microservices.QA.$version.nupkg"
+$packageNameQA = ".\output\nuget\DiraGeoSystems.ProSuite.Microservices.QA.$version.nupkg"
 
-Write-Output "Publishing $packageName"
+Write-Output "Publishing $packageNameQA"
 
-nuget push $packageName -Source https://api.nuget.org/v3/index.json
+nuget push $packageNameQA -Source https://api.nuget.org/v3/index.json
+
+
+
+$packageNameGeometry = ".\output\nuget\DiraGeoSystems.ProSuite.Microservices.Geometry.$version.nupkg"
+
+Write-Output "Publishing $packageNameGeometry"
+
+nuget push $packageNameGeometry -Source https://api.nuget.org/v3/index.json
 
 
 pause

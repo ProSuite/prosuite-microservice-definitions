@@ -19,4 +19,8 @@ dotnet build ..\src\ProSuite.Microservices.Definitions.QA\ProSuite.Microservices
 nuget pack ..\src\ProSuite.Microservices.Definitions.QA\ProSuite.Microservices.Definitions.QA.csproj -Exclude '**\*.x86.*;**\*.x64.*' -OutputDirectory .\output\nuget -Properties Configuration=Release
 
 
+dotnet build ..\src\ProSuite.Microservices.Definitions.Geometry\ProSuite.Microservices.Definitions.Geometry.csproj -property:Configuration=Release
+nuget pack ..\src\ProSuite.Microservices.Definitions.Geometry\ProSuite.Microservices.Definitions.Geometry.csproj -Exclude '**\*.x86.*;**\*.x64.*' -OutputDirectory .\output\nuget -Properties Configuration=Release
+
+
 pause

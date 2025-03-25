@@ -5,9 +5,12 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ProSuite.Microservices.Definitions.Key.snk</AssemblyOriginatorKeyFile>
-    <Description>The geometry service definition.</Description>
+    <Description>The ProSuite geometry microservice definitions for .NET.</Description>
     <PackageLicenseFile>..\..\LICENSE.md</PackageLicenseFile>
-    <Company />
+    <Title>ProSuite Geometry Microservice Definitions</Title>
+    <Product>ProSuite Edit Tools</Product>
+    <PackageProjectUrl>https://www.dirageosystems.ch/prosuite</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ProSuite/prosuite-microservice-definitions</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
