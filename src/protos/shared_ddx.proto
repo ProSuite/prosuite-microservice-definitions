@@ -162,6 +162,9 @@ message DatasetMsg {
     * specific dataset subclass, such as revision dataset or conflict dataset.
 	*/
   int32 type_code = 9;
+
+  /** The dataset's model id. */
+  int32 model_id = 10;
 }
 
 /**
@@ -239,6 +242,9 @@ message AssociationMsg {
 	* - The fourth attribute is the primary key of the origin end.
     */
   repeated AttributeMsg attributes = 19;
+
+  /** The association's model id. */
+  int32 model_id = 20;
 }
 
 /**
