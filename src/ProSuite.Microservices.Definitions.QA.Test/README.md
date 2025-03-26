@@ -1,7 +1,7 @@
-# ProSuite QA Microservice Definitions
+# ProSuite QA Microservice Definitions for external tests
 
 [ProSuite QA](https://dirageosystems.ch/prosuite) provides quality verification functionality for geographic data implemented in a microservice architecture. 
-This package contains the .NET assemblies of the [gRPC](https://github.com/grpc) microservice APIs for the QA servers and clients implemented in different repositories.
+This package contains the .NET assemblies of the [gRPC](https://github.com/grpc) microservice APIs for the external or third-party QA test implementations and its client used in different repositories.
 
 In case the other ProSuite Microservice Definitions are used in the same application, make sure to use corresponding versions, as they all have a reference to ProSuite.Microservices.Definitions.Shared containing shared message definitions.
 

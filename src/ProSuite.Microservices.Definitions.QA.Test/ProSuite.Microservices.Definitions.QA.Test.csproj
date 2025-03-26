@@ -5,9 +5,12 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ProSuite.Microservices.Definitions.Key.snk</AssemblyOriginatorKeyFile>
-    <Description>The quality verification service definition.</Description>
     <PackageLicenseFile>..\..\LICENSE.md</PackageLicenseFile>
-    <Company />
+    <Description>The ProSuite quality test definition for .NET</Description>
+    <Title>ProSuite QA Microservice external Test API</Title>
+    <Product>ProSuite QA</Product>
+    <PackageProjectUrl>https://www.dirageosystems.ch/prosuite</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ProSuite/prosuite-microservice-definitions</RepositoryUrl>
   </PropertyGroup>
   
   <ItemGroup>
@@ -26,6 +29,8 @@
     -->
     <Content Include="..\protos\shared_gdb.proto" Link="protos\shared_gdb.proto" />
     <Protobuf Include="..\protos\quality_test.proto" Link="protos\quality_test.proto" />
+
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
