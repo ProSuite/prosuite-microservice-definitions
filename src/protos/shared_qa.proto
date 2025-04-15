@@ -174,27 +174,27 @@ message QualityConditionMsg {
     */
   int32 condition_id = 1;
 
-	/** The name of the condition. */
-	string name = 2;
-
-	/** The name of the test descriptor in the form <class name>(<consturctor id>). */
-	string test_descriptor_name = 3;
-
-	/** An optional url. */
-	string url = 4;
-
-	/** The optional description.
-    */
-	string description = 5;
-    
-	/** The condition's parameters. */
-	repeated ParameterMsg parameters = 6;
-
-	/** The condition's issue filters. */
-	repeated InstanceConfigurationMsg condition_issue_filters = 7;
-
-	/** The condition's issue filter expression that allows combining issue filters. */
-	string issue_filter_expression = 8;
+  /** The name of the condition. */
+  string name = 2;
+  
+  /** The name of the test descriptor in the form <class name>(<consturctor id>). */
+  string test_descriptor_name = 3;
+  
+  /** An optional url. */
+  string url = 4;
+  
+  /** The optional description.
+  */
+  string description = 5;
+  
+  /** The condition's parameters. */
+  repeated ParameterMsg parameters = 6;
+  
+  /** The condition's issue filters. */
+  repeated InstanceConfigurationMsg condition_issue_filters = 7;
+  
+  /** The condition's issue filter expression that allows combining issue filters. */
+  string issue_filter_expression = 8;
 }
 
 /**
@@ -358,6 +358,13 @@ message VerificationParametersMsg {
 
   /** Whether the issues shall be stored in the primary model's error datasets. */
   bool update_issues_in_verified_model = 19;
+
+  /** The culture code that shall determine the language for issue reporting.
+    * It will be used for both the html report and the issue descriptions 
+    * If not specified, the default culture code will be used on the host of 
+    * the service.
+    */
+  string report_culture_code = 20;
 }
 
 /**
@@ -365,12 +372,12 @@ message VerificationParametersMsg {
   * a specific object class.
   */
 message GdbData {
-  
-	/** The object count (if requested). */
-	int64 gdb_object_count = 4;
 
-	/** The gdb objects (if requested). */
-	repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg gdb_objects = 3;
+  /** The object count (if requested). */
+  int64 gdb_object_count = 4;
+  
+  /** The gdb objects (if requested). */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg gdb_objects = 3;
 }
 
 /**
@@ -379,7 +386,7 @@ message GdbData {
   */
 message DataRequest {
 	
-	/** The table or query for which additional objects are requested. */
+  /** The table or query for which additional objects are requested. */
   oneof table
   {
     ClassDef class_def = 1;
