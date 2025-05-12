@@ -81,6 +81,10 @@ message CalculateReshapeLinesResponse {
 
   /** The notifications. */
   repeated string notifications = 3;
+
+  /** The filter buffer line for display purposes. */
+	.ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg filter_buffer = 4;
+
 }
 
 /**
