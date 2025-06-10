@@ -32,6 +32,8 @@ service QualityVerificationGrpc {
 	* VerifyQuality instead.
     */
   rpc VerifyStandaloneXml(StandaloneVerificationRequest) returns (stream StandaloneVerificationResponse) {}
+
+  rpc QueryData(QueryDataRequest) returns (stream QueryDataResponse) {}
 }
 
 /**
@@ -83,6 +85,24 @@ message DataVerificationRequest {
 
   /** The error message (if any) regarding data or schema provision. */
   string error_message = 5;
+}
+
+message QueryDataRequest {
+
+  /** The list of data sources (i.e. workspaces) referenced by the transformer. */
+  repeated DataSourceMsg data_sources = 1;
+
+  /** The schema information for the datasets referenced by the transformer. */
+  SchemaMsg schema = 2;
+
+  /** The transformer configuration referenced by the data request. */
+  InstanceConfigurationMsg transformer = 3;
+
+  /** The data request containing the query details. */
+  DataRequest data_request = 4;
+
+  /** The (display) name of the user who requested the verification. */
+  string user_name = 5;
 }
 
 /**
@@ -160,4 +180,17 @@ message StandaloneVerificationResponse {
 
   /** The list of issues detected since the last response. */
   repeated IssueMsg issues = 3;
+}
+
+message QueryDataResponse {
+
+  /** The current status of the query run. */
+  int32 service_call_status = 1;
+
+  /** The result data. */
+  GdbData data = 2;
+
+  /** A log message in case there was an error. */
+  LogMsg message = 3;
+
 }

@@ -373,11 +373,14 @@ message VerificationParametersMsg {
   */
 message GdbData {
 
-  /** The object count (if requested). */
-  int64 gdb_object_count = 4;
-  
+  /** Whether more data will be provided in a next message. */
+  bool has_more_data = 2;
+
   /** The gdb objects (if requested). */
   repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg gdb_objects = 3;
+
+  /** The object count (if requested). */
+  int64 gdb_object_count = 4;
 }
 
 /**
