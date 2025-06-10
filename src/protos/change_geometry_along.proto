@@ -111,6 +111,9 @@ message CalculateCutLinesRequest {
 
 	/** The options that control the filtering of the result reshape lines. */
 	ReshapeLineFilterOptionsMsg filter_options = 6;
+  
+  /** The z-sources to be used for new vertices of the source features. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.DatasetZSource z_sources = 7;
 }
 
 /**
@@ -184,9 +187,6 @@ message ApplyCutLinesRequest {
     */
 	bool insert_vertices_in_target = 3;
 
-	/** The z source of the changed vertices.
-    */
-	int32 changed_vertices_z_source = 4;
 }
 
 
