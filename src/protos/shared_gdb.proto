@@ -67,16 +67,19 @@ message AttributeValue {
     /** The value is null in the database */
     bool db_null = 1;
 
-    /** The geodatabase 'short' integer */
+    /** The geodatabase 'short' integer which corresponds to a 16-bit int */
     int32 short_int_value = 2;
 
-    /** The geodatabase 'long' integer */
-    int32 long_int_value = 3;
+    /** The geodatabase 'long' integer which corresponds to a 32-bit int */
+    int32 int_value = 3;
 
-    /** The geodatabase 'float' */
+    /** The geodatabase 'big' integer which corresponds to a 64-bit int */
+    int64 big_int_value = 10;
+
+    /** The geodatabase 'float', i.e. a 4-byte floating-point type */
     float float_value = 4;
 
-    /** The geodatabase 'double' */
+    /** The geodatabase 'double', i.e. a 8-byte floating-point type */
     double double_value = 5;
 
     /** The geodatabase 'double' */
