@@ -96,6 +96,36 @@ message AttributeValue {
 	}
 }
 
+// Experimental
+message AttributeValueFast {
+  enum Kind {
+    NONE = 0;
+    DB_NULL = 1;
+    SHORT = 2;
+    INT = 3;
+    BIG_INT = 10;
+    FLOAT = 4;
+    DOUBLE = 5;
+    STRING = 6;
+    DATE_TIME_TICKS = 7;
+    UUID_KIND = 8;
+    BLOB = 9;
+  }
+
+  Kind kind = 100;
+
+  optional bool db_null = 1;
+  optional int32 short_int_value = 2;
+  optional int32 int_value = 3;
+  optional int64 big_int_value = 10;
+  optional float float_value = 4;
+  optional double double_value = 5;
+  optional string string_value = 6;
+  optional int64 date_time_ticks_value = 7;
+  optional UUID uuid_value = 8;
+  optional bytes blob_value = 9;
+}
+
 /**
   * Geodatabase object (feature or row). 
   * By convention a row has a null Shape and a feature a not-null (but possibly empty)
@@ -117,6 +147,9 @@ message GdbObjectMsg {
     * the entire list left empty alltogether.
     */
   repeated AttributeValue values = 3;
+
+  // Experimental
+  repeated AttributeValueFast values_fast = 100;
 
   /** The geometry, in case this message represents a feature. */
   ShapeMsg Shape = 4;
