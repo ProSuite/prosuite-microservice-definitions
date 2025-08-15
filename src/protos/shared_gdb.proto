@@ -166,7 +166,15 @@ message ObjectClassMsg {
   /** The spatial reference of the class. */
   SpatialReferenceMsg spatial_reference = 6;
 
+  /** The fields of the object class, i.e. the field definitions. */
   repeated FieldMsg fields = 7;
+
+  /** The model identifier that can be used to uniquely define the model of the 
+    * dataset representing this class. It is considered optional if the 
+    * the class is not part of a model or the workspace_handle is sufficient.
+    * Typically this can be used to connect an object class to a DataSourceMsg.
+    */
+  int32 ddx_model_id = 8;
 }
 
 /**

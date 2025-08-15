@@ -143,6 +143,9 @@ message DataSourceMsg {
 
   /** The database owner (for enterprise databases) */
   string schema_owner = 5;
+
+  /** The model id used for datasets that are defined in the data dictionary. */
+  int32 ddx_model_id = 6;
 }
 
 /**
