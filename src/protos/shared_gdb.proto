@@ -119,7 +119,7 @@ message GdbObjectMsg {
   repeated AttributeValue values = 3;
 
   /** The geometry, in case this message represents a feature. */
-  ShapeMsg Shape = 4;
+  ShapeMsg shape = 4;
 }
 
 /**
