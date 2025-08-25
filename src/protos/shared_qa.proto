@@ -379,8 +379,11 @@ message GdbData {
   /** Whether more data will be provided in a next message. */
   bool has_more_data = 2;
 
-  /** The gdb objects (if requested). */
+  /** The row-based gdb objects (if transfer_mode is rows). */
   repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg gdb_objects = 3;
+
+  /** The columnar gdb data (if transfer_mode is columns). */
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ColumnarGdbObjects gdb_columnar_data = 5;
 
   /** The object count (if requested). */
   int64 gdb_object_count = 4;
@@ -413,6 +416,9 @@ message DataRequest {
     * be ommited in the result.
     */
 	bool count_only = 6;
+
+    /** The transfer mode (experimental): rows = 0, columns = 1, auto = 2,  */
+    int32 transfer_mode = 7;
 }
 
 /**

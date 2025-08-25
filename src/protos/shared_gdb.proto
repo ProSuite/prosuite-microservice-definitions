@@ -123,6 +123,82 @@ message GdbObjectMsg {
 }
 
 /**
+  * Geodatabase objects in columnar form, which can be delivered with much 
+  * better performance than row-based objects.
+  */
+message ColumnarGdbObjects {
+
+  /** The number of rows in this batch */
+  int32 row_count = 1;
+
+  /** The columns, each containing values for all rows. The order of the 
+    * columns correspond to the order of the requested fields in the 
+    * DataRequest subfields.
+    */
+  repeated Column columns = 2;
+}
+
+/** The column types, each with a packed bitmap of nulls for the column, 
+  * LSB-first, length = ceil(row_count / 8.0).
+  */
+message Int16Column    { repeated int32 values = 1; }
+message Int32Column    { repeated int32 values = 1; }
+message Int64Column    { repeated int64 values = 1; }
+message FloatColumn    { repeated float values = 1; }
+message DoubleColumn   { repeated double values = 1; }
+message StringColumn   { repeated string values = 1; }
+message BytesColumn    { repeated bytes values = 1; }
+message UuidColumn     { repeated UUID values = 1; }
+message DateTicksColumn{ repeated int64 values = 1; } // DateTime.Ticks
+message GeometryColumn { repeated ShapeMsg shapes = 1; }
+
+
+enum WireFieldType {
+  FIELD_TYPE_UNKNOWN  = 0;
+  FIELD_TYPE_INT16    = 1;
+  FIELD_TYPE_INT32    = 2;
+  FIELD_TYPE_INT64    = 3;
+  FIELD_TYPE_FLOAT    = 4;
+  FIELD_TYPE_DOUBLE   = 5;
+  FIELD_TYPE_STRING   = 6;
+  FIELD_TYPE_BYTES    = 7;
+  FIELD_TYPE_UUID     = 8;
+  FIELD_TYPE_DATETICKS= 9;
+  FIELD_TYPE_GEOMETRY = 10;
+}
+
+/**
+  * An individual column of attribute values for a set of rows.
+  */
+message Column {
+
+  /** The name of the column. */
+  string name = 1;
+
+  /** The wire-level type of this column. */
+  WireFieldType type = 2;
+
+  /** A packed bitmap of nulls for the column, LSB-first, 
+   *  length = ceil(row_count / 8.0).
+   */
+  bytes nulls = 3;
+
+  /** The optional length of the column, in case of string or bytes. */
+  oneof values {
+    Int16Column     short_int_values       = 10;
+    Int32Column     int_values             = 11;
+    Int64Column     big_int_values         = 12;
+    FloatColumn     float_values           = 13;
+    DoubleColumn    double_values          = 14;
+    StringColumn    string_values          = 15;
+    BytesColumn     byte_values            = 16;
+    UuidColumn      uuid_values            = 17;
+    DateTicksColumn date_time_ticks_values = 18;
+    GeometryColumn  geometries             = 19;
+  }
+}
+
+/**
   * A light-weight reference to a geodatabase object (feature or row). 
   */
 message GdbObjRefMsg {
