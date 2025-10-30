@@ -362,6 +362,14 @@ message VerificationParametersMsg {
   /** Whether the issues shall be stored in the primary model's error datasets. */
   bool update_issues_in_verified_model = 19;
 
+  /** Deletion of existing issues in the primary model's error datasets'. This 
+    * parameter is ignored if update_issues_in_verified_model is false.
+    * 0: Delete issues in the perimeter that belong to a verified condition.
+    * 1: Delete all issues in the perimeter.
+    * 2: Do not delete any issues.
+    */
+  int32 delete_issues_in_verified_model = 21;
+
   /** The culture code that shall determine the language for issue reporting.
     * It will be used for both the html report and the issue descriptions 
     * If not specified, the default culture code will be used on the host of 
