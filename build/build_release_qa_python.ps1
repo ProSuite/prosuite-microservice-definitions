@@ -4,6 +4,16 @@
 # - ProSuite.Microservices.Definitions.QA.*
 # These python files can be checked into the consuming repo's lib folder.
 
+# Note:
+# The structure of the generated files depends on the active Python
+# environment at build time. The installed versions of 'grpcio-tools' and
+# 'protobuf' determine which code pattern is produced.
+# (e.g., building with protobuf 4.x produces files that import 'runtime_version',
+# while protobuf 6.x creates a different import structure.)
+# When the base environment is active during the build, the Protobuf files
+# are generated using the structure of the newest available protobuf/grpc
+# versions.
+
 Set-Location $PSScriptRoot
 
 $OutputDir = "output/python" 
