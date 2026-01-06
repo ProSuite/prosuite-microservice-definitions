@@ -702,22 +702,4 @@ message QualityVerificationDatasetMsg {
   double load_time = 2;
 }
 
-/**
-  * A simple progress message wrapping a log entry to be streamed during a lengthy process.
-  */
-message LogMsg {
-
-  /** The detailed progress message. */
-  string message = 3;
-
-  /** The (log4net) progress message level. A few examples:
-    * Fatal = 110000
-    * Error = 70000
-    * Warn = 60000
-    * Info = 40000
-    * Debug = 30000
-    * Verbose = 10000
-    */
-  int32 message_level = 4;
-}
 

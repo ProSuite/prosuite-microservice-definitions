@@ -1,0 +1,48 @@
+﻿syntax = "proto3";
+
+/**
+ * The core types contain re-usable message definitions to be used in various
+ * services or aggregate messages.
+ *
+ */
+
+package ProSuite.Microservices.Definitions.Shared.Commons;
+
+/**
+  * UUID / Guid format as byte array.
+  */
+message UUID {
+	bytes value = 1;
+}
+
+/**
+  * A key value pair.
+  */
+message KeyValuePairMsg {
+
+	/** The key. */
+	string key = 1;
+
+	/** The value. */
+	string value = 2;
+}
+
+/**
+  * A simple progress message wrapping a log entry to be streamed during a lengthy process.
+  * Consider moving to shared.proto that contains other basic types
+  */
+message LogMsg {
+
+  /** The detailed progress message. */
+  string message = 3;
+
+  /** The (log4net) progress message level. A few examples:
+    * Fatal = 110000
+    * Error = 70000
+    * Warn = 60000
+    * Info = 40000
+    * Debug = 30000
+    * Verbose = 10000
+    */
+  int32 message_level = 4;
+}

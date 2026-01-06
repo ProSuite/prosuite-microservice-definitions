@@ -11,12 +11,7 @@
 
 package ProSuite.Microservices.Definitions.Shared.Gdb;
 
-/**
-  * UUID / Guid format as byte array.
-  */
-message UUID {
-	bytes value = 1;
-}
+import "shared_commons.proto";
 
 /**
   * A basic envelope in the XY plane.
@@ -89,7 +84,7 @@ message AttributeValue {
     int64 date_time_ticks_value = 7;
 
     /** The geodatabase 'GUID' */
-    UUID uuid_value = 8;
+    .ProSuite.Microservices.Definitions.Shared.Commons.UUID uuid_value = 8;
 
     /** The geodatabase 'blob' */
     bytes blob_value = 9;
@@ -148,7 +143,7 @@ message FloatColumn    { repeated float values = 1; }
 message DoubleColumn   { repeated double values = 1; }
 message StringColumn   { repeated string values = 1; }
 message BytesColumn    { repeated bytes values = 1; }
-message UuidColumn     { repeated UUID values = 1; }
+message UuidColumn     { repeated .ProSuite.Microservices.Definitions.Shared.Commons.UUID values = 1; }
 message DateTicksColumn{ repeated int64 values = 1; } // DateTime.Ticks
 message GeometryColumn { repeated ShapeMsg shapes = 1; }
 
@@ -280,22 +275,10 @@ message WorkspaceMsg {
   int64 default_version_creation_ticks = 7;
 
   /** The workspace connection properties. */
-  repeated KeyValuePairMsg connection_properties = 8;
+  repeated .ProSuite.Microservices.Definitions.Shared.Commons.KeyValuePairMsg connection_properties = 8;
 
   /** The default version modification date, in case it is a remote geodatabase. */
   int64 default_version_modification_ticks = 9;
-}
-
-/**
-  * A key value pair.
-  */
-message KeyValuePairMsg {
-
-	/** The key. */
-	string key = 1;
-
-	/** The value. */
-	string value = 2;
 }
 
 /**

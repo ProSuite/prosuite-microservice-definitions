@@ -8,6 +8,7 @@
 
 package ProSuite.Microservices.Definitions.QA;
 
+import "shared_commons.proto";
 import "shared_gdb.proto";
 import "shared_qa.proto";
 
@@ -188,7 +189,7 @@ message StandaloneVerificationResponse {
   int32 service_call_status = 1;
 
   /** The current log message of the verification run. */
-  LogMsg message = 2;
+  .ProSuite.Microservices.Definitions.Shared.Commons.LogMsg message = 2;
 
   /** The list of issues detected since the last response. */
   repeated IssueMsg issues = 3;
@@ -203,7 +204,7 @@ message QueryDataResponse {
   GdbData data = 2;
 
   /** A log message in case there was an error. */
-  LogMsg message = 3;
+  .ProSuite.Microservices.Definitions.Shared.Commons.LogMsg message = 3;
 
   /** The request for input data to be provided by the client. */
   DataRequest data_request = 4;

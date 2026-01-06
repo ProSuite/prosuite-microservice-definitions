@@ -28,6 +28,7 @@
     -->
     <Content Include="..\protos\shared_gdb.proto" Link="protos\shared_gdb.proto" />
     <Content Include="..\protos\shared_ddx.proto" Link="protos\shared_ddx.proto" />
+    <Content Include="..\protos\shared_commons.proto" Link="protos\shared_commons.proto" />
     
     <Protobuf Include="..\protos\quality_verification_service.proto" Link="protos\quality_verification_service.proto" />
     <Protobuf Include="..\protos\quality_verification_ddx.proto" Link="protos\quality_verification_ddx.proto" />
