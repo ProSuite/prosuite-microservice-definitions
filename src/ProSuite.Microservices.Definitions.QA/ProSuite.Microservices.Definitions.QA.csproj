@@ -33,12 +33,12 @@
     <Protobuf Include="..\protos\quality_verification_ddx.proto" Link="protos\quality_verification_ddx.proto" />
     <Protobuf Include="..\protos\shared_qa.proto" Link="protos\shared_qa.proto" />
 
-    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.24.0" />
-    <PackageReference Include="Grpc" Version="2.46.6" />
+    <PackageReference Include="Google.Protobuf" Version="3.33.1" />
+    <PackageReference Include="Grpc.Core" Version="2.46.6" />
     <PackageReference Include="Grpc.Tools" Version="2.62.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
