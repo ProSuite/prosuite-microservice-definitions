@@ -112,6 +112,9 @@ message QueryDataRequest {
 
   /** The input data delivered by to a DataRequest from the server. */
   GdbData input_data = 7;
+
+  /** The name of the ddx environment. */
+  string environment_name = 8;
 }
 
 /**
