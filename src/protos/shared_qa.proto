@@ -376,6 +376,10 @@ message VerificationParametersMsg {
     * the service.
     */
   string report_culture_code = 20;
+
+  /** Specific options: See XmlVerificationOptions. */
+  string xml_options = 22;
+
 }
 
 /**
