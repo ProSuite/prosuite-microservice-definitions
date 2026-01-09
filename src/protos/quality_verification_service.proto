@@ -28,20 +28,11 @@ service QualityVerificationGrpc {
   rpc VerifyDataQuality(stream DataVerificationRequest) returns (stream DataVerificationResponse) {}
 
   /**
-    * Verifies the quality using an XML definition instead of accessing the data dictionary.
-	* This is a simplified interface with a basic response and no parallelism. Consider using
-	* VerifyQuality instead.
-    */
-  // TODO: This is just a test
-    //rpc VerifyStandaloneXml(StandaloneVerificationRequest) returns (stream StandaloneVerificationResponse) {}
-
-  /**
-    * Importes Issues into an exception geodatabase.
+    * Imports issues into an exception geodatabase.
     */
   rpc ImportExceptions(ImportExceptionsRequest) returns (ImportExceptionsResponse) {}
 
-
-  /**
+    /**
     * Queries data using a transformer configuration and a data request.
     */
   rpc QueryData(stream QueryDataRequest) returns (stream QueryDataResponse) {}
@@ -218,6 +209,7 @@ message StandaloneVerificationResponse {
 
 /** The response of the exception import operation. */
 message ImportExceptionsResponse {
+
   /** The current status code of the import run. */
   int32 service_call_status = 1;
 
