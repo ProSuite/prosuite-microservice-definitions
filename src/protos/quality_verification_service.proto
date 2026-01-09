@@ -32,7 +32,14 @@ service QualityVerificationGrpc {
 	* This is a simplified interface with a basic response and no parallelism. Consider using
 	* VerifyQuality instead.
     */
-  rpc VerifyStandaloneXml(StandaloneVerificationRequest) returns (stream StandaloneVerificationResponse) {}
+  // TODO: This is just a test
+    //rpc VerifyStandaloneXml(StandaloneVerificationRequest) returns (stream StandaloneVerificationResponse) {}
+
+  /**
+    * Importes Issues into an exception geodatabase.
+    */
+  rpc ImportExceptions(ImportExceptionsRequest) returns (ImportExceptionsResponse) {}
+
 
   /**
     * Queries data using a transformer configuration and a data request.
@@ -144,6 +151,20 @@ message StandaloneVerificationRequest {
   string user_name = 6;
 }
 
+message ImportExceptionsRequest {
+  /** The workspace (file or enterprise geodatabase) containing the source issue datasets. */
+  string parameterImportWorkspace = 1;
+
+  /** Optional filter expression limiting which issues are imported as exceptions. */
+  string parameterImportWhereClause = 2;
+
+  /** The target workspace (file or enterprise geodatabase) where exceptions will be stored. */
+  string parameterTargetWorkspace = 3;
+
+  /** The origin text written to the imported exceptions (e.g. user or process name). */
+  string parameterImportOriginValue = 4;
+}
+
 /**
   * The response containing the streamed response messages. The last response 
   * contains the quality verification and the verified perimeter.
@@ -195,6 +216,15 @@ message StandaloneVerificationResponse {
   repeated IssueMsg issues = 3;
 }
 
+/** The response of the exception import operation. */
+message ImportExceptionsResponse {
+  /** The current status code of the import run. */
+  int32 service_call_status = 1;
+
+  /** The log messages produced during the import run (info, warnings, errors). */
+  repeated .ProSuite.Microservices.Definitions.Shared.Commons.LogMsg message = 2;
+}
+
 message QueryDataResponse {
 
   /** The current status of the query run. */
@@ -209,3 +239,5 @@ message QueryDataResponse {
   /** The request for input data to be provided by the client. */
   DataRequest data_request = 4;
 }
+
+
