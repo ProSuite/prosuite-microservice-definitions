@@ -25,6 +25,7 @@ python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir -
 python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --pyi_out=$OutputDir shared_qa.proto
 python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --pyi_out=$OutputDir shared_gdb.proto
 python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --pyi_out=$OutputDir shared_ddx.proto
+python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --pyi_out=$OutputDir shared_commons.proto
 python -m grpc.tools.protoc --proto_path=../src/protos --python_out=$OutputDir --pyi_out=$OutputDir --grpc_python_out=$OutputDir quality_test.proto
 
 Write-Host "Created python output in ${OutputDir}"
