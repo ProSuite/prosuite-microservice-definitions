@@ -374,12 +374,17 @@ message VerificationParametersMsg {
     * It will be used for both the html report and the issue descriptions 
     * If not specified, the default culture code will be used on the host of 
     * the service.
-    */
+    */ 
   string report_culture_code = 20;
 
   /** Specific options: See XmlVerificationOptions. */
   string xml_options = 22;
 
+  /** Custom properties to be included in the verification report header as key-value pairs. */
+  map<string, string> report_properties = 23;
+
+  /** Description of the verification perimeter / area of interest. */
+  string perimeter_description = 24;
 }
 
 /**
