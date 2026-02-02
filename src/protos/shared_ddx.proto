@@ -165,6 +165,12 @@ message DatasetMsg {
 
   /** The dataset's model id. */
   int32 model_id = 10;
+
+  /** The dataset's category name (typically reflecting feature datasets). */
+  string category_name = 11;
+
+  /** The dataset's display format in the form of '{FieldName} - {OtherFieldName}'. */
+  string display_format = 12;
 }
 
 /**

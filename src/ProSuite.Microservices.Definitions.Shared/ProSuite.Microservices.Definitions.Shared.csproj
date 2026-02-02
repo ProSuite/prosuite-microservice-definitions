@@ -15,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.31.1" />
+	<!-- NOTE: ArcGIS Pro 3.6 references 3.29.3.0 and loads it first. 
+	To avoid issues in the debugger (error CS1705) -->
+    <PackageReference Include="Google.Protobuf" Version="3.29.3.0" />
     <PackageReference Include="Grpc.Core.Api" Version="2.76.0" />
     <PackageReference Include="Grpc.Tools" Version="2.62.0">
       <PrivateAssets>all</PrivateAssets>
