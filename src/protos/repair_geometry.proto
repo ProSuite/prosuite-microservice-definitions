@@ -1,0 +1,157 @@
+syntax = "proto3";
+
+/**
+ * The repair geometry service definition and its associated request and
+ * response message types.
+ *
+ */
+
+package ProSuite.Microservices.Definitions.Geometry;
+
+import "shared_gdb.proto";
+
+/**
+  * The repair geometry service definition.
+  */
+service RepairGeometryGrpc {
+
+  /**
+    * The calculation of the repair info (points to delete, crack points to add,
+    * invalid segments) for the specified source features.
+    */
+  rpc CalculateRepairInfo(CalculateRepairInfoRequest)
+      returns (CalculateRepairInfoResponse) {}
+
+  /**
+    * Applies the specified repair info to the input features.
+    */
+  rpc ApplyRepairGeometry(ApplyRepairGeometryRequest)
+      returns (ApplyRepairGeometryResponse) {}
+}
+
+/**
+  * The repair info calculation request.
+  */
+message CalculateRepairInfoRequest {
+
+  /** The set of source features for which the result shall be calculated. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
+
+  /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 2;
+
+  /** The repair options. */
+  RepairOptionsMsg repair_options = 3;
+}
+
+/**
+  * The repair geometry options.
+  */
+message RepairOptionsMsg {
+
+  /** The minimum segment length or a negative number if the minimum segment
+    * length shall not be enforced.
+    */
+  double minimum_segment_length = 1;
+
+  /** Whether self-intersecting loops in the polyline interior are allowed. */
+  bool allow_loops = 2;
+
+  /** Whether self-intersections of dimension 1 (lines) in the polyline interior
+    * are allowed.
+    */
+  bool allow_linear_self_intersections = 3;
+
+  /** Whether crack points shall be added at intersections between parts of
+    * the same feature.
+    */
+  bool add_crack_points_between_parts = 4;
+
+  /** The tolerance used for crack point detection. */
+  double crack_point_tolerance = 5;
+
+  /** Whether to use the 2D distance also for Z-aware geometries. */
+  bool use_2d = 6;
+}
+
+/**
+  * The repair info calculation response.
+  */
+message CalculateRepairInfoResponse {
+
+  /** The repair info for each source feature. */
+  repeated RepairInfoMsg repair_infos = 1;
+
+  /** Notifications that might be relevant to the user. */
+  repeated string notifications = 2;
+}
+
+/**
+  * The apply repair geometry request.
+  */
+message ApplyRepairGeometryRequest {
+
+  /** The set of source features to be repaired. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjectMsg source_features = 1;
+
+  /** The repair infos to be applied to the respective source geometries. */
+  repeated RepairInfoMsg repair_infos = 2;
+
+  /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 3;
+}
+
+/**
+  * The apply repair geometry response.
+  */
+message ApplyRepairGeometryResponse {
+
+  /** The result features. */
+  repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ResultObjectMsg result_features = 1;
+
+  /** Notifications that might be relevant to the user. */
+  repeated string non_storable_messages = 2;
+}
+
+/**
+  * The repair info associated with a specific source feature.
+  */
+message RepairInfoMsg {
+
+  /** The result multipoint shape with points to delete in the same spatial
+    * reference as the original feature.
+    */
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg points_to_delete = 1;
+
+  /** The result multipoint shape with crack points to add in the same spatial
+    * reference as the original feature.
+    */
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg crack_points_to_add = 2;
+
+  /** The invalid (short) segments to be removed. */
+  repeated InvalidSegmentMsg invalid_segments = 3;
+
+  /** A reference to the original feature. */
+  .ProSuite.Microservices.Definitions.Shared.Gdb.GdbObjRefMsg original_feature_ref = 4;
+}
+
+/**
+  * An invalid segment (e.g. a segment below the minimum length threshold).
+  */
+message InvalidSegmentMsg {
+
+  /** The segment's from point. */
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg from_point = 1;
+
+  /** The segment's to point. */
+  .ProSuite.Microservices.Definitions.Shared.Gdb.ShapeMsg to_point = 2;
+
+  /** The segment's absolute index in the original geometry. */
+  int32 absolute_index = 3;
+
+  /** The part index of the segment in the original geometry. */
+  int32 part_index = 4;
+
+  /** The segment's relative index in its part in the original geometry. */
+  int32 relative_index = 5;
+}
