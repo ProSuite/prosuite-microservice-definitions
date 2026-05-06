@@ -30,6 +30,9 @@
          <!-- Project URL provides a link for the gallery -->
         <projectUrl>https://github.com/ProSuite/prosuite-microservice-definitions</projectUrl>
 
+        <!-- Repository URL provides another link for the gallery -->
+        <repository type="git" url="https://github.com/ProSuite/prosuite-microservice-definitions.git" />
+
          <!-- License information is displayed on the gallery -->
         <license type="expression">MIT</license>
 
@@ -50,15 +53,16 @@
 
         <!-- Dependencies are automatically installed when the package is installed -->
         <dependencies>
-			<!-- <group targetFramework=".NETStandard2.0"> -->
-				<dependency id="Google.Protobuf" version="3.24.0" />
-				<dependency id="Grpc" version="2.46.6" />
-			<!-- </group> -->
+            <group targetFramework=".NETStandard2.0">
+                <dependency id="Google.Protobuf" version="3.29.3" />
+                <dependency id="Grpc.Core.Api" version="2.76.0" />
+            </group>
         </dependencies>
     </metadata>
 
     <!-- Files to include when the package is installed -->
     <files>
+		<file src="bin\Release\netstandard2.0\ProSuite.Microservices.Definitions.QA.dll" target="lib\netstandard2.0" />
 		<file src="bin\Release\netstandard2.0\ProSuite.Microservices.Definitions.Shared.dll" target="lib\netstandard2.0" />
         <file src="README.md" target="" />
 		<file src="..\..\LICENSE.md" target="" />

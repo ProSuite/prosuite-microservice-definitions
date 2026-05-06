@@ -3,14 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <NuspecFile>ProSuite.Microservices.Definitions.Geometry.nuspec</NuspecFile>
+    <NuspecProperties>version=$(Version);authors=$(Authors)</NuspecProperties>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ProSuite.Microservices.Definitions.Key.snk</AssemblyOriginatorKeyFile>
     <Description>The ProSuite geometry microservice definitions for .NET.</Description>
-    <PackageLicenseFile>..\..\LICENSE.md</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <Title>ProSuite Geometry Microservice Definitions</Title>
     <Product>ProSuite Edit Tools</Product>
     <PackageProjectUrl>https://www.dirageosystems.ch/prosuite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ProSuite/prosuite-microservice-definitions</RepositoryUrl>
+	<IncludeContentInPack>true</IncludeContentInPack>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,6 +37,7 @@
     <Protobuf Include="..\protos\crack.proto" Link="protos\crack.proto" />
     <Protobuf Include="..\protos\generalize.proto" Link="protos\generalize.proto" />
     <Protobuf Include="..\protos\fill_hole.proto" Link="protos\fill_hole.proto" />
+    <Protobuf Include="..\protos\repair_geometry.proto" Link="protos\repair_geometry.proto" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +53,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProSuite.Microservices.Definitions.Shared\ProSuite.Microservices.Definitions.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

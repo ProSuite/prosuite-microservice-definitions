@@ -12,7 +12,12 @@
     <PackageProjectUrl>https://www.dirageosystems.ch/prosuite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ProSuite/prosuite-microservice-definitions</RepositoryUrl>
   </PropertyGroup>
-  
+
+  <PropertyGroup>
+    <NuspecFile>ProSuite.Microservices.Definitions.QA.Test.nuspec</NuspecFile>
+    <NuspecProperties>version=$(Version);authors=$(Authors);description=$(Description);copyright=$(Copyright)</NuspecProperties>
+  </PropertyGroup>
+
   <ItemGroup>
     <!--
     IMPORTANT NOTICE

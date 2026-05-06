@@ -16,10 +16,10 @@
             The description can be used in package manager UI. Note that the
             nuget.org gallery uses information you add in the portal. 
         -->
-        <description>$description$</description>
+        <description>The ProSuite geometry microservice definitions for .NET.</description>
 
         <!-- Copyright information -->
-        <copyright>$copyright$</copyright>
+        <copyright>The ProSuite Authors</copyright>
 
         <!-- 
             Owners are typically nuget.org identities that allow gallery
@@ -53,18 +53,19 @@
 
         <!-- Dependencies are automatically installed when the package is installed -->
         <dependencies>
-			<!-- <group targetFramework=".NETStandard2.0"> -->
-				<dependency id="Google.Protobuf" version="3.24.0" />
-				<dependency id="Grpc" version="2.46.6" />
-			<!-- </group> -->
+            <group targetFramework=".NETStandard2.0">
+                <dependency id="Google.Protobuf" version="3.29.3" />
+                <dependency id="Grpc.Core.Api" version="2.76.0" />
+            </group>
         </dependencies>
     </metadata>
 
     <!-- Files to include when the package is installed -->
     <files>
+	    <file src="bin\Release\netstandard2.0\ProSuite.Microservices.Definitions.Geometry.dll" target="lib\netstandard2.0" />
 		<file src="bin\Release\netstandard2.0\ProSuite.Microservices.Definitions.Shared.dll" target="lib\netstandard2.0" />
         <file src="README.md" target="" />
-		<file src="..\..\LICENSE.md" target="" />
+		<file src="LICENSE.md" target="" />
         <file src="ProSuite_Edit_128.png" target="" />
     </files>
 </package>
