@@ -99,6 +99,9 @@ message ApplyRepairGeometryRequest {
 
   /** The object class details referenced by the class_handle of the above GdbObjectMsg objects. */
   repeated .ProSuite.Microservices.Definitions.Shared.Gdb.ObjectClassMsg class_definitions = 3;
+
+  /** The repair options used during the original CalculateRepairInfo call. */
+  RepairOptionsMsg repair_options = 4;
 }
 
 /**
