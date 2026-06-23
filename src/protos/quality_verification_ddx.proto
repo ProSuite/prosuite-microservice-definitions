@@ -186,6 +186,11 @@ message ProjectWorkspaceMsg {
 
   /** Whether the workspace is in the model's master database. */
   bool is_master_database_workspace =  4;
+
+  /** The geodatabase (workspace) dataset names, aligned by index with dataset_ids.
+      Optional: when present, the client matches a live table to a dataset by its
+      gdb table name instead of by the model dataset name. Empty for older servers. */
+  repeated string gdb_dataset_names = 5;
 }
 
 /**
