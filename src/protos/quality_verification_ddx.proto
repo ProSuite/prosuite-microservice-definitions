@@ -38,6 +38,11 @@ service QualityVerificationDdxGrpc {
     */
   rpc GetQualityCondition(GetConditionRequest) returns (GetConditionResponse) {}
 
+  /**
+    * Gets the quality conditions for the specified data dictionary ids.
+    */
+  rpc GetQualityConditions(GetConditionsRequest) returns (GetConditionsResponse) {}
+
     /**
     * Gets dataset details, such as the attributes and object category collections.
     */
@@ -85,6 +90,15 @@ message GetConditionRequest {
 
   /** The name of the requested quality condition. */
   string condition_name = 2;
+}
+
+message GetConditionsRequest {
+
+  /** The data dictionary environment. */
+  string environment = 1;
+
+  /** The data dictionary ids of the requested quality conditions. */
+  repeated int32 condition_ids = 2;
 }
 
 message GetDatasetDetailsRequest {
@@ -152,6 +166,22 @@ message GetConditionResponse {
 
   /** The models referenced by the datasets referenced by the condition. */
   repeated ProSuite.Microservices.Definitions.Shared.Ddx.ModelMsg referenced_models = 5;
+}
+
+message GetConditionsResponse {
+
+  /** The quality conditions. Conditions for unknown ids are silently omitted.
+      The referenced test descriptors must be in the form <class name>(<constructor id>). */
+  repeated QualityConditionMsg conditions = 1;
+
+  /** The instance descriptors referenced by one or more of the conditions. */
+  repeated InstanceDescriptorMsg referenced_instance_descriptors = 2;
+
+  /** The datasets referenced by one or more of the conditions. */
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.DatasetMsg referenced_datasets = 3;
+
+  /** The models referenced by the datasets referenced by the conditions. */
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.ModelMsg referenced_models = 4;
 }
 
 message GetDatasetDetailsResponse {
