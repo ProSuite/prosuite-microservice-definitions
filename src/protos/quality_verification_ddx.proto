@@ -108,6 +108,17 @@ message GetDatasetDetailsRequest {
 
   /** The list of dataset ids. */
   repeated int32 dataset_ids = 2;
+
+  /** Do not include the datasets' attributes and object categories in the
+      response. They make up the bulk of the payload and are not needed by
+      all callers. */
+  bool omit_dataset_attributes = 3;
+
+  /** Do not include the associations in the response. */
+  bool omit_associations = 4;
+
+  /** Do not include the linear networks in the response. */
+  bool omit_linear_networks = 5;
 }
 
 message GetProjectWorkspacesResponse {
@@ -194,6 +205,9 @@ message GetDatasetDetailsResponse {
 
   /** The associations referenced by one or more of the requested datasets. */
   repeated ProSuite.Microservices.Definitions.Shared.Ddx.AssociationMsg associations = 2;
+
+  /** The linear networks referencing one or more of the requested datasets. */
+  repeated ProSuite.Microservices.Definitions.Shared.Ddx.LinearNetworkMsg linear_networks = 3;
 }
 
 // ----------------------------------------------------------------------------
