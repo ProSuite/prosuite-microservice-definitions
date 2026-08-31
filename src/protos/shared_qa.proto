@@ -249,6 +249,46 @@ message ParameterMsg {
 
   /** For dataset parameters: Whether the dataset is only used as reference. */
   bool used_as_reference_data = 5;
+
+  /** For dataset parameters: The optional attribute role assignments for
+    * fields of the referenced dataset. They are only needed where there is no
+    * data dictionary to carry them, i.e. in a condition list specification
+    * whose model is harvested from the live workspace: there a file catalog is
+    * indistinguishable from any other polygon feature class.
+    */
+  repeated DatasetFieldRoleMsg field_roles = 7;
+
+  /** For dataset parameters: The optional declared kind of dataset,
+    * corresponding with the ProSuite.DomainModel.Core.QA.SupportedDatasetType
+    * enum (0 = not declared). Together with the field roles above it identifies
+    * a file catalog, which the roles alone cannot: every file catalog has a
+    * FilePath role, and only the declared type says what kind of file the paths
+    * point to.
+    *
+    * NOTE: This is not the ProSuite.Commons.GeoDb.DatasetType carried by
+    * DatasetMsg.dataset_type, whose values are the Esri dataset type ids. The
+    * catalog kinds have no id of their own - a raster catalog and a point cloud
+    * catalog are both plain polygon feature classes - so that enum cannot
+    * express the distinction this field exists to make.
+    */
+  int32 dataset_type = 8;
+}
+
+/**
+  * The assignment of an attribute role to a field of the dataset referenced by
+  * a dataset parameter. It corresponds to the &lt;Field role=... name=... /&gt;
+  * element of an XML condition list specification.
+  */
+message DatasetFieldRoleMsg {
+
+  /** The name of the attribute role, such as "FilePath". The name is used
+    * rather than the role's numeric id, which is an implementation detail of
+    * the role registry. An unknown name is an error.
+    */
+  string role = 1;
+
+  /** The name of the field in the geodatabase that plays the role. */
+  string name = 2;
 }
 
 /**
