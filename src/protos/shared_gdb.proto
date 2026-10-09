@@ -246,6 +246,14 @@ message ObjectClassMsg {
     * Typically this can be used to connect an object class to a DataSourceMsg.
     */
   int32 ddx_model_id = 8;
+
+  /** The database type of the class's workspace, corresponding to the
+    * WorkspaceDbType enum (as in WorkspaceMsg.workspace_db_type). When the
+    * server reads the class's data from the client, the client's database runs
+    * the where clauses, so its type sets their limits, for example the number
+    * of values in an IN list. 0 (unknown) if not provided.
+    */
+  int32 workspace_db_type = 9;
 }
 
 /**
