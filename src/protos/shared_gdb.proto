@@ -254,6 +254,14 @@ message ObjectClassMsg {
     * of values in an IN list. 0 (unknown) if not provided.
     */
   int32 workspace_db_type = 9;
+
+  /** The extent of the class as reported by its geodatabase, in the class's
+    * spatial reference. When the server reads the class's data from the
+    * client, it uses this extent instead of opening the class itself, for
+    * example to define the tiles of a full-extent verification. Not set for
+    * tables, or if the client does not provide it.
+    */
+  EnvelopeMsg extent = 10;
 }
 
 /**
